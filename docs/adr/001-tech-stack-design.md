@@ -1,4 +1,12 @@
-# ADR: Intent Compiler 技术选型与架构设计
+---
+title: "技术选型与架构设计"
+adr: "001"
+date: "2026-04-02"
+status: "Accepted"
+tags: [tech-stack, architecture, react, vite, dexie]
+---
+
+# ADR-001: Intent Compiler 技术选型与架构设计
 
 > 日期：2026-04-02
 > 状态：Accepted
@@ -53,15 +61,15 @@ Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板
 - 产品核心交互是表单驱动，表单库是关键依赖
 - react-hook-form 性能优异（非受控组件，最小化 re-render）
 - 支持 schema 验证（配合 zod）、动态字段、嵌套对象
-- 与 shadcn/ui 组件无缝集成（官方有适配示例）
+- 与 shadcn/ui 组件无缝集成
 
 ### 2.4 路由：React Router v7
 
 **决策：** React Router 作为客户端路由方案。
 
 **理由：**
-- React 生态最成熟的路由库，文档和社区资源丰富
-- 支持 URL 参数和 search params，满足 `/build?template=code_gen` 等路由需求
+- React 生态最成熟的路由库
+- 支持 URL 参数和 search params
 - 一人项目选最稳定、最熟悉的方案
 
 **否决方案：** TanStack Router（功能更强但生态较新）。
@@ -84,9 +92,9 @@ Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板
 - 表单组件、Select、Dialog、Tabs 等开箱即有
 - 组件代码在项目中可完全控制，不被框架锁定
 - 社区模板和示例丰富
-- 对 i18n 中性——组件无内置文案，不阻碍多语言
+- 对 i18n 中性——组件无内置文案
 
-**否决方案：** Ant Design（样式重、定制成本高）、纯 Tailwind 手撸（一人团队造轮子成本高）。
+**否决方案：** Ant Design（样式重、定制成本高）、纯 Tailwind 手撸（造轮子成本高）。
 
 ### 2.7 国际化：react-i18next
 
@@ -112,7 +120,7 @@ Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板
 - 模板和 IR 是结构化数据，IndexedDB 天然适合
 - Dexie 提供类 ORM 的 API，开发体验接近操作数据库
 - 内置 schema 版本迁移，对应 IR 的 `schema_version` 演进需求
-- 容量充裕（几百 MB+），不用担心模板积累后撑爆
+- 容量充裕（几百 MB+）
 - 后续加云同步时 `dexie-cloud-addon` 提供平滑迁移路径
 
 **否决方案：** localStorage（5-10MB 上限，无结构化查询）、直接用 IndexedDB（原生 API 极难用）。
@@ -123,7 +131,7 @@ Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板
 
 **理由：**
 - 极简，几乎无 boilerplate
-- 表单状态 → IR 编译 → 渲染预览的数据流用 `subscribe` + selector 很自然
+- 表单状态 -> IR 编译 -> 渲染预览的数据流用 `subscribe` + selector 很自然
 - 支持 `persist` 中间件，可与 Dexie 配合
 - 调试有 devtools 中间件
 
@@ -133,11 +141,11 @@ Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板
 
 **决策：** 抽象 `AIService` 接口作为 Phase 2 预留。MVP 可选择性支持用户自带 OpenAI/Anthropic API Key 直连。
 
-**注意：AI Assist 是 Phase 2 功能，不属于 MVP 核心交付范围。** 以下接口定义仅为架构预留，确保 MVP 代码结构不阻碍后续接入。
+**注意：AI Assist 是 Phase 2 功能，不属于 MVP 核心交付范围。**
 
 **理由：**
 - PRD 明确 AI Assist 是 Phase 2，但预留抽象接口成本极低（一个 TypeScript interface）
-- 目标用户（高频 AI 用户）大概率已有 API Key
+- 目标用户大概率已有 API Key
 - 不引入任何后端依赖
 - 接口抽象后，后续换成托管服务只需新增实现类
 
@@ -217,7 +225,7 @@ src/
 ```
 
 **关键约束：**
-1. **单向数据流** — Form State → IR → Rendered Output，无反向依赖
+1. **单向数据流** — Form State -> IR -> Rendered Output，无反向依赖
 2. **IR 是唯一 source of truth** — 存储、导出、渲染都基于 IR
 3. **编译是 debounced 的** — 300ms 防抖后批量编译
 4. **校验和渲染并行** — IR 产出后同时触发，互不阻塞
@@ -260,8 +268,6 @@ interface Renderer {
   render(ir: PromptIR, options: RenderOptions): string
 }
 
-// MVP 实现 hybrid_json 和 natural_language 两种
-// hybrid_text 和 pure_json 在 Phase 2 扩展
 type RenderVariant = 'hybrid_json' | 'natural_language' | 'hybrid_text' | 'pure_json'
 
 interface RenderOptions {
@@ -296,8 +302,6 @@ interface AIServiceResult {
 ### 3.4 Zustand Store 结构
 
 ```ts
-// FormState 按模板类型参数化，核心字段有类型约束
-// 仅 additional_notes 等自由文本字段为 string
 interface FormState {
   task_type: TaskType
   objective: string
@@ -308,23 +312,17 @@ interface FormState {
   context?: ContextConfig
   forbidden?: string[]
   additional_notes?: string
-  [key: string]: unknown            // 模板自定义扩展字段
+  [key: string]: unknown
 }
 
 interface AppState {
-  // 当前编辑状态
   currentTemplateId: string | null
   formState: FormState | null
   compiledIR: PromptIR | null
-
-  // 渲染输出
   renderedOutput: string
   renderVariant: RenderVariant
-
-  // 校验
   validationErrors: ValidationResult[]
 
-  // Actions
   selectTemplate: (id: string) => void
   updateField: (key: string, value: unknown) => void
   switchRenderVariant: (variant: RenderVariant) => void
@@ -351,17 +349,17 @@ db.version(1).stores({
 | `settings` | 用户配置（API Key、语言等） | key |
 
 **系统模板加载策略：**
-- 系统模板以 TypeScript 模块形式定义在 `core/template/presets/` 目录中（非 Dexie 存储）
+- 系统模板以 TypeScript 模块形式定义在 `core/template/presets/`
 - 应用启动时通过静态 import 加载，注册到内存中的 template registry
 - 系统模板通过代码版本控制（git），不通过 Dexie 版本迁移
-- 用户保存的 preset 引用系统模板的 `template_id`；当系统模板升级时，preset 保留原 `ir_schema_version` 并在加载时触发 migration adapter
+- 用户 preset 引用系统模板的 `template_id`；系统模板升级时，preset 保留原 `ir_schema_version` 并在加载时触发 migration adapter
 
 **数据生命周期：**
-- 用户选模板 → 创建 draft（自动保存到 Dexie）
-- 编辑中 → draft 每 5s 自动更新
-- 点击"保存模板" → 写入 presets，删除对应 draft
-- 点击"复制 prompt" → 不写 presets，draft 保留
-- 关闭页面 → draft 保留，下次可恢复
+- 用户选模板 -> 创建 draft（自动保存到 Dexie）
+- 编辑中 -> draft 每 5s 自动更新
+- 点击"保存模板" -> 写入 presets，删除对应 draft
+- 点击"复制 prompt" -> 不写 presets，draft 保留
+- 关闭页面 -> draft 保留，下次可恢复
 
 ### 3.6 页面路由
 
@@ -426,8 +424,6 @@ test('production_eval template renders hybrid_json correctly', () => {
 })
 ```
 
-每个模板 × 每种渲染模式 = 一个 snapshot。模板或 Renderer 变更时差异一目了然。
-
 ---
 
 ## 5. 部署架构
@@ -442,7 +438,7 @@ test('production_eval template renders hybrid_json correctly', () => {
 
 ### 5.2 Nginx 配置
 
-**HTTPS 要求：** 产品会在浏览器端存储用户 API Key（Dexie settings 表），HTTPS 是基线安全要求。使用 certbot (Let's Encrypt) 自动签发和续期 TLS 证书。
+**HTTPS 要求：** 使用 certbot (Let's Encrypt) 自动签发和续期 TLS 证书。
 
 ```nginx
 server {
@@ -498,4 +494,4 @@ server {
 | Phase 3 | 团队模板共享，需要用户认证和权限 |
 | Phase 4 | API/SDK 对外，可能需要独立后端服务 |
 
-每个阶段的架构变化都不需要推翻前一阶段的决策——纯前端 → BaaS → 独立后端是渐进演进路径。
+每个阶段的架构变化都不需要推翻前一阶段的决策——纯前端 -> BaaS -> 独立后端是渐进演进路径。
