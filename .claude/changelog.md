@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-05] - Create detailed MVP implementation plan
+- Created `docs/plans/` with 9 files: overview + 8 chunks covering full MVP implementation
+- Chunks: bootstrap & types, compiler & validator, renderers, data layer, template system, i18n/routing/layout, builder page, templates page & polish
+- Plan includes TDD test code, exact file paths, complete implementations, and commit steps
+- Based on all 17 PRD docs and ADR-001 architecture decisions
+
 ## [2026-04-05] - Reposition project for Agent era: emphasize intent compilation over prompt tooling
 - **Renamed "Prompt IR" → "Intent IR"** across all 13 files (PRD, ADR, README, CLAUDE.md) and code type `PromptIR` → `IntentIR` in ADR
 - **Updated output framing**: one-liners in README.md, CLAUDE.md, 01-summary.md now describe multi-target output (prompt, Agent instructions, etc.) instead of "stable prompt"
