@@ -13,7 +13,7 @@ tags: [roadmap, milestones, phases]
 交付：
 
 - 任务类型 taxonomy v0
-- Prompt IR v0
+- Intent IR v0
 - 6-8 个核心模板
 - 纸面原型 / 低保真交互稿
 - 少量用户访谈与可用性验证
@@ -65,6 +65,8 @@ tags: [roadmap, milestones, phases]
 
 ## Phase 4：生态扩展（后续）
 
+- **Agent 输出适配**：新增 Agent 指令型 Renderer，将 IR 渲染为 Claude Code / Cursor / Windsurf 等 Agent IDE 的启动指令格式
+- **工具链集成**：支持将 IR 映射为 MCP 工具调用参数、API 请求体等机器可消费格式
 - 模型适配 renderer
 - API / SDK
 - 团队权限

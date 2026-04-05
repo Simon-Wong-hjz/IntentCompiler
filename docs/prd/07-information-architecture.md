@@ -13,7 +13,7 @@ tags: [architecture, objects, task-types]
 - Workspace（可选，团队版再加强）
 - Template Definition（系统模板定义）
 - Prompt Draft（用户当前编辑中的实例）
-- Prompt IR（规范化中间表示）
+- Intent IR（规范化中间表示）
 - Rendered Output（导出的 prompt 文本）
 - Saved Template / Saved Preset（用户保存后的可复用实例）
 - Version（版本快照）
@@ -46,7 +46,7 @@ tags: [architecture, objects, task-types]
 - render_variant
 - dirty_state
 
-### C. Prompt IR
+### C. Intent IR
 
 系统 canonical object。包含任务目标、约束、输出、语气、边界等标准字段。
 

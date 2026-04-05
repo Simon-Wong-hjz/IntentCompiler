@@ -16,7 +16,7 @@ tags: [scope, mvp, non-goals]
 2. **表单式意图构建**
    每个模板只暴露少量关键字段，支持默认值、动态字段显示、即时校验。
 
-3. **统一 Prompt IR**
+3. **统一 Intent IR**
    所有输入最终编译到同一 canonical JSON。
 
 4. **Prompt 即时渲染**
@@ -51,8 +51,8 @@ tags: [scope, mvp, non-goals]
 
 以下内容不应进入 MVP：
 
-1. **通用 Agent / Workflow Builder**
-   那是另一个产品方向。
+1. **Agent 运行时 / Workflow 编排器**
+   本产品编译意图，不执行意图。Agent 的运行、编排、调度是另一个产品方向。但编译后的 Intent IR 作为 Agent 的启动输入是自然延伸（见 Roadmap Phase 4）。
 
 2. **复杂多轮对话状态机**
    本产品是任务发起编译器，不是聊天记忆系统。

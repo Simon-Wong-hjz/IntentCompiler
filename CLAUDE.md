@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Intent Compiler is a structured intent builder that compiles user task intentions into stable, reusable prompts. It uses templates as entry points, Prompt IR as the core protocol, and Renderers as the output mechanism.
+Intent Compiler is a structured intent compiler that transforms user task intentions into stable, reusable intent artifacts. It uses templates as entry points, Intent IR as the core protocol, and Renderers as the output adaptation layer — supporting prompts, agent instructions, and other target formats.
 
 ## Tech Stack
 

@@ -65,7 +65,7 @@ IR schema 采用 `MAJOR.MINOR` 语义化版本号，规则详见 [10-ir-schema-r
 
 ### 编译定义
 
-Draft（用户当前编辑状态）到 IR（规范化中间表示）的转换称为"编译"。编译器的输入是 `Prompt Draft.current_form_state`，输出是合法的 `Prompt IR`。
+Draft（用户当前编辑状态）到 IR（规范化中间表示）的转换称为"编译"。编译器的输入是 `Prompt Draft.current_form_state`，输出是合法的 `Intent IR`。
 
 ### Partial Compile（部分编译）
 

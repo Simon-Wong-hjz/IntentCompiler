@@ -18,7 +18,7 @@ tags: [flows, manual-mode, ai-mode, template-reuse]
 2. 选择任务类型或最近使用模板
 3. 打开对应简表单
 4. 填写少量关键槽位
-5. 系统实时注入默认值并生成 Prompt IR
+5. 系统实时注入默认值并生成 Intent IR
 6. 系统进行冲突校验与提示
 7. 右侧实时预览渲染后的 prompt
 8. 用户选择导出风格并复制 / 保存为模板

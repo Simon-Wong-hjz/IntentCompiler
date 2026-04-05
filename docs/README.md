@@ -10,7 +10,7 @@
 | 02 | [problem-opportunity](prd/02-problem-opportunity.md) | 问题定义、机会点、替代方案分析 | problem, opportunity |
 | 03 | [competitive-analysis](prd/03-competitive-analysis.md) | 竞品全景、功能矩阵、差异化壁垒 | competitive, moat |
 | 04 | [users-jtbd](prd/04-users-jtbd.md) | 用户分层、JTBD、优先级 | users, personas |
-| 05 | [core-concepts](prd/05-core-concepts.md) | Prompt IR、Template、Renderer、AI Assist 定义 | concepts, ir |
+| 05 | [core-concepts](prd/05-core-concepts.md) | Intent IR、Template、Renderer、AI Assist 定义 | concepts, ir |
 | 06 | [product-scope](prd/06-product-scope.md) | MVP 范围、后续版本、非目标 | scope, mvp |
 | 07 | [information-architecture](prd/07-information-architecture.md) | 对象模型、任务类型 taxonomy | objects, task-types |
 | 08 | [user-flows](prd/08-user-flows.md) | 无 AI 主流程、AI 模式、模板复用流程 | flows, ux |

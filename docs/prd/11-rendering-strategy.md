@@ -8,9 +8,9 @@ tags: [rendering, renderer, hybrid-json, field-tiered]
 
 ## 10.1 渲染目标
 
-同一份 IR 应能生成不同风格的输出，用于不同模型、平台和用户习惯。
+同一份 IR 应能适配不同的输出目标和风格，用于不同模型、平台、Agent 框架和用户习惯。
 
-严格划分四种渲染模式：
+### MVP 渲染模式（面向 Prompt 输出）
 
 1. 自然语言型（Pure NL）
 2. 混合文本型（NL + Structured Text）
@@ -18,6 +18,13 @@ tags: [rendering, renderer, hybrid-json, field-tiered]
 4. JSON 型（Pure JSON，高级）
 
 如果产品层只能保留一个"混合模式"作为默认导出，则应把 **混合模式明确定义为：自然语言任务句 + JSON 约束块**。
+
+### 后续渲染目标（Post-MVP）
+
+5. Agent 指令型 — 将 IR 渲染为 Agent 启动指令（System Prompt / Instructions 格式），适配 Claude Code、Cursor 等 Agent IDE
+6. 工具参数型 — 将 IR 中的约束和输出要求映射为 MCP 工具调用参数或 API 请求体
+
+Renderer 的架构设计应从一开始就预留输出目标的扩展点，而非仅围绕 prompt 格式硬编码。
 
 ## 10.2 自然语言型
 

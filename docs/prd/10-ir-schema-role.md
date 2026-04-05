@@ -1,19 +1,19 @@
 ---
-title: "Prompt IR / JSON Schema 在产品中的角色与边界"
+title: "Intent IR / JSON Schema 在产品中的角色与边界"
 section: "9"
 tags: [ir, schema, versioning, boundaries]
 ---
 
-# 9. Prompt IR / JSON Schema 在产品中的角色与边界
+# 9. Intent IR / JSON Schema 在产品中的角色与边界
 
 ## 9.1 角色
 
-Prompt IR / JSON Schema 的主要职责：
+Intent IR / JSON Schema 的主要职责：
 
 1. 统一不同输入模式
 2. 提供字段类型与默认值机制
 3. 提供校验能力
-4. 支撑渲染器输出
+4. 支撑渲染器输出（prompt、Agent 指令等多种目标格式）
 5. 支撑模板版本迁移与兼容性
 
 ## 9.2 边界
@@ -22,6 +22,7 @@ Schema 不应承担：
 
 - 通用知识建模
 - 多轮聊天状态存档
+- Agent 运行时状态管理
 - 工具执行 DAG
 - 用户画像数据库
 - RAG 检索上下文存储

@@ -16,7 +16,7 @@ tags: [tech-stack, architecture, react, vite, dexie]
 
 ## 1. 背景与目标
 
-Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板为入口、Prompt IR 为内核、Renderer 为出口，将用户任务意图编译为稳定可复用的 prompt。
+Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板为入口、Intent IR 为内核、Renderer 为输出适配层，将用户任务意图编译为可渲染至 prompt、Agent 指令等多种目标的结构化意图表示。
 
 本 ADR 记录 MVP 阶段的所有技术选型与架构决策，作为后续开发的约束基线。
 
@@ -179,7 +179,7 @@ Intent Compiler 是一个面向高频 AI 用户的意图编译产品，以模板
 src/
   core/
     ir/                # IR 类型定义、编译器、校验器
-      types.ts         # PromptIR, CompileResult 等类型
+      types.ts         # IntentIR, CompileResult 等类型
       compiler.ts      # IR Compiler 实现
       validator.ts     # 校验引擎
       rules/           # 声明式校验规则
@@ -215,7 +215,7 @@ src/
                                 ↓
                         IR Compiler (debounced 300ms)
                                 ↓
-                          Prompt IR (canonical JSON)
+                          Intent IR (canonical JSON)
                            ↓              ↓
                      Validator        Renderer
                      (冲突校验)     (字段分层投放)
@@ -240,7 +240,7 @@ interface IRCompiler {
 }
 
 interface CompileResult {
-  ir: PromptIR | null
+  ir: IntentIR | null
   status: 'complete' | 'partial' | 'failed'
   warnings: CompileWarning[]
 }
@@ -250,12 +250,12 @@ interface CompileResult {
 
 ```ts
 interface Validator {
-  validate(ir: PromptIR, rules: ValidationRule[]): ValidationResult[]
+  validate(ir: IntentIR, rules: ValidationRule[]): ValidationResult[]
 }
 
 interface ValidationRule {
   id: string                      // e.g. "R-001"
-  when: (ir: PromptIR) => boolean
+  when: (ir: IntentIR) => boolean
   severity: 'error' | 'warning' | 'info'
   message_key: string             // i18n key
 }
@@ -265,7 +265,7 @@ interface ValidationRule {
 
 ```ts
 interface Renderer {
-  render(ir: PromptIR, options: RenderOptions): string
+  render(ir: IntentIR, options: RenderOptions): string
 }
 
 type RenderVariant = 'hybrid_json' | 'natural_language' | 'hybrid_text' | 'pure_json'
@@ -278,7 +278,7 @@ interface RenderOptions {
 
 interface FieldPromotionRule {
   field_path: string              // e.g. "answer_mode.recommend_first"
-  condition?: (ir: PromptIR) => boolean
+  condition?: (ir: IntentIR) => boolean
   nl_template_key: string         // i18n key for NL sentence generation
 }
 ```
@@ -292,7 +292,7 @@ interface AIService {
 }
 
 interface AIServiceResult {
-  ir: Partial<PromptIR>
+  ir: Partial<IntentIR>
   confidence: number
   inferred_task_type: TaskType | null
   uncertain_fields: string[]
@@ -318,7 +318,7 @@ interface FormState {
 interface AppState {
   currentTemplateId: string | null
   formState: FormState | null
-  compiledIR: PromptIR | null
+  compiledIR: IntentIR | null
   renderedOutput: string
   renderVariant: RenderVariant
   validationErrors: ValidationResult[]
