@@ -42,3 +42,6 @@ coverage/
 
 # Claude Code
 /.claude/*.local.json
+
+# Worktrees
+.worktrees/
