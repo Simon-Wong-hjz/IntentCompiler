@@ -33,21 +33,25 @@ Core principles:
 11. As a user, I want to copy the compiled output to my clipboard with one click, so that I can paste it directly into my AI interaction interface.
 12. As a user, I want to switch the UI language between Chinese and English, so that I can use the tool in my preferred language.
 13. As a user, I want the compiled output to respect the selected UI language (field labels, section headers), so that the prompt I paste is in the language I need.
-14. As a user, I want to provide an AI API key to enable AI-enhanced compilation, so that the tool can optimize and refine my structured input into a higher-quality prompt.
+14. As a user, I want to provide an AI API key to enable AI-assisted field filling, so that AI can parse my brief intent and populate template fields for me.
 15. As a user, I want my API key to be stored securely in my browser and never sent to any server other than the AI provider, so that I trust the tool with my credentials.
-16. As a user, I want to save my preferences (language, default output format, API key) locally, so that I don't have to reconfigure the tool every time I visit.
-17. As a user, I want to save and reuse custom templates, so that I can build on my frequently used patterns.
-18. As a user, I want to view my compilation history, so that I can revisit or reuse previous prompts.
-19. As a user, I want the tool to work entirely in my browser with no backend dependency (in non-AI mode), so that I have full control over my data.
-20. As a user, I want to use the tool on both desktop and mobile browsers, so that I can compile prompts wherever I am.
-21. As a user selecting "Ask", I want to see intent, context, requirements, constraints, output_format, question_type, and audience as default fields, so that the template is optimized for asking questions.
-22. As a user selecting "Create", I want to see intent, context, requirements, constraints, output_format, content_type, key_points, and tone as default fields, so that the template is optimized for creation tasks.
-23. As a user selecting "Transform", I want to see intent, context, requirements, constraints, output_format, source_content, and transform_type as default fields, so that the template is optimized for content transformation.
-24. As a user selecting "Analyze", I want to see intent, context, requirements, constraints, output_format, subject, analyze_type, and criteria as default fields, so that the template is optimized for analysis tasks.
-25. As a user selecting "Ideate", I want to see intent, context, requirements, constraints, output_format, problem, current_state, desired_outcome (goal), assumptions, and goal as default fields, so that the template is optimized for ideation and problem-solving.
-26. As a user selecting "Execute", I want to see intent, context, requirements, constraints, output_format, plan, and goal as default fields, so that the template is optimized for agent task instructions.
-27. As a user, I want the addable field list to show task-specific optional fields above universal optional fields, so that the most relevant options are easy to find.
-28. As a user, I want fields to support both free text input and predefined options (e.g., question_type: factual / conceptual / how-to / opinion), so that I have guidance without losing flexibility.
+16. As a user with AI configured, I want to write a brief intent and click an AI fill button next to the Intent input, so that AI populates the other template fields based on my intent.
+17. As a user with AI configured, I want AI fill to only populate fields currently displayed in the editor by default, so that I stay in control of the template structure.
+18. As a user with AI configured, I want an option "Allow AI to add fields" that lets AI discover and add relevant optional fields, so that I can get a more comprehensive prompt when I choose to.
+19. As a user, I want to review and edit AI-filled fields before compiling, so that I retain full control over the final output.
+20. As a user, I want to save my preferences (language, default output format, API key) locally, so that I don't have to reconfigure the tool every time I visit.
+21. As a user, I want to save and reuse custom templates, so that I can build on my frequently used patterns.
+22. As a user, I want to view my compilation history, so that I can revisit or reuse previous prompts.
+23. As a user, I want the tool to work entirely in my browser with no backend dependency (in non-AI mode), so that I have full control over my data.
+24. As a user, I want to use the tool on a desktop browser with a well-designed layout, so that I can efficiently compile prompts on my primary workspace. (Mobile adaptation deferred to future iteration.)
+25. As a user selecting "Ask", I want to see intent, context, requirements, constraints, output_format, question_type, and audience as default fields, so that the template is optimized for asking questions.
+26. As a user selecting "Create", I want to see intent, context, requirements, constraints, output_format, content_type, key_points, and tone as default fields, so that the template is optimized for creation tasks.
+27. As a user selecting "Transform", I want to see intent, context, requirements, constraints, output_format, source_content, and transform_type as default fields, so that the template is optimized for content transformation.
+28. As a user selecting "Analyze", I want to see intent, context, requirements, constraints, output_format, subject, analyze_type, and criteria as default fields, so that the template is optimized for analysis tasks.
+29. As a user selecting "Ideate", I want to see intent, context, requirements, constraints, output_format, problem, current_state, goal, and assumptions as default fields, so that the template is optimized for ideation and problem-solving.
+30. As a user selecting "Execute", I want to see intent, context, requirements, constraints, output_format, plan, and goal as default fields, so that the template is optimized for agent task instructions.
+31. As a user, I want the addable field list to show task-specific optional fields above universal optional fields, so that the most relevant options are easy to find.
+32. As a user, I want fields to support both free text input and predefined options (e.g., question_type: factual / conceptual / how-to / opinion), so that I have guidance without losing flexibility.
 
 ## Implementation Decisions
 
@@ -65,6 +69,7 @@ Core principles:
 | Styling | Tailwind CSS + shadcn/ui | shadcn/ui provides accessible, Tailwind-native components copied into the project (no dependency lock-in); ideal for form-heavy UIs |
 | i18n | react-i18next | Mainstream React i18n solution |
 | Storage | IndexedDB via Dexie.js | Built-in versioning for template schema migration; structured data with indexes; no 5MB localStorage limit |
+| Serialization | js-yaml, fast-xml-parser | JSON and Markdown handled natively; YAML and XML need lightweight third-party libraries |
 | Deployment | Static build → Alibaba Cloud Nginx | Simple, no server runtime needed |
 
 ### Module Design
@@ -90,10 +95,14 @@ Core principles:
 
 **Editor UI**
 - Split-pane layout: left side is the template field editor, right side is live preview.
-- Task type selector mapped to verb + mental model labels (e.g., "Ask — I want to know something / 提问 — 我想知道一件事").
-- Default fields shown immediately; addable fields in a collapsible panel, grouped (task-specific first, universal second), each with description and usage hint.
-- Custom field support via key-value pair input.
-- One-click copy to clipboard.
+- Editor layout (core editing area only):
+  1. **Task type selector**: mapped to verb + mental model labels (e.g., "Ask — I want to know something / 提问 — 我想知道一件事").
+  2. **Intent input area**: visually elevated, standalone position — reflects its status as the universal required field. AI fill button is placed adjacent to this input.
+  3. **AI options**: "Allow AI to add fields" checkbox beneath the Intent area (visible only when AI is configured).
+  4. **Field editor**: default fields shown immediately; addable fields in a collapsible panel, grouped (task-specific first, universal second), each with description and usage hint.
+  5. **Custom field support**: key-value pair input.
+  6. **One-click copy** to clipboard.
+- **Note**: The editor layout defines only the core editing area. Page-level elements (history, API key configuration, language toggle, user preferences) belong to the surrounding page layout, which is to be designed separately.
 
 **i18n**
 - Bilingual support (Chinese / English) for all UI copy: field names, descriptions, hints, buttons, labels.
@@ -102,7 +111,12 @@ Core principles:
 
 **AI Connector**
 - Optional module, activated when user provides an API key.
-- Abstract interface supporting multiple AI providers (OpenAI, Anthropic, etc.).
+- **Core function**: AI-assisted field filling. User writes a brief intent → AI parses it and populates template fields.
+- Two fill modes:
+  - **Default**: fill only fields currently displayed in the editor (default fields + any user-added optional fields).
+  - **"Allow AI to add fields"**: AI can discover relevant optional fields, fill them, and add them to the editor.
+- Prerequisite: user has selected a task type and filled the Intent field.
+- **v1 provider support**: OpenAI and Anthropic. Abstract interface designed for extensibility to other providers.
 - Handles API calls, error handling, key validation.
 - API key stored in IndexedDB, never sent to any server other than the AI provider.
 
@@ -125,104 +139,257 @@ Core principles:
 | Ideate | 构思 | "Help me think / design" | "帮我想办法" |
 | Execute | 执行 | "Do a multi-step task for me" | "帮我做一个多步骤任务" |
 
-**Universal fields (shared by all task types):**
+**Field Classification Model**
 
-Default shown (5):
-- `intent` (required) — core intent, one sentence
-- `context` — background information
-- `requirements` — what must be satisfied
-- `constraints` — what to avoid, boundaries
-- `output_format` — desired output form
+Every field has two independent attributes:
+- **Scope**: Universal (shared by all task types) or Task (belongs to a specific task type)
+- **Visibility**: Default (shown in editor on task selection) or Optional (available in "add field" panel)
 
-Optional (14):
-- `goal` — desired end state or outcome (promoted to default for Ideate, Execute)
-- `role` — role the AI should assume
-- `audience` — target audience for the output (promoted to default for Ask)
-- `assumptions` — premises AI should take as given (promoted to default for Ideate)
-- `scope` — boundary of what to cover
-- `priority` — what matters most when trade-offs arise
-- `output_language` — language the AI should respond in
-- `detail_level` — summary / standard / in-depth
-- `tone` — formal / casual / technical (promoted to default for Create)
-- `thinking_style` — direct answer / step-by-step / pros-and-cons
-- `examples` — reference examples
-- `anti_examples` — counter-examples of what is not wanted
-- `references` — specific sources or materials
-- `custom_fields` — user-defined key-value pairs
+Both attributes can be configured per task type. A universal field can be re-scoped to Task for a specific task type (e.g., `goal` is Universal for most types but Task for Ideate and Execute). Changing scope does NOT automatically change visibility — they are independent decisions.
 
-**Task-specific fields:**
+**Field Input Types:**
 
-**Ask:**
-| Field | Default | Description |
-|-------|---------|-------------|
-| question_type | Y | Question type: factual / conceptual / how-to / opinion |
-| knowledge_level | | User's existing knowledge on the topic |
+Input type definitions:
+- `text` — single-line free text input
+- `textarea` — multi-line free text input
+- `select` — dropdown with predefined options only
+- `combo` — predefined options + free text custom input
+- `list` — ordered list of text items (add/remove)
+- `toggle` — boolean on/off
+- `number` — numeric input
+- `key-value` — dynamic key-value pair editor
 
-Universal promotions: `audience`
+| Field | Input Type | Predefined Options (if applicable) |
+|-------|------------|-------------------------------------|
+| intent | textarea | — |
+| context | textarea | — |
+| requirements | list | — |
+| constraints | list | — |
+| output_format | combo | paragraph / list / table / code / step-by-step |
+| goal | textarea | — |
+| role | text | — |
+| audience | text | — |
+| assumptions | list | — |
+| scope | text | — |
+| priority | text | — |
+| output_language | combo | Chinese / English / ... |
+| detail_level | select | summary / standard / in-depth |
+| tone | combo | formal / casual / technical / friendly |
+| thinking_style | select | direct answer / step-by-step / pros-and-cons |
+| examples | textarea | — |
+| anti_examples | textarea | — |
+| references | textarea | — |
+| custom_fields | key-value | — |
+| question_type | select | factual / conceptual / how-to / opinion |
+| knowledge_level | combo | beginner / intermediate / expert |
+| content_type | combo | email / article / doc / code / script |
+| key_points | list | — |
+| tech_stack | text | — |
+| target_length | text | — |
+| structure | textarea | — |
+| include_tests | toggle | — |
+| source_content | textarea | — |
+| transform_type | select | summarize / translate / rewrite / simplify / format convert |
+| preserve | list | — |
+| subject | textarea | — |
+| analyze_type | select | evaluate / compare / data interpretation |
+| criteria | list | — |
+| compared_subjects | list | — |
+| benchmark | textarea | — |
+| problem | textarea | — |
+| current_state | textarea | — |
+| idea_count | number | — |
+| evaluation_criteria | list | — |
+| tradeoff_preference | text | — |
+| plan | textarea | — |
+| tools_to_use | list | — |
+| checkpoints | list | — |
+| error_handling | textarea | — |
+| success_criteria | list | — |
 
-**Create:**
-| Field | Default | Description |
-|-------|---------|-------------|
-| content_type | Y | What to create: email / article / doc / code / script |
-| key_points | Y | Must-include points or core functionality |
-| tech_stack | | Language, framework, libraries (code scenarios) |
-| target_length | | Expected length or scale |
-| structure | | Expected structure or outline |
-| include_tests | | Whether to include tests (code scenarios) |
+**Per-task-type field tables (Scope and Visibility):**
 
-Universal promotions: `tone`
+**Ask (提问):**
 
-**Transform:**
-| Field | Default | Description |
-|-------|---------|-------------|
-| source_content | Y | Original content to transform |
-| transform_type | Y | Transformation: summarize / translate / rewrite / simplify / format convert |
-| preserve | | Information or characteristics that must be preserved |
-| target_length | | Expected length after transformation |
+| Field | Scope | Visibility | Description |
+|-------|-------|------------|-------------|
+| intent | Universal | Default (required) | Core intent, one sentence |
+| context | Universal | Default | Background information |
+| requirements | Universal | Default | What must be satisfied |
+| constraints | Universal | Default | What to avoid, boundaries |
+| output_format | Universal | Default | Desired output form |
+| question_type | Task | Default | Question type: factual / conceptual / how-to / opinion |
+| audience | Task | Default | Target audience for the output |
+| knowledge_level | Task | Optional | User's existing knowledge on the topic |
+| goal | Universal | Optional | Desired end state or outcome |
+| role | Universal | Optional | Role the AI should assume |
+| assumptions | Universal | Optional | Premises AI should take as given |
+| scope | Universal | Optional | Boundary of what to cover |
+| priority | Universal | Optional | What matters most when trade-offs arise |
+| output_language | Universal | Optional | Language the AI should respond in |
+| detail_level | Universal | Optional | Summary / standard / in-depth |
+| tone | Universal | Optional | Formal / casual / technical |
+| thinking_style | Universal | Optional | Direct answer / step-by-step / pros-and-cons |
+| examples | Universal | Optional | Reference examples |
+| anti_examples | Universal | Optional | Counter-examples of what is not wanted |
+| references | Universal | Optional | Specific sources or materials |
+| custom_fields | Universal | Optional | User-defined key-value pairs |
 
-Universal promotions: none
+**Create (创作):**
 
-**Analyze:**
-| Field | Default | Description |
-|-------|---------|-------------|
-| subject | Y | Object or content to analyze |
-| analyze_type | Y | Analysis type: evaluate / compare / data interpretation |
-| criteria | Y | Evaluation dimensions |
-| compared_subjects | | Comparison items (comparison scenario, supports multiple) |
-| benchmark | | Reference standard or baseline |
+| Field | Scope | Visibility | Description |
+|-------|-------|------------|-------------|
+| intent | Universal | Default (required) | Core intent, one sentence |
+| context | Universal | Default | Background information |
+| requirements | Universal | Default | What must be satisfied |
+| constraints | Universal | Default | What to avoid, boundaries |
+| output_format | Universal | Default | Desired output form |
+| content_type | Task | Default | What to create: email / article / doc / code / script |
+| key_points | Task | Default | Must-include points or core functionality |
+| tone | Task | Default | Formal / casual / technical |
+| tech_stack | Task | Optional | Language, framework, libraries (code scenarios) |
+| target_length | Task | Optional | Expected length or scale |
+| structure | Task | Optional | Expected structure or outline |
+| include_tests | Task | Optional | Whether to include tests (code scenarios) |
+| goal | Universal | Optional | Desired end state or outcome |
+| role | Universal | Optional | Role the AI should assume |
+| audience | Universal | Optional | Target audience for the output |
+| assumptions | Universal | Optional | Premises AI should take as given |
+| scope | Universal | Optional | Boundary of what to cover |
+| priority | Universal | Optional | What matters most when trade-offs arise |
+| output_language | Universal | Optional | Language the AI should respond in |
+| detail_level | Universal | Optional | Summary / standard / in-depth |
+| thinking_style | Universal | Optional | Direct answer / step-by-step / pros-and-cons |
+| examples | Universal | Optional | Reference examples |
+| anti_examples | Universal | Optional | Counter-examples of what is not wanted |
+| references | Universal | Optional | Specific sources or materials |
+| custom_fields | Universal | Optional | User-defined key-value pairs |
 
-Universal promotions: none
+**Transform (转化):**
 
-**Ideate:**
-| Field | Default | Description |
-|-------|---------|-------------|
-| problem | Y | Problem to solve or direction to explore |
-| current_state | Y | Current situation description |
-| idea_count | | How many ideas/options to generate |
-| evaluation_criteria | | How to judge idea quality |
-| tradeoff_preference | | Trade-off preference (e.g., speed vs quality, cost vs performance) |
+| Field | Scope | Visibility | Description |
+|-------|-------|------------|-------------|
+| intent | Universal | Default (required) | Core intent, one sentence |
+| context | Universal | Default | Background information |
+| requirements | Universal | Default | What must be satisfied |
+| constraints | Universal | Default | What to avoid, boundaries |
+| output_format | Universal | Default | Desired output form |
+| source_content | Task | Default | Original content to transform |
+| transform_type | Task | Default | Transformation: summarize / translate / rewrite / simplify / format convert |
+| preserve | Task | Optional | Information or characteristics that must be preserved |
+| target_length | Task | Optional | Expected length after transformation |
+| goal | Universal | Optional | Desired end state or outcome |
+| role | Universal | Optional | Role the AI should assume |
+| audience | Universal | Optional | Target audience for the output |
+| assumptions | Universal | Optional | Premises AI should take as given |
+| scope | Universal | Optional | Boundary of what to cover |
+| priority | Universal | Optional | What matters most when trade-offs arise |
+| output_language | Universal | Optional | Language the AI should respond in |
+| detail_level | Universal | Optional | Summary / standard / in-depth |
+| tone | Universal | Optional | Formal / casual / technical |
+| thinking_style | Universal | Optional | Direct answer / step-by-step / pros-and-cons |
+| examples | Universal | Optional | Reference examples |
+| anti_examples | Universal | Optional | Counter-examples of what is not wanted |
+| references | Universal | Optional | Specific sources or materials |
+| custom_fields | Universal | Optional | User-defined key-value pairs |
 
-Universal promotions: `goal`, `assumptions`
+**Analyze (分析):**
 
-**Execute:**
-| Field | Default | Description |
-|-------|---------|-------------|
-| plan | Y | Known steps or workflow; can be left empty for AI to plan, or paste an existing plan |
-| tools_to_use | | Tools the agent must use in this task |
-| checkpoints | | Where to pause for confirmation |
-| error_handling | | Strategy when errors occur |
-| success_criteria | | How to determine task completion |
+| Field | Scope | Visibility | Description |
+|-------|-------|------------|-------------|
+| intent | Universal | Default (required) | Core intent, one sentence |
+| context | Universal | Default | Background information |
+| requirements | Universal | Default | What must be satisfied |
+| constraints | Universal | Default | What to avoid, boundaries |
+| output_format | Universal | Default | Desired output form |
+| subject | Task | Default | Object or content to analyze |
+| analyze_type | Task | Default | Analysis type: evaluate / compare / data interpretation |
+| criteria | Task | Default | Evaluation dimensions |
+| compared_subjects | Task | Optional | Comparison items (comparison scenario, supports multiple) |
+| benchmark | Task | Optional | Reference standard or baseline |
+| goal | Universal | Optional | Desired end state or outcome |
+| role | Universal | Optional | Role the AI should assume |
+| audience | Universal | Optional | Target audience for the output |
+| assumptions | Universal | Optional | Premises AI should take as given |
+| scope | Universal | Optional | Boundary of what to cover |
+| priority | Universal | Optional | What matters most when trade-offs arise |
+| output_language | Universal | Optional | Language the AI should respond in |
+| detail_level | Universal | Optional | Summary / standard / in-depth |
+| tone | Universal | Optional | Formal / casual / technical |
+| thinking_style | Universal | Optional | Direct answer / step-by-step / pros-and-cons |
+| examples | Universal | Optional | Reference examples |
+| anti_examples | Universal | Optional | Counter-examples of what is not wanted |
+| references | Universal | Optional | Specific sources or materials |
+| custom_fields | Universal | Optional | User-defined key-value pairs |
 
-Universal promotions: `goal`
+**Ideate (构思):**
+
+| Field | Scope | Visibility | Description |
+|-------|-------|------------|-------------|
+| intent | Universal | Default (required) | Core intent, one sentence |
+| context | Universal | Default | Background information |
+| requirements | Universal | Default | What must be satisfied |
+| constraints | Universal | Default | What to avoid, boundaries |
+| output_format | Universal | Default | Desired output form |
+| problem | Task | Default | Problem to solve or direction to explore |
+| current_state | Task | Default | Current situation description |
+| goal | Task | Default | Desired end state or outcome |
+| assumptions | Task | Default | Premises AI should take as given |
+| idea_count | Task | Optional | How many ideas/options to generate |
+| evaluation_criteria | Task | Optional | How to judge idea quality |
+| tradeoff_preference | Task | Optional | Trade-off preference (e.g., speed vs quality, cost vs performance) |
+| role | Universal | Optional | Role the AI should assume |
+| audience | Universal | Optional | Target audience for the output |
+| scope | Universal | Optional | Boundary of what to cover |
+| priority | Universal | Optional | What matters most when trade-offs arise |
+| output_language | Universal | Optional | Language the AI should respond in |
+| detail_level | Universal | Optional | Summary / standard / in-depth |
+| tone | Universal | Optional | Formal / casual / technical |
+| thinking_style | Universal | Optional | Direct answer / step-by-step / pros-and-cons |
+| examples | Universal | Optional | Reference examples |
+| anti_examples | Universal | Optional | Counter-examples of what is not wanted |
+| references | Universal | Optional | Specific sources or materials |
+| custom_fields | Universal | Optional | User-defined key-value pairs |
+
+**Execute (执行):**
+
+| Field | Scope | Visibility | Description |
+|-------|-------|------------|-------------|
+| intent | Universal | Default (required) | Core intent, one sentence |
+| context | Universal | Default | Background information |
+| requirements | Universal | Default | What must be satisfied |
+| constraints | Universal | Default | What to avoid, boundaries |
+| output_format | Universal | Default | Desired output form |
+| plan | Task | Default | Known steps or workflow; can be left empty for AI to plan, or paste an existing plan |
+| goal | Task | Default | Desired end state or outcome |
+| tools_to_use | Task | Optional | Tools the agent must use in this task |
+| checkpoints | Task | Optional | Where to pause for confirmation |
+| error_handling | Task | Optional | Strategy when errors occur |
+| success_criteria | Task | Optional | How to determine task completion |
+| role | Universal | Optional | Role the AI should assume |
+| audience | Universal | Optional | Target audience for the output |
+| assumptions | Universal | Optional | Premises AI should take as given |
+| scope | Universal | Optional | Boundary of what to cover |
+| priority | Universal | Optional | What matters most when trade-offs arise |
+| output_language | Universal | Optional | Language the AI should respond in |
+| detail_level | Universal | Optional | Summary / standard / in-depth |
+| tone | Universal | Optional | Formal / casual / technical |
+| thinking_style | Universal | Optional | Direct answer / step-by-step / pros-and-cons |
+| examples | Universal | Optional | Reference examples |
+| anti_examples | Universal | Optional | Counter-examples of what is not wanted |
+| references | Universal | Optional | Specific sources or materials |
+| custom_fields | Universal | Optional | User-defined key-value pairs |
 
 ### Progressive Disclosure Mechanism
 
-- On task type selection, show: universal default fields + task-specific default fields + promoted universal fields.
-- "Add field" panel is collapsible, divided into two groups:
-  - **Task-specific optional fields** (shown first) — fields unique to the selected task type.
-  - **Universal optional fields** (shown second) — remaining universal fields not already displayed.
+- Every field has two independent attributes: **Scope** (Universal / Task) and **Visibility** (Default / Optional). Both can be configured per task type.
+- On task type selection, the editor shows all fields with Visibility = Default (regardless of Scope).
+- The "Add field" panel is collapsible, divided into two groups:
+  - **Task optional fields** (shown first) — fields with Scope = Task and Visibility = Optional.
+  - **Universal optional fields** (shown second) — fields with Scope = Universal and Visibility = Optional.
 - Each addable field displays: field name, one-line description, and a usage scenario hint.
 - Custom fields are always available at the bottom of the add panel.
+- A field's Scope and Visibility can be dynamically adjusted in future iterations (e.g., if analytics show a Universal Optional field is frequently added for a task type, it can be re-scoped or promoted).
 
 ### Output Compilation
 
@@ -273,15 +440,16 @@ Tests should verify external behavior and user-visible outcomes, not implementat
 ## Out of Scope
 
 - **User accounts and cloud sync** — this is a pure client-side tool. No server-side storage, no login.
-- **AI-powered intent parsing from natural language** — the non-AI mode relies on users filling template fields. Natural language → structure extraction is not in scope.
+- **Natural language parsing without AI** — the non-AI mode relies on users filling template fields. Natural language → structure extraction requires the AI-enhanced mode.
 - **Prompt library / community sharing** — no social features, no marketplace.
-- **Direct AI integration in the editor** (e.g., "chat with AI inside the tool") — the tool generates prompts; users paste them elsewhere.
-- **Mobile-native apps** — web responsive is sufficient; no native iOS/Android builds.
+- **AI-powered chat or conversation inside the tool** — AI is limited to field filling; the tool generates prompts, users paste them elsewhere.
+- **Mobile adaptation** — v1 focuses on desktop browsers; mobile layout deferred to future iteration.
+- **Page-level layout visual design** — the features surrounding the editor (language toggle, API key configuration, history view, preferences panel) are functionally in scope, but their visual placement and layout within the overall page are to be designed separately.
 - **Role Play task type** — deferred to a future version; can be approximated with Ask or Create.
 
 ## Further Notes
 
-- **AI-enhanced mode** is an incremental feature. The core product must deliver full value without AI. AI mode refines and optimizes the compiled output but does not change the fundamental interaction model.
+- **AI-enhanced mode** is an incremental feature. The core product must deliver full value without AI. AI mode assists with field filling (input side), not output optimization — it helps users populate template fields from a brief intent, but the compilation process remains the same.
 - **Template versioning** is important from day one. As the product evolves, template schemas will change. Dexie.js's built-in migration mechanism handles this, but schema changes should be backward-compatible where possible.
 - **The "verb + mental model" mapping** (Ask/Create/Transform/Analyze/Ideate/Execute) is a core product identity element. It should be prominently displayed in the task type selector and consistently used across all UI and documentation.
 - **Custom fields** are an escape hatch. If analytics later show that certain custom fields are frequently used, they should be considered for promotion into built-in fields.
