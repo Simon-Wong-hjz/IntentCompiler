@@ -1,5 +1,10 @@
 # Changelog
 
+## [2026-04-07] - Batch 5, Tasks 10-12: Layout + Task Selection UI
+- **Task 10**: Created `src/components/layout/TopBar.tsx` — fixed top bar with logo, disabled History/Settings buttons, and EN/中 language toggle pill
+- **Task 11**: Created `src/components/task-selector/TaskCard.tsx` — button card with default/selected/hover visual states using design tokens
+- **Task 12**: Created `src/components/task-selector/TaskSelector.tsx` — responsive 6-col (≥1280px) / 3-col (<1280px) grid consuming `getAllTaskTypes()` from registry
+
 ## [2026-04-07] - Batch 4, Tasks 8-9: React Hooks
 - **Task 8**: Created `src/hooks/useCompiler.ts` — `useCompiler(fieldDefinitions, fieldValues, format)` wraps `compileFields` + `getFormatter` in `useMemo`; returns `{ compiledOutput, hasContent }`
 - **Task 9**: Created `src/hooks/useClipboard.ts` — `useClipboard(resetDelay)` wraps `navigator.clipboard.writeText`; returns `{ status, copy }` with `'idle' | 'success' | 'error'` states and auto-reset via `useRef` timeout
