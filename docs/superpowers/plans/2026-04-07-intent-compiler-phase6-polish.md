@@ -6,7 +6,9 @@
 
 **Architecture:** A new `HelpCard` component renders inline between each field's label row and its input, driven by a centralized bilingual `helpContentMap` data file keyed by field ID. Edge states are handled via conditional rendering in existing components (`EditorArea`, `PreviewArea`, `AiFillButton`, `HistoryModal`). Visual polish is applied through CSS token alignment in `index.css` and component-level Tailwind classes.
 
-**Tech Stack:** React + TypeScript, Tailwind CSS, react-i18next (for UI language switching in help content), Vitest (for help-content data integrity test).
+**Tech Stack:** React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, react-i18next (for UI language switching in help content), Vitest 4.1 (for help-content data integrity test).
+
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key difference for this phase: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts` — CSS custom properties in Task 12 should be added to the `@theme` block, not a separate `:root` selector. The `@import url(...)` for Google Fonts should be placed outside the `@theme` block.
 
 ---
 
@@ -1294,45 +1296,52 @@ Audit and correct all design tokens in `src/index.css` and component classes to 
 - [ ] Add hover/focus/transition styles
 
 ```css
-/* src/index.css -- add/verify these CSS custom properties for consistency */
+/* src/index.css -- add/verify these design tokens
+ *
+ * IMPORTANT (Tailwind v4): This project uses Tailwind v4 with @tailwindcss/postcss.
+ * Design tokens go inside the existing @theme {} block in src/index.css,
+ * NOT in a :root {} selector or tailwind.config.ts (which does not exist).
+ * The @import for Google Fonts goes OUTSIDE the @theme block.
+ */
 
-:root {
+/* Google Font import -- add at top of index.css if not present, BEFORE @theme */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* Add these inside the existing @theme {} block in src/index.css */
+@theme {
   /* Colors */
-  --bg-page: #fffdf5;
-  --bg-surface: #ffffff;
-  --bg-muted: #f5f3ef;
-  --bg-accent-light: #fff3cd;
-  --bg-accent-warm: #fff8e1;
-  --accent-primary: #f5c518;
-  --accent-primary-shadow: rgba(245, 197, 24, 0.1);
-  --ink-primary: #1a1a1a;
-  --ink-secondary: #555555;
-  --ink-muted: #999999;
-  --ink-hint: #bbbbbb;
-  --ink-disabled: #cccccc;
-  --border-default: #e8e2d8;
-  --border-light: #f0ebe4;
-  --border-accent: #f0e6c8;
-  --status-success: #44aa99;
-  --status-danger: #ee5555;
+  --color-bg-page: #fffdf5;
+  --color-bg-surface: #ffffff;
+  --color-bg-muted: #f5f3ef;
+  --color-bg-accent-light: #fff3cd;
+  --color-bg-accent-warm: #fff8e1;
+  --color-accent-primary: #f5c518;
+  --color-accent-primary-shadow: rgba(245, 197, 24, 0.1);
+  --color-ink-primary: #1a1a1a;
+  --color-ink-secondary: #555555;
+  --color-ink-muted: #999999;
+  --color-ink-hint: #bbbbbb;
+  --color-ink-disabled: #cccccc;
+  --color-border-default: #e8e2d8;
+  --color-border-light: #f0ebe4;
+  --color-border-accent: #f0e6c8;
+  --color-status-success: #44aa99;
+  --color-status-danger: #ee5555;
 
   /* Spacing */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
-  --gap-field: 10px;
-  --gap-section: 12px;
-  --padding-input: 8px;
-  --padding-page: 20px;
+  --spacing-gap-field: 10px;
+  --spacing-gap-section: 12px;
+  --spacing-padding-input: 8px;
+  --spacing-padding-page: 20px;
 
   /* Typography */
   --font-sans: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
 }
-
-/* Google Font import -- add at top of index.css if not present */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 body {
   font-family: var(--font-sans);

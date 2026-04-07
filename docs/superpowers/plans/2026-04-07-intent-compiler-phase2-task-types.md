@@ -6,7 +6,9 @@
 
 **Architecture:** The Template Registry gains 5 new task type modules (create, transform, analyze, ideate, execute) each exporting a `TaskTemplate` with complete field arrays matching the PRD tables. Six new field components (SelectField, ComboField, ListField, ToggleField, NumberField, KeyValueField) implement the remaining `InputType` variants. A FieldLabel component standardizes the label pattern across all fields. An AddFieldPanel manages progressive disclosure of optional fields grouped by scope.
 
-**Tech Stack:** React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Vitest + React Testing Library + jsdom, @dnd-kit/sortable (for list drag-to-reorder)
+**Tech Stack:** React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, shadcn/ui (uses unscoped `radix-ui` package), Vitest 4.1 + React Testing Library + jsdom, @dnd-kit/sortable (for list drag-to-reorder)
+
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`; shadcn/ui uses unscoped `radix-ui` package (not `@radix-ui/react-*`).
 
 ---
 

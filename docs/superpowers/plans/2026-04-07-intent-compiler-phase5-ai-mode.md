@@ -6,7 +6,9 @@
 
 **Architecture:** An abstract `AiProvider` interface defines `fillFields()` and `verifyKey()` contracts. Concrete providers for OpenAI and Anthropic implement these using direct `fetch()` calls (no SDK dependencies). An AI Connector orchestrator builds prompts from the intent + task type + field definitions, calls the selected provider, validates the response, and maps results back to field values. The `useAiFill` hook connects this pipeline to React state, while the `AiFillButton` component renders the four-state UI.
 
-**Tech Stack:** TypeScript, fetch API (no AI SDK dependencies), Vitest with `vi.fn()` / `vi.spyOn()` for mocking fetch, React hooks, Tailwind CSS
+**Tech Stack:** React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, fetch API (no AI SDK dependencies), Vitest 4.1 with `vi.fn()` / `vi.spyOn()` for mocking fetch, React hooks
+
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`. Verify React 19.2 hook semantics for custom hooks in this phase.
 
 ---
 
@@ -1289,7 +1291,7 @@ export function AiFillButton({
 
 - [ ] **Step 2: Add CSS animation keyframes**
 
-Add the following to `src/index.css` (inside the `@theme` block or after it as a `@keyframes` + `@utility` if using Tailwind v4, or as a plain `@keyframes` block):
+Add the following to `src/index.css` AFTER the `@theme` block (Tailwind v4 — keyframes and utility classes go outside `@theme`):
 
 ```css
 /* Add after the @theme block in src/index.css */

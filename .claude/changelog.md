@@ -1,5 +1,14 @@
 # Changelog
 
+## [2026-04-07] - Update Phase 2-6 plans with Phase 1 audit findings
+- Updated tech stack sections in all 5 phase plans (Phase 2-6) to reflect actual versions: React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, Vitest 4.1
+- Added audit note blocks to each phase plan referencing `.claude/progress/2026-04-07-02-phase-plan-audit.md`
+- Fixed Phase 4 path typo: `.worktrees/clean-start` → `.worktrees/implementation`
+- Updated Phase 6 Task 12 CSS to use Tailwind v4 `@theme {}` block instead of `:root` CSS variables
+- Updated Phase 5 Task 7 CSS note to clarify keyframes go outside `@theme` block
+- Added notes about unscoped `radix-ui` package for shadcn/ui Dialog in Phase 4
+- Added note about `keyToLabel()` utility evaluation in Phase 3
+
 ## [2026-04-07] - Batch 8, Tasks 20-22: Wiring + Polish
 - **Task 20**: Replaced stub `src/App.tsx` with full compile loop — `useState` for selectedType and fieldValues, `useCompiler` for output, `useCallback` handlers, renders `PageLayout` with all props wired
 - **Task 21**: Updated `src/components/editor/EditorArea.tsx` to accept `selectedType` prop; added two empty states: "Select a task type" (no selection) and "Coming soon" (type selected but no fields). Updated `src/components/layout/PageLayout.tsx` to pass `selectedType` down to EditorArea

@@ -6,7 +6,9 @@
 
 **Architecture:** Dexie.js wraps IndexedDB with a typed schema (preferences key-value store, auto-incrementing history store, reserved templates store). A thin React hooks layer (`useStorage`) exposes async reads/writes to components. Settings and History modals are standalone components triggered from TopBar; the CopyButton is modified to also create history records on each copy action.
 
-**Tech Stack:** Dexie.js 4.x, fake-indexeddb (test), React 18, TypeScript, Tailwind CSS, shadcn/ui Dialog, Vitest, React Testing Library
+**Tech Stack:** Dexie.js 4.x, fake-indexeddb (test), React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, shadcn/ui Dialog (uses unscoped `radix-ui` package), Vitest 4.1, React Testing Library
+
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`; shadcn/ui uses unscoped `radix-ui` package (not `@radix-ui/react-*`); if adding Dialog via shadcn CLI, manual file relocation may be needed due to alias resolution. Phase 3 stores UI language in localStorage — this phase migrates it to Dexie.
 
 ---
 
@@ -41,7 +43,7 @@ Files to MODIFY:
 
 - [ ] **Step 1:** Install Dexie.js as a production dependency:
 ```bash
-cd /Users/simhuang/VSCodeProjects/IntentCompiler/.worktrees/clean-start
+cd /Users/simhuang/VSCodeProjects/IntentCompiler/.worktrees/implementation
 npm install dexie@^4
 ```
 

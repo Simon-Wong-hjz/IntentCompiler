@@ -6,7 +6,9 @@
 
 **Architecture:** Three new formatter modules (`json.ts`, `yaml.ts`, `xml.ts`) implement the same `Formatter` interface, receiving pre-sorted `OrderedField[]` from the compiler and producing valid serialized output. The `react-i18next` library provides runtime language switching for all UI text via a single `translation` namespace with keys organized by section. UI language (TopBar toggle) and output language (PreviewHeader toggle) are independent pieces of state -- the compiler accepts `outputLanguage` to determine field label translations in compiled output while the UI renders in whichever language the user prefers.
 
-**Tech Stack:** react-i18next + i18next (UI translations), js-yaml (YAML serialization), fast-xml-parser (XML building), Vitest (formatter tests)
+**Tech Stack:** React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, react-i18next + i18next (UI translations), js-yaml (YAML serialization), fast-xml-parser (XML building), Vitest 4.1 (formatter tests)
+
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`. Additionally, `src/lib/format.ts` contains a `keyToLabel()` utility — evaluate whether it becomes obsolete or needs an i18n-aware replacement when implementing this phase.
 
 ---
 
