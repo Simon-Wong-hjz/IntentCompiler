@@ -1,7 +1,9 @@
 function App() {
   return (
-    <div className="min-h-screen">
-      <h1>Intent Compiler</h1>
+    <div className="min-h-screen bg-bg-page">
+      <h1 className="text-xl font-extrabold text-ink-primary p-5">
+        Intent Compiler
+      </h1>
     </div>
   );
 }
