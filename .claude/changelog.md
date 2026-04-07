@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-07] - Batch 7, Tasks 16-19: EditorArea + PreviewArea + CopyButton + PageLayout
+- **Task 16**: Created `src/components/editor/EditorArea.tsx` — separates intent field from other default fields, renders empty-state when no task type selected
+- **Task 17**: Created `src/components/preview/PreviewArea.tsx` — monospace output pane with empty-state and CopyButton footer
+- **Task 18**: Created `src/components/preview/CopyButton.tsx` — full-width button using `useClipboard` hook with idle/success/error states and disabled styling
+- **Task 19**: Created `src/components/layout/PageLayout.tsx` — full-page layout composing TopBar, TaskSelector, EditorArea, and PreviewArea in a fixed 50/50 split
+
 ## [2026-04-07] - Batch 6, Tasks 13-15: Field Input Components
 - **Task 13**: Created `src/components/editor/fields/TextareaField.tsx` — auto-expanding textarea with label, design tokens, and `minHeight` prop; created `src/components/editor/fields/TextField.tsx` — single-line input with matching styling
 - **Task 14**: Created `src/components/editor/IntentField.tsx` — elevated textarea with golden `border-accent-primary` border, 4px shadow glow via CSS custom property, and auto-expand behavior
