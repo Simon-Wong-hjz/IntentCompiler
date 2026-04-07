@@ -1,5 +1,9 @@
 # Changelog
 
+## [2026-04-07] - Batch 4, Tasks 8-9: React Hooks
+- **Task 8**: Created `src/hooks/useCompiler.ts` — `useCompiler(fieldDefinitions, fieldValues, format)` wraps `compileFields` + `getFormatter` in `useMemo`; returns `{ compiledOutput, hasContent }`
+- **Task 9**: Created `src/hooks/useClipboard.ts` — `useClipboard(resetDelay)` wraps `navigator.clipboard.writeText`; returns `{ status, copy }` with `'idle' | 'success' | 'error'` states and auto-reset via `useRef` timeout
+
 ## [2026-04-07] - Batch 3, Tasks 6-7: Compiler Engine + Markdown Formatter (TDD)
 - **Task 6**: Created `src/compiler/compiler.ts` — `compileFields()` iterates field definitions in order, omits empty values, generates human-readable labels via `keyToLabel()`; created `tests/compiler/compiler.test.ts` with 5 tests (all pass)
 - **Task 7**: Created `src/formatters/markdown.ts` — `MarkdownFormatter` class implementing `Formatter` interface with `# Label\nvalue` sections separated by blank lines; created `src/formatters/index.ts` — `getFormatter()` registry + re-export; created `tests/formatters/markdown.test.ts` with 5 tests (all pass)
