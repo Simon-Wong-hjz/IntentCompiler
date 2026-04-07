@@ -67,11 +67,11 @@ describe('Template Registry', () => {
     expect(fieldMap.get('audience')!.inputType).toBe('text');
   });
 
-  it('returns undefined for non-ask templates (not yet implemented)', () => {
+  it('returns Create template with empty fields (not yet implemented)', () => {
     const template = getTemplate('create');
     expect(template).toBeDefined();
     expect(template!.type).toBe('create');
-    // Create has no fields yet — only verb/mental model
+    // Create fields are not populated until Phase 2
     expect(template!.fields).toEqual([]);
   });
 });
