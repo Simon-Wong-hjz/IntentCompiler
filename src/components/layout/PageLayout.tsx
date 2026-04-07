@@ -40,6 +40,7 @@ export function PageLayout({
             fields={fields}
             fieldValues={fieldValues}
             onFieldChange={onFieldChange}
+            selectedType={selectedType}
           />
         </div>
 

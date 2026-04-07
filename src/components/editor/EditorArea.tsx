@@ -1,31 +1,44 @@
 import { IntentField } from '@/components/editor/IntentField';
 import { FieldRenderer } from '@/components/editor/FieldRenderer';
-import type { FieldDefinition } from '@/registry/types';
+import type { FieldDefinition, TaskType } from '@/registry/types';
 
 interface EditorAreaProps {
   fields: FieldDefinition[];
   fieldValues: Record<string, string>;
   onFieldChange: (key: string, value: string) => void;
+  selectedType?: TaskType | null;
 }
 
 export function EditorArea({
   fields,
   fieldValues,
   onFieldChange,
+  selectedType,
 }: EditorAreaProps) {
+  // No task type selected
+  if (!selectedType) {
+    return (
+      <div className="flex-1 flex items-center justify-center h-full text-ink-muted text-sm p-5">
+        Select a task type above to begin
+      </div>
+    );
+  }
+
+  // Task type selected but no fields defined (coming soon)
+  if (fields.length === 0) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center h-full text-ink-muted text-sm p-5 gap-2">
+        <span className="text-2xl">🚧</span>
+        <span>Coming soon</span>
+      </div>
+    );
+  }
+
   // Separate intent from other fields
   const intentField = fields.find((f) => f.key === 'intent');
   const otherFields = fields.filter(
     (f) => f.key !== 'intent' && f.visibility === 'default',
   );
-
-  if (fields.length === 0) {
-    return (
-      <div className="flex-1 flex items-center justify-center text-ink-muted text-sm">
-        Select a task type above to begin
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col gap-[10px] p-5 overflow-y-auto">
