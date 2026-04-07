@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-07] - Batch 2, Task 5: Template Registry with Ask Task Type (TDD)
+- Created `tests/registry/template-registry.test.ts` — 5 tests covering: all 6 task types presence, Ask default fields order, intent required flag, input type correctness, other templates stub existence
+- Created `src/registry/task-types/ask.ts` — 7 field definitions for Ask task type (intent, context, requirements, constraints, output_format, question_type, audience)
+- Created `src/registry/template-registry.ts` — `getTemplate()` and `getAllTaskTypes()` with all 6 task type stubs
+- All 5 tests pass; `npx tsc --noEmit` clean
+
 ## [2026-04-07] - Batch 2, Task 4: Core Shared Types
 - Created `src/registry/types.ts` — `InputType`, `TaskType`, `FieldScope`, `FieldVisibility`, `FieldDefinition`, `TaskTemplate`
 - Created `src/compiler/types.ts` — `OutputFormat`, `Language`, `OrderedField`, `Formatter`
