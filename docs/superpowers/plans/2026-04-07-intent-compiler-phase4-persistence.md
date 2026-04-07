@@ -10,6 +10,17 @@
 
 > **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`; shadcn/ui uses unscoped `radix-ui` package (not `@radix-ui/react-*`); if adding Dialog via shadcn CLI, manual file relocation may be needed due to alias resolution. Phase 3 stores UI language in localStorage — this phase migrates it to Dexie.
 
+> **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase:
+> 1. **Task 8 (`DEFAULT_PREFERENCES`):** `uiLanguage` and `defaultOutputLanguage` must default to `'zh'`, not `'en'`.
+> 2. **Task 11 (SettingsModal):** All fallback/default strings in the modal should use Chinese (the `t()` i18n function should provide Chinese as the default, but hardcoded fallbacks like `'en'` should be `'zh'`).
+> 3. **Task 12 (HistoryModal):** The `uiLanguage` fallback in the render prop should be `'zh'`, not `'en'`.
+> 4. **Task 13 (i18n keys):** Both English and Chinese translations are provided — Chinese is the primary locale.
+>
+> Additionally, preserve the following Phase 1 behaviors:
+> - **`canCopy` prop chain** (App→PageLayout→PreviewArea→CopyButton): Copy button requires both content AND non-empty Intent. When wiring `onAfterCopy` to CopyButton, do not disturb the existing `canCopy`/`hasContent` separation.
+> - **Intent field conditional glow**: Three states in IntentField — red border+glow when empty, gold when non-empty+focused, default when non-empty+unfocused. Do not override when modifying IntentField.
+> - **Task switching preserves Intent**: `handleSelectType` in App.tsx preserves Intent value and shows `window.confirm` for non-Intent fields. When adding storage hooks to App.tsx, do not override this behavior with a blanket `setFieldValues({})`.
+
 ---
 
 ## File Structure
@@ -584,12 +595,12 @@ export interface PreferencesState {
 }
 
 const DEFAULT_PREFERENCES: PreferencesState = {
-  defaultOutputLanguage: 'en',
+  defaultOutputLanguage: 'zh',
   defaultOutputFormat: 'markdown',
   aiProvider: 'openai',
   apiKey_openai: '',
   apiKey_anthropic: '',
-  uiLanguage: 'en',
+  uiLanguage: 'zh',
 };
 
 export function usePreferences() {
@@ -1787,7 +1798,7 @@ const hasEditorContent = useMemo(() => {
   onDeleteRecord={removeHistoryRecord}
   onClearAll={clearHistory}
   hasEditorContent={hasEditorContent}
-  uiLanguage={preferences.uiLanguage || 'en'}
+  uiLanguage={preferences.uiLanguage || 'zh'}
 />
 ```
 

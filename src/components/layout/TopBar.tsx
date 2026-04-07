@@ -13,20 +13,20 @@ export function TopBar() {
           className="text-sm font-medium text-ink-secondary hover:text-ink-primary cursor-not-allowed opacity-60"
           disabled
         >
-          History
+          历史
         </button>
         <button
           className="text-sm font-medium text-ink-secondary hover:text-ink-primary cursor-not-allowed opacity-60"
           disabled
         >
-          Settings
+          设置
         </button>
         <div className="flex items-center rounded-sm border border-border-default text-sm">
           <span className="px-2 py-0.5 bg-ink-primary text-accent-primary font-medium rounded-l-sm">
-            EN
+            中
           </span>
           <span className="px-2 py-0.5 text-ink-muted font-medium rounded-r-sm">
-            中
+            EN
           </span>
         </div>
       </nav>

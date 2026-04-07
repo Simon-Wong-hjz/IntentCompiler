@@ -28,9 +28,9 @@ export function CopyButton({ text, disabled }: CopyButtonProps) {
             : 'bg-accent-primary text-ink-primary cursor-pointer hover:brightness-95 active:scale-[0.99]',
       )}
     >
-      {status === 'success' && '\u2713 Copied!'}
-      {status === 'error' && '\u2717 Copy failed'}
-      {status === 'idle' && 'Copy to Clipboard'}
+      {status === 'success' && '\u2713 已复制！'}
+      {status === 'error' && '\u2717 复制失败'}
+      {status === 'idle' && '复制到剪贴板'}
     </button>
   );
 }

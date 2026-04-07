@@ -10,6 +10,12 @@
 
 > **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`; shadcn/ui uses unscoped `radix-ui` package (not `@radix-ui/react-*`).
 
+> **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase, all user-facing strings must be in Chinese. Specifically:
+> 1. **Task 7 (FieldLabel):** `OPERATION_HINTS` values must be Chinese (e.g., `textarea: '自由输入文本'`, `select: '点击选择一项'`, `list: '添加列表项'`, `toggle: '开关切换'`, `number: '点击 +/− 或输入数字'`, `'key-value': '添加键值对'`). `displayName` should use `keyToLabelZh()` from `src/lib/format.ts` instead of raw `field.key.replace(/_/g, ' ')`.
+> 2. **Tasks 1-5 (task type definitions):** Enum `options` arrays need Chinese display labels. Either add a parallel `optionLabels` field to `FieldDefinition`, or create an `OPTION_LABELS_ZH` mapping. Values in compiled output should also be Chinese per CLAUDE.md ("compiled prompt output follows the UI language").
+> 3. **Task 16 (AddFieldPanel):** `FIELD_DESCRIPTIONS` values must be Chinese.
+> 4. **Tasks 9-10 (SelectField/ComboField):** Pill button text should display Chinese option labels.
+
 ---
 
 ## File Structure
@@ -1902,26 +1908,20 @@ Select Create. Verify: Default fields appear (intent, context, requirements, con
 **Files:**
 - Modify: `src/components/editor/EditorArea.tsx`
 
-- [ ] **Step 1: Add task-switch reset effect**
+> **⚠️ CRITICAL — Phase 1 Conflict:** Phase 1's `handleSelectType` in `App.tsx` already handles task-switch reset with Intent preservation and a confirmation dialog. **Do NOT add a `useEffect` with `setFieldValues({})` in EditorArea** — this would override the existing behavior by blanket-clearing Intent. Instead, only add `setAddedFields([])` reset logic here. The field-value reset (preserving Intent) is already handled in `App.tsx`'s `handleSelectType` callback. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` conflict #10 for details.
 
-When the selected task type changes, reset the editor state: clear field values and clear addedFields.
+- [ ] **Step 1: Add addedFields reset effect (field values reset is handled by App.tsx)**
+
+When the selected task type changes, reset the optional fields list. Do NOT reset field values here — that is already handled by `handleSelectType` in App.tsx which preserves the Intent value.
 
 ```tsx
-// In EditorArea.tsx, add an effect that resets state when taskType changes:
-
-// The taskType prop or state that tracks the selected task type:
-// (Adapt to match Phase 1's prop/state naming)
+// In EditorArea.tsx, add an effect that resets addedFields when taskType changes:
 
 useEffect(() => {
-  // Reset all field values to empty
-  setFieldValues({});
-  // Reset added optional fields
+  // Reset added optional fields only — field values are reset in App.tsx's handleSelectType
   setAddedFields([]);
 }, [selectedTaskType]);
-// selectedTaskType is the current task type — replace with actual variable name from Phase 1
 ```
-
-The `setFieldValues({})` call resets the form data object that stores all field values. If Phase 1 uses a different state shape (e.g., a Map or individual state variables), adapt accordingly — the key behavior is that all field values are cleared when the task type changes.
 
 - [ ] **Step 2: Verify visually**
 

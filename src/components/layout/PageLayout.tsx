@@ -12,6 +12,7 @@ interface PageLayoutProps {
   onFieldChange: (key: string, value: string) => void;
   compiledOutput: string;
   hasContent: boolean;
+  canCopy: boolean;
 }
 
 export function PageLayout({
@@ -22,6 +23,7 @@ export function PageLayout({
   onFieldChange,
   compiledOutput,
   hasContent,
+  canCopy,
 }: PageLayoutProps) {
   return (
     <div className="h-screen flex flex-col bg-bg-page" style={{ minWidth: '1024px' }}>
@@ -52,6 +54,7 @@ export function PageLayout({
           <PreviewArea
             compiledOutput={compiledOutput}
             hasContent={hasContent}
+            canCopy={canCopy}
           />
         </div>
       </div>

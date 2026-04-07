@@ -3,9 +3,10 @@ import { CopyButton } from '@/components/preview/CopyButton';
 interface PreviewAreaProps {
   compiledOutput: string;
   hasContent: boolean;
+  canCopy: boolean;
 }
 
-export function PreviewArea({ compiledOutput, hasContent }: PreviewAreaProps) {
+export function PreviewArea({ compiledOutput, hasContent, canCopy }: PreviewAreaProps) {
   return (
     <div className="flex flex-col h-full">
       <div
@@ -23,13 +24,13 @@ export function PreviewArea({ compiledOutput, hasContent }: PreviewAreaProps) {
           </pre>
         ) : (
           <div className="flex items-center justify-center h-full text-ink-muted text-sm">
-            Select a task type and fill in fields to see the preview
+            选择任务类型并填写字段以查看预览
           </div>
         )}
       </div>
 
       <div className="flex-shrink-0 px-5 py-3 border-t border-border-light">
-        <CopyButton text={compiledOutput} disabled={!hasContent} />
+        <CopyButton text={compiledOutput} disabled={!canCopy} />
       </div>
     </div>
   );

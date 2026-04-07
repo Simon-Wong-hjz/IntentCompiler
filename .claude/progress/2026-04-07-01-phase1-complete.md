@@ -1,9 +1,9 @@
 # Phase 1: Project Setup + Single-Task Compile Loop
 
-**Status**: Complete
+**Status**: Complete (with post-Phase-1 UX refinements)
 **Date**: 2026-04-07
 **Branch**: `feat/implementation`
-**Commits**: 28 (35c035a..d5a0e47)
+**Commits**: 28+ (35c035a..HEAD)
 
 ## What Was Built
 
@@ -59,15 +59,15 @@ src/
 │   │   ├── TaskCard.tsx               # Single card with default/selected/hover states
 │   │   └── TaskSelector.tsx           # 6-card responsive grid
 │   ├── editor/
-│   │   ├── EditorArea.tsx             # Intent + field list + empty states
-│   │   ├── IntentField.tsx            # Golden-bordered hero textarea
-│   │   ├── FieldRenderer.tsx          # Routes field defs → input components
+│   │   ├── EditorArea.tsx             # Intent + field list + empty states (Chinese)
+│   │   ├── IntentField.tsx            # Conditional glow: red when empty, gold when filled+focused
+│   │   ├── FieldRenderer.tsx          # Routes field defs → input components (Chinese labels via keyToLabelZh)
 │   │   └── fields/
 │   │       ├── TextareaField.tsx      # Auto-expanding textarea
 │   │       └── TextField.tsx          # Single-line text input
 │   └── preview/
-│       ├── PreviewArea.tsx            # Monospace output pane
-│       └── CopyButton.tsx            # 3-state copy button
+│       ├── PreviewArea.tsx            # Monospace output pane (accepts canCopy prop)
+│       └── CopyButton.tsx            # 3-state copy button (Chinese labels)
 └── types/
     └── index.ts                        # Barrel re-export
 
@@ -99,15 +99,21 @@ tests/
 1. **No tailwind.config.ts** — Tailwind v4 uses `@theme {}` in CSS instead
 2. **vite.config.ts imports from `vitest/config`** — Required for Vitest 4 type compatibility
 3. **`baseUrl` removed from tsconfig.app.json** — Deprecated in TS 6; `paths` works standalone
-4. **`keyToLabel()` extracted to `src/lib/format.ts`** — Shared by compiler and FieldRenderer
+4. **`keyToLabel()` extracted to `src/lib/format.ts`** — Used by compiler for output labels; `keyToLabelZh()` added for Chinese UI labels
 5. **select/combo/list fields use text/textarea fallbacks** — Proper input components deferred to Phase 2
-6. **Non-Ask task types show "Coming soon"** — Fields will be populated in Phase 2
+6. **Non-Ask task types show "即将推出"** — Fields will be populated in Phase 2
+7. **Chinese-first UI** — All UI strings default to Chinese; English is i18n secondary (Phase 3). See CLAUDE.md "Language Priority"
+8. **Intent field conditional glow** — Red border+glow when empty (required indicator); gold border+glow when non-empty+focused; default border when non-empty+unfocused
+9. **`canCopy` separated from `hasContent`** — Copy button disabled when Intent is empty (even if other fields have content); preview display still uses `hasContent`
+10. **Task switching preserves Intent** — Intent value retained across type switches; confirmation dialog shown if non-Intent fields have content
 
 ## Known Gaps (by design, addressed in later phases)
 
 - Only Ask task type has fields (Phase 2 adds remaining 5)
 - Only Markdown output format (Phase 3 adds JSON/YAML/XML)
-- No i18n — all UI text is hardcoded English (Phase 3)
+- No i18n framework — UI is hardcoded Chinese; react-i18next bilingual support deferred to Phase 3
+- Enum option values still in English (Phase 2 will localize alongside proper Select/Combo components)
+- No field help (?) buttons or operation hints (Phase 2: FieldLabel component)
 - No persistence — settings/history lost on refresh (Phase 4)
 - No AI-assisted field filling (Phase 5)
 - No help system, keyboard shortcuts, or edge-state polish (Phase 6)

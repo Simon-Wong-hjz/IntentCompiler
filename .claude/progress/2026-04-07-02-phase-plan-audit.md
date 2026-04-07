@@ -47,21 +47,51 @@
 - **Affects**: Phase 2 (if adding Select/Combobox), Phase 4-5 (if adding Dialog)
 - **Fix**: Use unscoped imports; shadcn CLI may need manual file relocation due to alias resolution issue
 
+### 7. Chinese-first UI — plans assume English
+
+- **Plans assume**: English UI text, i18n added in Phase 3
+- **Actual**: All UI strings are now Chinese by default. `keyToLabelZh()` in `src/lib/format.ts` provides Chinese field labels. Language toggle shows 中 as active.
+- **Affects**: Phase 2 (OPERATION_HINTS, FIELD_DESCRIPTIONS, enum option labels), Phase 3 (default locale should be `zh`, not `en`)
+- **Fix**: All new user-facing strings must be Chinese. Phase 2 plan already has a "Chinese-First Localization Note" at the top. See CLAUDE.md "Language Priority" section.
+
+### 8. Intent field has conditional visual states
+
+- **Plans assume**: IntentField always has golden border and glow
+- **Actual**: Three states — red border+glow when empty, gold border+glow when non-empty+focused, default border when non-empty+unfocused. `--color-status-danger-shadow` CSS token added.
+- **Affects**: Phase 2 Task 8 (FieldLabel integration into IntentField) must preserve conditional glow logic
+- **Fix**: When modifying IntentField, keep the `isEmpty`/`isFocused` state tracking and conditional `className`/`style`
+
+### 9. Copy button disabled by Intent emptiness
+
+- **Plans assume**: Copy disabled when `!hasContent` (no compiled output)
+- **Actual**: Copy disabled when `!canCopy` — requires both content AND non-empty Intent. `canCopy` prop threaded through App→PageLayout→PreviewArea.
+- **Affects**: Any phase modifying PreviewArea or CopyButton props
+- **Fix**: Preserve the `canCopy` / `hasContent` separation
+
+### 10. Task switching preserves Intent + shows confirmation
+
+- **Plans assume**: Task switch clears all field values (Phase 2 Task 18 adds `setFieldValues({})` in a `useEffect`)
+- **Actual**: `handleSelectType` in App.tsx preserves Intent value, shows `window.confirm` if non-Intent fields have content, and aborts on cancel.
+- **Affects**: Phase 2 Task 18 (task-switch reset) — must NOT override this behavior with a blanket `setFieldValues({})`
+- **Fix**: Phase 2 Task 18 should be skipped or adapted to work with existing App.tsx logic. The `addedFields` reset can be added to App.tsx's `handleSelectType` callback.
+
 ## Important Conflicts (needs update, won't break immediately)
 
-### 7. `keyToLabel()` in `src/lib/format.ts`
+### 11. `keyToLabel()` and `keyToLabelZh()` in `src/lib/format.ts`
 
-- Plans don't reference this shared utility
-- Phase 3 introduces i18n field labels that may replace this function
-- **Action**: When implementing Phase 3, evaluate whether `keyToLabel()` becomes obsolete or needs i18n-aware replacement
+- Plans don't reference these shared utilities
+- `keyToLabel()` is used by the compiler for output section headers (English)
+- `keyToLabelZh()` is used by FieldRenderer for Chinese UI labels
+- Phase 3 introduces i18n field labels that may replace both functions
+- **Action**: When implementing Phase 3, evaluate whether these become obsolete or need i18n-aware replacement
 
-### 8. Phase execution order dependency
+### 12. Phase execution order dependency
 
 - Phase 3 stores UI language in localStorage
 - Phase 4 migrates it to Dexie
 - **Action**: Phase 3 must be fully implemented before Phase 4 persistence wiring
 
-### 9. Path typo in Phase 4
+### 13. Path typo in Phase 4
 
 - Phase 4 plan references `.worktrees/clean-start` instead of `.worktrees/implementation`
 - **Action**: Use actual working directory when executing

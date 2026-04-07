@@ -19,10 +19,34 @@ function App() {
     'markdown',
   );
 
-  const handleSelectType = useCallback((type: TaskType) => {
-    setSelectedType(type);
-    setFieldValues({});
-  }, []);
+  // Copy requires both content and a non-empty Intent
+  const intentFilled = (fieldValues['intent'] ?? '').trim().length > 0;
+  const canCopy = hasContent && intentFilled;
+
+  const handleSelectType = useCallback(
+    (type: TaskType) => {
+      if (type === selectedType) return;
+
+      const hasNonIntentValues = Object.entries(fieldValues).some(
+        ([key, val]) => key !== 'intent' && val.trim().length > 0,
+      );
+
+      if (selectedType !== null && hasNonIntentValues) {
+        if (
+          !window.confirm(
+            '切换任务类型将清空除"意图"之外的所有字段，是否继续？',
+          )
+        ) {
+          return;
+        }
+      }
+
+      const intentValue = fieldValues['intent'] ?? '';
+      setSelectedType(type);
+      setFieldValues(intentValue ? { intent: intentValue } : {});
+    },
+    [selectedType, fieldValues],
+  );
 
   const handleFieldChange = useCallback((key: string, value: string) => {
     setFieldValues((prev) => ({ ...prev, [key]: value }));
@@ -37,6 +61,7 @@ function App() {
       onFieldChange={handleFieldChange}
       compiledOutput={compiledOutput}
       hasContent={hasContent}
+      canCopy={canCopy}
     />
   );
 }

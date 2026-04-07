@@ -18,6 +18,7 @@
   --color-border-accent: #f0e6c8;
   --color-status-success: #44aa99;
   --color-status-danger: #ee5555;
+  --color-status-danger-shadow: rgba(238, 85, 85, 0.15);
 
   --radius-sm: 4px;
   --radius-md: 6px;

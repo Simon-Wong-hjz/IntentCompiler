@@ -1,4 +1,5 @@
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface IntentFieldProps {
   value: string;
@@ -7,7 +8,9 @@ interface IntentFieldProps {
 
 export function IntentField({ value, onChange }: IntentFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
   const minHeight = 48;
+  const isEmpty = value.trim().length === 0;
 
   const autoExpand = useCallback(() => {
     const el = textareaRef.current;
@@ -20,13 +23,19 @@ export function IntentField({ value, onChange }: IntentFieldProps) {
     autoExpand();
   }, [value, autoExpand]);
 
+  const glowStyle = isEmpty
+    ? '0 0 0 4px var(--color-status-danger-shadow)'
+    : isFocused
+      ? '0 0 0 4px var(--color-accent-primary-shadow)'
+      : 'none';
+
   return (
     <div className="flex flex-col gap-1">
       <label
         htmlFor="intent"
         className="text-xs uppercase text-ink-muted font-semibold tracking-wide"
       >
-        Intent
+        意图
       </label>
       <textarea
         ref={textareaRef}
@@ -34,11 +43,20 @@ export function IntentField({ value, onChange }: IntentFieldProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onInput={autoExpand}
-        placeholder="What do you want to accomplish?"
-        className="w-full bg-bg-surface border-2 border-accent-primary rounded-lg p-2 text-sm text-ink-primary placeholder:text-ink-hint resize-none focus:outline-none transition-colors"
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        placeholder="你想完成什么？"
+        className={cn(
+          'w-full bg-bg-surface border-2 rounded-lg p-2 text-sm text-ink-primary placeholder:text-ink-hint resize-none focus:outline-none transition-all',
+          isEmpty
+            ? 'border-status-danger'
+            : isFocused
+              ? 'border-accent-primary'
+              : 'border-border-default',
+        )}
         style={{
           minHeight: `${minHeight}px`,
-          boxShadow: '0 0 0 4px var(--color-accent-primary-shadow)',
+          boxShadow: glowStyle,
         }}
       />
     </div>

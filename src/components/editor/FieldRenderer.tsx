@@ -1,7 +1,7 @@
 import type { FieldDefinition } from '@/registry/types';
 import { TextareaField } from '@/components/editor/fields/TextareaField';
 import { TextField } from '@/components/editor/fields/TextField';
-import { keyToLabel } from '@/lib/format';
+import { keyToLabelZh } from '@/lib/format';
 
 interface FieldRendererProps {
   field: FieldDefinition;
@@ -10,7 +10,7 @@ interface FieldRendererProps {
 }
 
 export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
-  const label = keyToLabel(field.key);
+  const label = keyToLabelZh(field.key);
 
   switch (field.inputType) {
     case 'textarea':
@@ -20,7 +20,7 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
           label={label}
           value={value}
           onChange={onChange}
-          placeholder="Enter text freely"
+          placeholder="自由输入"
         />
       );
 
@@ -31,7 +31,7 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
           label={label}
           value={value}
           onChange={onChange}
-          placeholder="Enter text freely"
+          placeholder="自由输入"
         />
       );
 
@@ -42,7 +42,7 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
           label={label}
           value={value}
           onChange={onChange}
-          placeholder="Enter items (one per line)"
+          placeholder="每行输入一项"
         />
       );
 
@@ -50,10 +50,10 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
       return (
         <TextField
           fieldKey={field.key}
-          label={`${label}${field.options ? ` (${field.options.join(' / ')})` : ''}`}
+          label={`${label}${field.options ? `（${field.options.join(' / ')}）` : ''}`}
           value={value}
           onChange={onChange}
-          placeholder={field.options ? field.options.join(', ') : 'Enter value'}
+          placeholder={field.options ? field.options.join('、') : '输入内容'}
         />
       );
 
@@ -61,10 +61,10 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
       return (
         <TextField
           fieldKey={field.key}
-          label={`${label}${field.options ? ` (${field.options.join(' / ')})` : ''}`}
+          label={`${label}${field.options ? `（${field.options.join(' / ')}）` : ''}`}
           value={value}
           onChange={onChange}
-          placeholder={field.options ? `${field.options.join(', ')} or custom` : 'Select or type custom'}
+          placeholder={field.options ? `${field.options.join('、')} 或自定义` : '选择或输入自定义值'}
         />
       );
 
@@ -75,7 +75,7 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
           label={label}
           value={value}
           onChange={onChange}
-          placeholder="Enter value"
+          placeholder="输入内容"
         />
       );
   }

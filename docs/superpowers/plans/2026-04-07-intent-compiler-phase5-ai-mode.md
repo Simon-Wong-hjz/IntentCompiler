@@ -10,6 +10,17 @@
 
 > **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`. Verify React 19.2 hook semantics for custom hooks in this phase.
 
+> **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase:
+> 1. **Task 7 (AiFillButton):** The hardcoded English strings in the code snippet (`"AI Fill"`, `"Filling..."`, `"Filled N fields"`, `"Fill failed:"`, `"Configure AI provider in Settings"`) are placeholders. Task 15 replaces them with i18n keys. When writing Chinese translations, Chinese is the primary locale — write Chinese strings first.
+> 2. **Task 8 (IntentField checkbox):** `"Allow AI to add fields"` label and help text must have Chinese as the primary translation.
+> 3. **Task 15 (i18n for AI):** Chinese translations are listed second in the JSON snippets but are the PRIMARY locale. Ensure `zh.json` values are natural Chinese, not machine-translated.
+> 4. **Error messages in providers:** Error messages from OpenAI/Anthropic providers are English because they appear alongside English API error messages. This is acceptable — these are technical messages, not UI labels.
+>
+> Additionally, preserve the following Phase 1 behaviors:
+> - **`canCopy` prop chain** (App→PageLayout→PreviewArea→CopyButton): Do not disturb the `canCopy`/`hasContent` separation when modifying App.tsx.
+> - **Intent field conditional glow**: Three states in IntentField. When adding AI props (Task 8), preserve the `isEmpty`/`isFocused` state tracking and conditional `className`/`style`.
+> - **Task switching preserves Intent**: `handleSelectType` in App.tsx preserves Intent value. Task 10 Step 5 must integrate with existing logic, not override it.
+
 ---
 
 ## File Structure

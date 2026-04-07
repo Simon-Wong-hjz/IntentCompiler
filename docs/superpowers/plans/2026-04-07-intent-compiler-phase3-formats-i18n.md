@@ -8,7 +8,19 @@
 
 **Tech Stack:** React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, react-i18next + i18next (UI translations), js-yaml (YAML serialization), fast-xml-parser (XML building), Vitest 4.1 (formatter tests)
 
-> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`. Additionally, `src/lib/format.ts` contains a `keyToLabel()` utility — evaluate whether it becomes obsolete or needs an i18n-aware replacement when implementing this phase.
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`. Additionally, `src/lib/format.ts` contains both `keyToLabel()` (English, used by compiler for output) and `keyToLabelZh()` (Chinese, used by FieldRenderer for UI labels) — evaluate whether these become obsolete or need i18n-aware replacements when implementing this phase.
+
+> **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase:
+> 1. **Task 9 (i18n config):** Default language must be `'zh'`, not `'en'`. `getStoredLanguage()` fallback and `fallbackLng` should both default to `'zh'`.
+> 2. **Task 10 (App.tsx state):** `outputLanguage` initial state should be `'zh'`, not `'en'`.
+> 3. **Task 11 (Compiler):** Default output language parameter should be `'zh'`.
+> 4. **Task 14 (TopBar):** The existing Chinese-first UI toggle (中 as active) should be preserved; the i18n toggle replaces it functionally.
+> 5. **Existing Chinese strings:** Phase 1 hardcoded Chinese UI strings (e.g., in CopyButton, EditorArea, IntentField, FieldRenderer). These will be migrated to i18n keys, with Chinese as the `zh.json` values.
+>
+> Additionally, preserve the following Phase 1 behaviors:
+> - **`canCopy` prop chain** (App→PageLayout→PreviewArea→CopyButton): Copy button requires both content AND non-empty Intent. Do not merge `canCopy` with `hasContent`.
+> - **Intent field conditional glow**: Three states — red border+glow when empty, gold border+glow when non-empty+focused, default border when non-empty+unfocused. Do not override when adding i18n to IntentField.
+> - **Task switching preserves Intent**: `handleSelectType` in App.tsx preserves Intent value and shows `window.confirm` for non-Intent fields. Do not override this behavior.
 
 ---
 
@@ -758,9 +770,9 @@ const STORAGE_KEY = 'intent-compiler-ui-lang';
 
 function getStoredLanguage(): string {
   try {
-    return localStorage.getItem(STORAGE_KEY) || 'en';
+    return localStorage.getItem(STORAGE_KEY) || 'zh';
   } catch {
-    return 'en';
+    return 'zh';
   }
 }
 
@@ -770,7 +782,7 @@ i18n.use(initReactI18next).init({
     zh: { translation: zh },
   },
   lng: getStoredLanguage(),
-  fallbackLng: 'en',
+  fallbackLng: 'zh',
   interpolation: {
     escapeValue: false, // React already escapes
   },
@@ -1160,7 +1172,7 @@ import type { OutputFormat, Language } from './types';
 
 // Inside the App component:
 const [outputFormat, setOutputFormat] = useState<OutputFormat>('markdown');
-const [outputLanguage, setOutputLanguage] = useState<Language>('en');
+const [outputLanguage, setOutputLanguage] = useState<Language>('zh');
 ```
 
 - [ ] **Step 3: Pass state to PreviewArea**

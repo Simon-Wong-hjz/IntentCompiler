@@ -104,6 +104,13 @@ Each phase has detailed acceptance criteria in `docs/superpowers/plans/`.
 - **Layout**: Fixed top bar → task selector → 50/50 split (editor | preview)
 - **Minimum viewport**: 1024px (desktop-first; mobile deferred)
 
+## Language Priority
+
+- **Chinese (中文) is the primary UI language**; English is the i18n secondary language
+- All UI text defaults to Chinese; English translations will be added via react-i18next in Phase 3
+- When adding new user-facing strings, always write Chinese first
+- The compiled prompt output follows the UI language
+
 ## Key Decisions
 
 - **No backend**: Pure frontend SPA. AI calls go directly from browser to provider API.

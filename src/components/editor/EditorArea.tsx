@@ -19,7 +19,7 @@ export function EditorArea({
   if (!selectedType) {
     return (
       <div className="flex-1 flex items-center justify-center h-full text-ink-muted text-sm p-5">
-        Select a task type above to begin
+        请先在上方选择一个任务类型
       </div>
     );
   }
@@ -29,7 +29,7 @@ export function EditorArea({
     return (
       <div className="flex-1 flex flex-col items-center justify-center h-full text-ink-muted text-sm p-5 gap-2">
         <span className="text-2xl">🚧</span>
-        <span>Coming soon</span>
+        <span>即将推出</span>
       </div>
     );
   }

@@ -1,5 +1,20 @@
 # Changelog
 
+## [2026-04-07] - Add Chinese-first notes and fix defaults in Phase 2-6 plans
+- **Phase 3**: Added Chinese-First Localization Note; fixed `getStoredLanguage()` fallback from `'en'` to `'zh'`; fixed `fallbackLng` from `'en'` to `'zh'`; fixed `outputLanguage` default state from `'en'` to `'zh'`; updated audit note to mention `keyToLabelZh()` alongside `keyToLabel()`; added notes about preserving canCopy/Intent glow/task-switch behaviors
+- **Phase 4**: Added Chinese-First Localization Note; fixed `DEFAULT_PREFERENCES` `uiLanguage` and `defaultOutputLanguage` from `'en'` to `'zh'`; fixed HistoryModal `uiLanguage` fallback from `'en'` to `'zh'`; added notes about preserving canCopy/Intent glow/task-switch behaviors
+- **Phase 5**: Added Chinese-First Localization Note; noted AiFillButton English placeholders will be replaced by i18n in Task 15; added notes about preserving canCopy/Intent glow/task-switch behaviors
+- **Phase 6**: Added Chinese-First Localization Note; added notes about preserving canCopy/Intent glow/task-switch behaviors
+- **Phase 2 Task 18**: Added critical warning about `setFieldValues({})` conflict with Intent preservation — replaced with `setAddedFields([])` only, since field-value reset is already handled by `handleSelectType` in App.tsx
+
+## [2026-04-07] - Chinese-first UI, Intent field visual states, task switching UX
+- **Chinese-first UI**: Switched all hardcoded UI strings from English to Chinese — TopBar (历史/设置), TaskSelector (verb.zh/mentalModel.zh), EditorArea, PreviewArea, IntentField, CopyButton, FieldRenderer; added `keyToLabelZh()` mapping in `src/lib/format.ts`; swapped language toggle to show 中 as active; updated CLAUDE.md with Language Priority section
+- **Intent field**: Added focus tracking + conditional glow — red border/shadow when empty (status-danger), gold border/shadow when non-empty+focused (accent-primary), gold border only when non-empty+unfocused; added `--color-status-danger-shadow` CSS token in `src/index.css`
+- **Copy button**: Disabled when Intent is empty — added `canCopy` prop chain through App→PageLayout→PreviewArea→CopyButton (separate from `hasContent` which controls preview display)
+- **Task switching**: Intent value preserved when switching task types; confirmation dialog (`window.confirm`) shown when non-Intent fields have content; cancel aborts the switch
+- **Intent non-focused state**: Changed non-empty + unfocused Intent border from always-gold to `border-border-default`, matching other fields' neutral state
+- **Phase 2 plan**: Added Chinese-first localization note covering OPERATION_HINTS, FIELD_DESCRIPTIONS, enum option display labels, and FieldLabel displayName
+
 ## [2026-04-07] - Update Phase 2-6 plans with Phase 1 audit findings
 - Updated tech stack sections in all 5 phase plans (Phase 2-6) to reflect actual versions: React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, Vitest 4.1
 - Added audit note blocks to each phase plan referencing `.claude/progress/2026-04-07-02-phase-plan-audit.md`

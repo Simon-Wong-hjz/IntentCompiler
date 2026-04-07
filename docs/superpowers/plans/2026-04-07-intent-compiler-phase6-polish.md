@@ -10,6 +10,16 @@
 
 > **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key difference for this phase: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts` — CSS custom properties in Task 12 should be added to the `@theme` block, not a separate `:root` selector. The `@import url(...)` for Google Fonts should be placed outside the `@theme` block.
 
+> **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase:
+> 1. **Task 1 (help content):** The `helpContentMap` already includes bilingual `{ en, zh }` objects. Chinese values are the primary user-facing text — ensure they read naturally and are not just English translations.
+> 2. **Edge state strings:** Any new empty-state or placeholder strings added in this phase must be Chinese by default, with English as the i18n secondary.
+> 3. **Task 12 (CSS polish):** No language-specific impact, but ensure font stack includes Chinese fallback fonts (PingFang SC → Microsoft YaHei → Noto Sans SC, already set up in Phase 1).
+>
+> Additionally, preserve the following Phase 1 behaviors:
+> - **`canCopy` prop chain**: When polishing CopyButton disabled state, preserve the `canCopy`/`hasContent` separation.
+> - **Intent field conditional glow**: When polishing IntentField, preserve the three-state glow logic (`isEmpty`/`isFocused`).
+> - **Task switching preserves Intent**: When polishing task-switch edge states, preserve the `handleSelectType` logic in App.tsx.
+
 ---
 
 ## File Structure
