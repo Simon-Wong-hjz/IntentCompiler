@@ -1,12 +1,6 @@
 import type { FieldDefinition } from '@/registry/types';
 import type { OrderedField } from '@/compiler/types';
-
-function keyToLabel(key: string): string {
-  return key
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
+import { keyToLabel } from '@/lib/format';
 
 function hasValue(value: unknown): boolean {
   if (value === undefined || value === null) return false;

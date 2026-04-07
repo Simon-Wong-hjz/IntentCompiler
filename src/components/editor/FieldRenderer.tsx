@@ -1,13 +1,7 @@
 import type { FieldDefinition } from '@/registry/types';
 import { TextareaField } from '@/components/editor/fields/TextareaField';
 import { TextField } from '@/components/editor/fields/TextField';
-
-function keyToLabel(key: string): string {
-  return key
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
+import { keyToLabel } from '@/lib/format';
 
 interface FieldRendererProps {
   field: FieldDefinition;

@@ -1,8 +1,6 @@
 import { cn } from '@/lib/utils';
-import type { TaskType } from '@/registry/types';
 
 interface TaskCardProps {
-  type: TaskType;
   verb: string;
   mentalModel: string;
   isSelected: boolean;

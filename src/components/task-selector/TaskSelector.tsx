@@ -16,7 +16,6 @@ export function TaskSelector({ selectedType, onSelect }: TaskSelectorProps) {
         {taskTypes.map((tt) => (
           <TaskCard
             key={tt.type}
-            type={tt.type}
             verb={tt.verb.en}
             mentalModel={tt.mentalModel.en}
             isSelected={selectedType === tt.type}
