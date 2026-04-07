@@ -1,5 +1,10 @@
 # Changelog
 
+## [2026-04-07] - Batch 6, Tasks 13-15: Field Input Components
+- **Task 13**: Created `src/components/editor/fields/TextareaField.tsx` — auto-expanding textarea with label, design tokens, and `minHeight` prop; created `src/components/editor/fields/TextField.tsx` — single-line input with matching styling
+- **Task 14**: Created `src/components/editor/IntentField.tsx` — elevated textarea with golden `border-accent-primary` border, 4px shadow glow via CSS custom property, and auto-expand behavior
+- **Task 15**: Created `src/components/editor/FieldRenderer.tsx` — switch-based router mapping `FieldDefinition.inputType` to TextareaField/TextField; Phase 1 fallbacks for `select`, `combo`, `list`
+
 ## [2026-04-07] - Batch 5, Tasks 10-12: Layout + Task Selection UI
 - **Task 10**: Created `src/components/layout/TopBar.tsx` — fixed top bar with logo, disabled History/Settings buttons, and EN/中 language toggle pill
 - **Task 11**: Created `src/components/task-selector/TaskCard.tsx` — button card with default/selected/hover visual states using design tokens
