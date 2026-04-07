@@ -1,0 +1,273 @@
+<h2>Editor Layout Density</h2>
+<p class="subtitle">Same content (Ask task type, 4 fields shown), different spacing and visual weight</p>
+
+<div class="split">
+  <!-- Option A: Spacious -->
+  <div class="mockup" data-choice="a" onclick="toggleSelect(this)" style="cursor:pointer;">
+    <div class="mockup-header">A. Spacious / 宽松呼吸感</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; font-size:12px; min-height:480px;">
+        <!-- Top bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <span style="font-weight:800; color:#1a1a1a; font-size:15px;">Intent Compiler</span>
+          <div style="display:flex; gap:10px; font-size:10px; color:#555;">
+            <span>History</span><span>Settings</span>
+            <span style="background:#fff3cd; padding:2px 6px; border-radius:4px; font-weight:600;">EN</span>
+          </div>
+        </div>
+
+        <!-- Task selector cards -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px;">
+          <div style="background:#1a1a1a; color:#f5c518; padding:10px; border-radius:12px; text-align:center;">
+            <div style="font-size:12px; font-weight:700;">Ask</div>
+            <div style="font-size:8px; opacity:0.7; margin-top:2px;">I want to know something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px; border-radius:12px; text-align:center;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Create</div>
+            <div style="font-size:8px; color:#999; margin-top:2px;">I want to make something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px; border-radius:12px; text-align:center;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Transform</div>
+            <div style="font-size:8px; color:#999; margin-top:2px;">Change content's form</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px; border-radius:12px; text-align:center;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Analyze</div>
+            <div style="font-size:8px; color:#999; margin-top:2px;">Help me understand</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px; border-radius:12px; text-align:center;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Ideate</div>
+            <div style="font-size:8px; color:#999; margin-top:2px;">Help me think</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px; border-radius:12px; text-align:center;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Execute</div>
+            <div style="font-size:8px; color:#999; margin-top:2px;">Multi-step task</div>
+          </div>
+        </div>
+
+        <!-- Two column: Editor + Preview -->
+        <div style="display:flex; gap:12px;">
+          <!-- Left: Editor -->
+          <div style="flex:1;">
+            <!-- Intent card -->
+            <div style="background:#fff; border:2px solid #f5c518; border-radius:16px; padding:16px; margin-bottom:14px; box-shadow:0 2px 8px rgba(245,197,24,0.1);">
+              <div style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; margin-bottom:8px;">INTENT 意图</div>
+              <div style="min-height:32px; font-size:11px; color:#1a1a1a; line-height:1.6;">How do React hooks compare to class components for state management?</div>
+              <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+                <button style="background:#1a1a1a; color:#f5c518; border:none; border-radius:10px; padding:5px 14px; font-size:9px; font-weight:700; cursor:pointer;">✨ AI Fill</button>
+              </div>
+            </div>
+
+            <!-- Context card -->
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:16px; padding:16px; margin-bottom:14px;">
+              <div style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; margin-bottom:8px;">CONTEXT 上下文</div>
+              <div style="min-height:24px; font-size:11px; color:#1a1a1a; line-height:1.6;">Building a mid-size React app, team is familiar with class components</div>
+            </div>
+
+            <!-- Question Type card -->
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:16px; padding:16px; margin-bottom:14px;">
+              <div style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; margin-bottom:8px;">QUESTION TYPE 问题类型</div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <span style="background:#fff3cd; color:#1a1a1a; padding:4px 10px; border-radius:10px; font-size:9px; font-weight:600; border:1.5px solid #f5c518;">conceptual</span>
+                <span style="background:#fff; color:#888; padding:4px 10px; border-radius:10px; font-size:9px; border:1px solid #e8e2d8;">factual</span>
+                <span style="background:#fff; color:#888; padding:4px 10px; border-radius:10px; font-size:9px; border:1px solid #e8e2d8;">how-to</span>
+                <span style="background:#fff; color:#888; padding:4px 10px; border-radius:10px; font-size:9px; border:1px solid #e8e2d8;">opinion</span>
+              </div>
+            </div>
+
+            <!-- Requirements card -->
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:16px; padding:16px; margin-bottom:14px;">
+              <div style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; margin-bottom:8px;">REQUIREMENTS 需求</div>
+              <div style="font-size:11px; color:#1a1a1a;">
+                <div style="padding:4px 0; border-bottom:1px solid #f5f3ef;">• Include performance comparison</div>
+                <div style="padding:4px 0;">• Show migration path</div>
+              </div>
+            </div>
+
+            <div style="font-size:10px; color:#aaa; text-align:center; margin-top:4px;">↓ need to scroll for more fields ↓</div>
+          </div>
+
+          <!-- Right: Preview -->
+          <div style="flex:1; background:#fff; border:1.5px solid #e8e2d8; border-radius:16px; padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <div style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">PREVIEW</div>
+              <div style="display:flex; gap:4px;">
+                <span style="background:#1a1a1a; color:#f5c518; padding:2px 8px; border-radius:6px; font-size:8px; font-weight:600;">MD</span>
+                <span style="background:#f5f3ef; color:#999; padding:2px 8px; border-radius:6px; font-size:8px;">JSON</span>
+                <span style="background:#f5f3ef; color:#999; padding:2px 8px; border-radius:6px; font-size:8px;">YAML</span>
+                <span style="background:#f5f3ef; color:#999; padding:2px 8px; border-radius:6px; font-size:8px;">XML</span>
+              </div>
+            </div>
+            <div style="font-family:'SF Mono',Consolas,monospace; font-size:9px; color:#555; line-height:1.8; white-space:pre-wrap;"># Intent
+How do React hooks compare to class components...
+
+## Context
+Building a mid-size React app...
+
+## Question Type
+conceptual
+
+## Requirements
+- Include performance comparison
+- Show migration path</div>
+            <div style="margin-top:16px;">
+              <button style="background:#f5c518; color:#1a1a1a; border:none; border-radius:10px; padding:6px 16px; font-size:10px; font-weight:700; cursor:pointer; width:100%;">Copy to Clipboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Compact -->
+  <div class="mockup" data-choice="b" onclick="toggleSelect(this)" style="cursor:pointer;">
+    <div class="mockup-header">B. Compact / 紧凑高效感</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:12px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; font-size:12px; min-height:480px;">
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <!-- Top bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-weight:800; color:#1a1a1a; font-size:15px;">Intent Compiler</span>
+          <div style="display:flex; gap:10px; font-size:10px; color:#555;">
+            <span>History</span><span>Settings</span>
+            <span style="background:#fff3cd; padding:2px 6px; border-radius:4px; font-weight:600;">EN</span>
+          </div>
+        </div>
+
+        <!-- Task selector cards -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-bottom:10px;">
+          <div style="background:#1a1a1a; color:#f5c518; padding:7px 5px; border-radius:8px; text-align:center;">
+            <div style="font-size:11px; font-weight:700;">Ask</div>
+            <div style="font-size:7px; opacity:0.7; margin-top:1px;">I want to know something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:7px 5px; border-radius:8px; text-align:center;">
+            <div style="font-size:11px; font-weight:700; color:#1a1a1a;">Create</div>
+            <div style="font-size:7px; color:#999; margin-top:1px;">I want to make something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:7px 5px; border-radius:8px; text-align:center;">
+            <div style="font-size:11px; font-weight:700; color:#1a1a1a;">Transform</div>
+            <div style="font-size:7px; color:#999; margin-top:1px;">Change content's form</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:7px 5px; border-radius:8px; text-align:center;">
+            <div style="font-size:11px; font-weight:700; color:#1a1a1a;">Analyze</div>
+            <div style="font-size:7px; color:#999; margin-top:1px;">Help me understand</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:7px 5px; border-radius:8px; text-align:center;">
+            <div style="font-size:11px; font-weight:700; color:#1a1a1a;">Ideate</div>
+            <div style="font-size:7px; color:#999; margin-top:1px;">Help me think</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:7px 5px; border-radius:8px; text-align:center;">
+            <div style="font-size:11px; font-weight:700; color:#1a1a1a;">Execute</div>
+            <div style="font-size:7px; color:#999; margin-top:1px;">Multi-step task</div>
+          </div>
+        </div>
+
+        <!-- Two column: Editor + Preview -->
+        <div style="display:flex; gap:10px;">
+          <!-- Left: Editor -->
+          <div style="flex:1;">
+            <!-- Intent -->
+            <div style="margin-bottom:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">INTENT 意图</label>
+                <button style="background:#1a1a1a; color:#f5c518; border:none; border-radius:6px; padding:3px 10px; font-size:8px; font-weight:700; cursor:pointer;">✨ AI Fill</button>
+              </div>
+              <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:28px; line-height:1.5; box-shadow:0 1px 4px rgba(245,197,24,0.1);">How do React hooks compare to class components for state management?</div>
+            </div>
+
+            <!-- Context -->
+            <div style="margin-bottom:10px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">CONTEXT 上下文</label>
+              <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:20px; line-height:1.5;">Building a mid-size React app, team is familiar with class components</div>
+            </div>
+
+            <!-- Question Type -->
+            <div style="margin-bottom:10px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">QUESTION TYPE 问题类型</label>
+              <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="background:#fff3cd; color:#1a1a1a; padding:3px 8px; border-radius:6px; font-size:9px; font-weight:600; border:1.5px solid #f5c518;">conceptual</span>
+                <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">factual</span>
+                <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">how-to</span>
+                <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">opinion</span>
+              </div>
+            </div>
+
+            <!-- Requirements -->
+            <div style="margin-bottom:10px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">REQUIREMENTS 需求</label>
+              <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a;">
+                <div style="padding:2px 0;">• Include performance comparison</div>
+                <div style="padding:2px 0;">• Show migration path</div>
+              </div>
+            </div>
+
+            <!-- Constraints -->
+            <div style="margin-bottom:10px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">CONSTRAINTS 约束</label>
+              <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#aaa; min-height:20px;">Add constraints...</div>
+            </div>
+
+            <!-- Output Format -->
+            <div style="margin-bottom:10px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">OUTPUT FORMAT 输出格式</label>
+              <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">paragraph</span>
+                <span style="background:#fff3cd; color:#1a1a1a; padding:3px 8px; border-radius:6px; font-size:9px; font-weight:600; border:1.5px solid #f5c518;">list</span>
+                <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">table</span>
+                <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">code</span>
+              </div>
+            </div>
+
+            <!-- Audience -->
+            <div style="margin-bottom:8px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">AUDIENCE 目标受众</label>
+              <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:16px;">Mid-level React developers</div>
+            </div>
+
+            <!-- Add field button -->
+            <div style="text-align:center; margin-top:6px;">
+              <button style="background:#fff; color:#999; border:1.5px dashed #ddd; border-radius:8px; padding:5px 16px; font-size:9px; cursor:pointer; font-weight:600;">+ Add Field 添加字段</button>
+            </div>
+          </div>
+
+          <!-- Right: Preview -->
+          <div style="flex:1; background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:10px; display:flex; flex-direction:column;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">PREVIEW</div>
+              <div style="display:flex; gap:3px;">
+                <span style="background:#1a1a1a; color:#f5c518; padding:2px 6px; border-radius:4px; font-size:8px; font-weight:600;">MD</span>
+                <span style="background:#f5f3ef; color:#999; padding:2px 6px; border-radius:4px; font-size:8px;">JSON</span>
+                <span style="background:#f5f3ef; color:#999; padding:2px 6px; border-radius:4px; font-size:8px;">YAML</span>
+                <span style="background:#f5f3ef; color:#999; padding:2px 6px; border-radius:4px; font-size:8px;">XML</span>
+              </div>
+            </div>
+            <div style="flex:1; font-family:'SF Mono',Consolas,monospace; font-size:9px; color:#555; line-height:1.8; white-space:pre-wrap;"># Intent
+How do React hooks compare to class components for state management?
+
+## Context
+Building a mid-size React app, team is familiar with class components
+
+## Question Type
+conceptual
+
+## Requirements
+- Include performance comparison
+- Show migration path
+
+## Output Format
+list
+
+## Audience
+Mid-level React developers</div>
+            <div style="margin-top:8px; padding-top:8px; border-top:1px solid #f0ebe4;">
+              <button style="background:#f5c518; color:#1a1a1a; border:none; border-radius:8px; padding:6px 16px; font-size:10px; font-weight:700; cursor:pointer; width:100%;">Copy to Clipboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:16px; padding:12px 16px; background:#fff8e1; border-radius:8px; border:1px solid #f0e6c8;">
+  <p style="font-size:13px; color:#555; margin:0;"><strong>Key difference:</strong> A shows 4 fields before scrolling (each field is a full card with 16px padding + 16px border-radius). B shows all 7 default fields for "Ask" without scrolling (label-above-input, 8px padding, 8px border-radius). Same content, different density.</p>
+</div>

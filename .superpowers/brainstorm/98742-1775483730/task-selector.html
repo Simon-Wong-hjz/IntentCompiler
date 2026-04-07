@@ -1,0 +1,108 @@
+<h2>Task Type Selector</h2>
+<p class="subtitle">How should the 6 task types (verb + mental model) be presented? This is the first thing users interact with.</p>
+
+<div class="cards">
+  <!-- Option A: Horizontal pill tabs -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fffdf5; border-radius:8px; padding:16px; font-family:system-ui;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <div style="background:#1a1a1a; color:#f5c518; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer;">
+            Ask <span style="font-weight:400; opacity:0.7; font-size:9px;">提问</span>
+          </div>
+          <div style="background:#fff3cd; color:#1a1a1a; padding:6px 14px; border-radius:20px; font-size:11px; border:1px solid #f0e6c8; cursor:pointer;">
+            Create <span style="opacity:0.5; font-size:9px;">创作</span>
+          </div>
+          <div style="background:#fff3cd; color:#1a1a1a; padding:6px 14px; border-radius:20px; font-size:11px; border:1px solid #f0e6c8; cursor:pointer;">
+            Transform <span style="opacity:0.5; font-size:9px;">转化</span>
+          </div>
+          <div style="background:#fff3cd; color:#1a1a1a; padding:6px 14px; border-radius:20px; font-size:11px; border:1px solid #f0e6c8; cursor:pointer;">
+            Analyze <span style="opacity:0.5; font-size:9px;">分析</span>
+          </div>
+          <div style="background:#fff3cd; color:#1a1a1a; padding:6px 14px; border-radius:20px; font-size:11px; border:1px solid #f0e6c8; cursor:pointer;">
+            Ideate <span style="opacity:0.5; font-size:9px;">构思</span>
+          </div>
+          <div style="background:#fff3cd; color:#1a1a1a; padding:6px 14px; border-radius:20px; font-size:11px; border:1px solid #f0e6c8; cursor:pointer;">
+            Execute <span style="opacity:0.5; font-size:9px;">执行</span>
+          </div>
+        </div>
+        <p style="font-size:10px; color:#666; margin-top:8px; margin-bottom:0;">Selected: <strong>Ask</strong> — "I want to know something"</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Pill Tabs</h3>
+      <p>Horizontal pills showing verb + Chinese label. Selected tab inverts to black+gold. Mental model description appears below as helper text. Compact — one line of tabs, scales to all 6 easily.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Card grid -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fffdf5; border-radius:8px; padding:12px; font-family:system-ui;">
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px;">
+          <div style="background:#1a1a1a; color:#f5c518; padding:10px 8px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700;">Ask</div>
+            <div style="font-size:8px; opacity:0.7; margin-top:2px;">I want to know something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px 8px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:600; color:#1a1a1a;">Create</div>
+            <div style="font-size:8px; color:#888; margin-top:2px;">I want to make something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px 8px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:600; color:#1a1a1a;">Transform</div>
+            <div style="font-size:8px; color:#888; margin-top:2px;">Change content's form</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px 8px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:600; color:#1a1a1a;">Analyze</div>
+            <div style="font-size:8px; color:#888; margin-top:2px;">Help me judge / understand</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px 8px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:600; color:#1a1a1a;">Ideate</div>
+            <div style="font-size:8px; color:#888; margin-top:2px;">Help me think / design</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:10px 8px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:600; color:#1a1a1a;">Execute</div>
+            <div style="font-size:8px; color:#888; margin-top:2px;">Do a multi-step task</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Card Grid (3×2)</h3>
+      <p>Each task type as a mini card showing verb + mental model description directly. Selected card inverts to black+gold. All 6 types and their descriptions are visible at once — no hover or extra text needed.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Segmented control with description -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fffdf5; border-radius:8px; padding:16px; font-family:system-ui;">
+        <div style="background:#fff; border:2px solid #1a1a1a; border-radius:10px; display:flex; overflow:hidden;">
+          <div style="flex:1; background:#1a1a1a; color:#f5c518; padding:8px 4px; text-align:center; font-size:11px; font-weight:700; cursor:pointer;">
+            Ask<br><span style="font-size:8px; font-weight:400; opacity:0.7;">提问</span>
+          </div>
+          <div style="flex:1; padding:8px 4px; text-align:center; font-size:11px; color:#1a1a1a; border-left:1px solid #eee; cursor:pointer;">
+            Create<br><span style="font-size:8px; color:#999;">创作</span>
+          </div>
+          <div style="flex:1; padding:8px 4px; text-align:center; font-size:11px; color:#1a1a1a; border-left:1px solid #eee; cursor:pointer;">
+            Transform<br><span style="font-size:8px; color:#999;">转化</span>
+          </div>
+          <div style="flex:1; padding:8px 4px; text-align:center; font-size:11px; color:#1a1a1a; border-left:1px solid #eee; cursor:pointer;">
+            Analyze<br><span style="font-size:8px; color:#999;">分析</span>
+          </div>
+          <div style="flex:1; padding:8px 4px; text-align:center; font-size:11px; color:#1a1a1a; border-left:1px solid #eee; cursor:pointer;">
+            Ideate<br><span style="font-size:8px; color:#999;">构思</span>
+          </div>
+          <div style="flex:1; padding:8px 4px; text-align:center; font-size:11px; color:#1a1a1a; border-left:1px solid #eee; cursor:pointer;">
+            Execute<br><span style="font-size:8px; color:#999;">执行</span>
+          </div>
+        </div>
+        <p style="font-size:10px; color:#666; margin-top:8px; margin-bottom:0;">"I want to know something" — 我想知道一件事</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Segmented Control</h3>
+      <p>Connected segments in a single bar, like iOS segmented control. Each shows verb + Chinese. Selected segment fills black+gold. Mental model description below. Very compact, strong visual unity.</p>
+    </div>
+  </div>
+</div>

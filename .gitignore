@@ -43,8 +43,5 @@ coverage/
 # Claude Code
 /.claude/*.local.json
 
-# Superpowers brainstorm sessions
-.superpowers/
-
 # Worktrees
 .worktrees/

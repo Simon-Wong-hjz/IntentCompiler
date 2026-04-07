@@ -1,0 +1,161 @@
+<h2>Typography — Bilingual (EN + 中文)</h2>
+<p class="subtitle">Each option shows the same UI content in both languages. Chinese fonts are system-level (loading CJK web fonts is 10MB+, not practical).</p>
+
+<div class="cards">
+  <!-- Option A: Inter + System Chinese -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="border-radius:8px; overflow:hidden; font-family:'Inter',system-ui,sans-serif;">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <div style="background:#fffdf5; padding:14px;">
+          <!-- Top bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-weight:700; color:#1a1a1a; font-size:14px;">Intent Compiler</span>
+            <div style="display:flex; gap:8px; font-size:11px; color:#333;">
+              <span>History</span><span>Settings</span>
+              <span style="background:#fff3cd; padding:1px 6px; border-radius:3px;">EN / 中</span>
+            </div>
+          </div>
+          <!-- Task cards -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-bottom:8px;">
+            <div style="background:#1a1a1a; color:#f5c518; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:600;">Ask</div>
+              <div style="font-size:8px; opacity:0.7;">I want to know something</div>
+            </div>
+            <div style="background:#fff; border:1px solid #f0e6c8; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:600; color:#1a1a1a;">Create</div>
+              <div style="font-size:8px; color:#888;">I want to make something</div>
+            </div>
+            <div style="background:#fff; border:1px solid #f0e6c8; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:600; color:#1a1a1a;">构思</div>
+              <div style="font-size:8px; color:#888;">帮我想办法</div>
+            </div>
+          </div>
+          <!-- Intent area -->
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px; margin-bottom:6px;">
+            <div style="font-size:9px; color:#999; margin-bottom:4px; font-weight:500;">INTENT 意图</div>
+            <div style="font-size:12px; color:#1a1a1a; line-height:1.5;">I want to understand the trade-offs between SQL and NoSQL databases for my e-commerce project</div>
+          </div>
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px;">
+            <div style="font-size:9px; color:#999; margin-bottom:4px; font-weight:500;">INTENT 意图</div>
+            <div style="font-size:12px; color:#1a1a1a; line-height:1.5;">我想了解如何在 React 项目中合理使用状态管理方案</div>
+          </div>
+          <div style="margin-top:6px; font-size:9px; color:#aaa;">
+            Body: Inter 400 · Labels: Inter 500 · Headings: Inter 700<br>
+            中文回退: PingFang SC (Mac) / Microsoft YaHei (Win) / Noto Sans SC (Linux)
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Inter + System Chinese</h3>
+      <p>Modern UI standard. Inter handles all Latin text with excellent readability. Chinese falls back to each OS's best: PingFang SC (Mac), Microsoft YaHei (Windows). Slight visual mismatch between scripts but both are high quality. <strong>Most popular choice for bilingual web apps.</strong></p>
+    </div>
+  </div>
+
+  <!-- Option B: System Font Stack -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="border-radius:8px; overflow:hidden; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'PingFang SC','Microsoft YaHei',sans-serif;">
+        <div style="background:#fffdf5; padding:14px;">
+          <!-- Top bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-weight:700; color:#1a1a1a; font-size:14px;">Intent Compiler</span>
+            <div style="display:flex; gap:8px; font-size:11px; color:#333;">
+              <span>History</span><span>Settings</span>
+              <span style="background:#fff3cd; padding:1px 6px; border-radius:3px;">EN / 中</span>
+            </div>
+          </div>
+          <!-- Task cards -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-bottom:8px;">
+            <div style="background:#1a1a1a; color:#f5c518; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:600;">Ask</div>
+              <div style="font-size:8px; opacity:0.7;">I want to know something</div>
+            </div>
+            <div style="background:#fff; border:1px solid #f0e6c8; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:600; color:#1a1a1a;">Create</div>
+              <div style="font-size:8px; color:#888;">I want to make something</div>
+            </div>
+            <div style="background:#fff; border:1px solid #f0e6c8; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:600; color:#1a1a1a;">构思</div>
+              <div style="font-size:8px; color:#888;">帮我想办法</div>
+            </div>
+          </div>
+          <!-- Intent area -->
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px; margin-bottom:6px;">
+            <div style="font-size:9px; color:#999; margin-bottom:4px; font-weight:500;">INTENT 意图</div>
+            <div style="font-size:12px; color:#1a1a1a; line-height:1.5;">I want to understand the trade-offs between SQL and NoSQL databases for my e-commerce project</div>
+          </div>
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px;">
+            <div style="font-size:9px; color:#999; margin-bottom:4px; font-weight:500;">INTENT 意图</div>
+            <div style="font-size:12px; color:#1a1a1a; line-height:1.5;">我想了解如何在 React 项目中合理使用状态管理方案</div>
+          </div>
+          <div style="margin-top:6px; font-size:9px; color:#aaa;">
+            Mac: SF Pro + PingFang SC · Win: Segoe UI + Microsoft YaHei<br>
+            零额外加载，各平台原生最佳体验
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Pure System Fonts</h3>
+      <p>Zero loading cost. Uses each OS's native font — SF Pro + PingFang SC on Mac, Segoe UI + YaHei on Windows. Chinese and English are from the same font family on each platform, so they harmonize naturally. Looks slightly different per OS.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Plus Jakarta Sans + System Chinese -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="border-radius:8px; overflow:hidden; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <div style="background:#fffdf5; padding:14px;">
+          <!-- Top bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-weight:800; color:#1a1a1a; font-size:14px;">Intent Compiler</span>
+            <div style="display:flex; gap:8px; font-size:11px; color:#333;">
+              <span>History</span><span>Settings</span>
+              <span style="background:#fff3cd; padding:1px 6px; border-radius:3px;">EN / 中</span>
+            </div>
+          </div>
+          <!-- Task cards -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-bottom:8px;">
+            <div style="background:#1a1a1a; color:#f5c518; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:700;">Ask</div>
+              <div style="font-size:8px; opacity:0.7; font-weight:400;">I want to know something</div>
+            </div>
+            <div style="background:#fff; border:1px solid #f0e6c8; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:700; color:#1a1a1a;">Create</div>
+              <div style="font-size:8px; color:#888;">I want to make something</div>
+            </div>
+            <div style="background:#fff; border:1px solid #f0e6c8; padding:6px; border-radius:6px; text-align:center;">
+              <div style="font-size:11px; font-weight:700; color:#1a1a1a;">构思</div>
+              <div style="font-size:8px; color:#888;">帮我想办法</div>
+            </div>
+          </div>
+          <!-- Intent area -->
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px; margin-bottom:6px;">
+            <div style="font-size:9px; color:#999; margin-bottom:4px; font-weight:600; letter-spacing:0.5px;">INTENT 意图</div>
+            <div style="font-size:12px; color:#1a1a1a; line-height:1.5;">I want to understand the trade-offs between SQL and NoSQL databases for my e-commerce project</div>
+          </div>
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px;">
+            <div style="font-size:9px; color:#999; margin-bottom:4px; font-weight:600; letter-spacing:0.5px;">INTENT 意图</div>
+            <div style="font-size:12px; color:#1a1a1a; line-height:1.5;">我想了解如何在 React 项目中合理使用状态管理方案</div>
+          </div>
+          <div style="margin-top:6px; font-size:9px; color:#aaa;">
+            Body: Plus Jakarta Sans 400 · Labels: 600 · Headings: 800<br>
+            中文回退: PingFang SC / Microsoft YaHei / Noto Sans SC
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Plus Jakarta Sans + System Chinese</h3>
+      <p>More personality. Geometric, rounded letterforms that match the friendly editor vibe and the bold Sunflower+Ink brand. Heavier weights (800) look great for headings. Chinese falls back to system fonts. Slightly more character mismatch but stronger brand identity.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px; padding:12px; background:#fff8e1; border-radius:8px; border:1px solid #f0e6c8;">
+  <h3 style="margin-top:0;">Note on Chinese Web Fonts</h3>
+  <p style="font-size:13px; color:#555; margin-bottom:0;">CJK web fonts are 10-20MB per weight — not practical to load. All options use system Chinese fonts (PingFang SC on Mac, Microsoft YaHei on Windows, Noto Sans SC on Linux). The choice here is really about the <strong>Latin/English font</strong> and how well it pairs with the system Chinese font.</p>
+</div>

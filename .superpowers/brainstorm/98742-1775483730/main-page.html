@@ -1,0 +1,229 @@
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<h2>Main Page — Full Integration</h2>
+<p class="subtitle">All decisions applied. Note: Output Language + Output Format are both in the preview header.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Complete page layout (desktop, ~1280px viewport)</div>
+  <div class="mockup-body" style="padding:0;">
+    <div style="background:#fffdf5; font-family:'Plus Jakarta Sans',system-ui,sans-serif; font-size:12px; min-height:580px; display:flex; flex-direction:column;">
+
+      <!-- ===== TOP BAR (fixed) ===== -->
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 20px; border-bottom:1.5px solid #f0ebe4; background:#fffdf5; flex-shrink:0;">
+        <span style="font-weight:800; color:#1a1a1a; font-size:16px;">Intent Compiler</span>
+        <div style="display:flex; gap:14px; align-items:center; font-size:11px; color:#555;">
+          <span style="cursor:pointer; font-weight:500;">History</span>
+          <span style="cursor:pointer; font-weight:500;">Settings</span>
+          <div style="display:flex; border:1.5px solid #e8e2d8; border-radius:6px; overflow:hidden; font-size:10px;">
+            <span style="padding:3px 8px; background:#1a1a1a; color:#f5c518; font-weight:600;">EN</span>
+            <span style="padding:3px 8px; color:#888; cursor:pointer;">中</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TASK TYPE SELECTOR (3×2 grid) ===== -->
+      <div style="padding:12px 20px 8px; flex-shrink:0;">
+        <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:6px;">
+          <div style="background:#1a1a1a; color:#f5c518; padding:8px 6px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700;">Ask</div>
+            <div style="font-size:8px; opacity:0.7; margin-top:1px;">I want to know something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:8px 6px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Create</div>
+            <div style="font-size:8px; color:#999; margin-top:1px;">I want to make something</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:8px 6px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Transform</div>
+            <div style="font-size:8px; color:#999; margin-top:1px;">Change content's form</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:8px 6px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Analyze</div>
+            <div style="font-size:8px; color:#999; margin-top:1px;">Help me understand</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:8px 6px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Ideate</div>
+            <div style="font-size:8px; color:#999; margin-top:1px;">Help me think / design</div>
+          </div>
+          <div style="background:#fff; border:1.5px solid #f0e6c8; padding:8px 6px; border-radius:8px; text-align:center; cursor:pointer;">
+            <div style="font-size:12px; font-weight:700; color:#1a1a1a;">Execute</div>
+            <div style="font-size:8px; color:#999; margin-top:1px;">Multi-step task</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== MAIN CONTENT: Editor + Preview ===== -->
+      <div style="display:flex; gap:0; flex:1; min-height:0; padding:0 20px 12px;">
+
+        <!-- LEFT: Editor (scrollable) -->
+        <div style="flex:1; overflow-y:auto; padding-right:12px; border-right:1.5px solid #f0ebe4;">
+
+          <!-- Intent -->
+          <div style="margin-bottom:10px; margin-top:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <div style="display:flex; align-items:center; gap:0;">
+                <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">INTENT 意图</label>
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px; margin-right:8px;">?</span>
+                <span style="font-size:9px; color:#bbb;">Enter text freely</span>
+              </div>
+              <button style="background:#1a1a1a; color:#f5c518; border:none; border-radius:6px; padding:4px 12px; font-size:9px; font-weight:700; cursor:pointer;">✨ AI Fill</button>
+            </div>
+            <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:36px; line-height:1.5; box-shadow:0 1px 4px rgba(245,197,24,0.1);">How do React hooks compare to class components for state management?</div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:6px;">
+              <div style="width:14px; height:14px; border:1.5px solid #e8e2d8; border-radius:3px; cursor:pointer;"></div>
+              <span style="font-size:9px; color:#888;">Allow AI to add fields</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:13px; height:13px; border-radius:50%; background:#f0ebe4; color:#999; font-size:8px; font-weight:700; cursor:pointer;">?</span>
+            </div>
+          </div>
+
+          <!-- Context -->
+          <div style="margin-bottom:10px;">
+            <div style="display:flex; align-items:center; gap:0; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">CONTEXT 上下文</label>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px; margin-right:8px;">?</span>
+              <span style="font-size:9px; color:#bbb;">Enter text freely</span>
+            </div>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:28px; line-height:1.5;">Building a mid-size React app, team is familiar with class components</div>
+          </div>
+
+          <!-- Requirements -->
+          <div style="margin-bottom:10px;">
+            <div style="display:flex; align-items:center; gap:0; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">REQUIREMENTS 需求</label>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px; margin-right:8px;">?</span>
+              <span style="font-size:9px; color:#bbb;">Add items to list</span>
+            </div>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px;">
+              <div style="display:flex; align-items:center; gap:6px; padding:2px 0; border-bottom:1px solid #f5f3ef;">
+                <span style="color:#ccc; font-size:10px;">⠿</span>
+                <span style="font-size:10px; color:#1a1a1a; flex:1;">Include performance comparison</span>
+                <span style="color:#ccc; font-size:10px; cursor:pointer;">✕</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px; padding:2px 0;">
+                <span style="color:#ddd; font-size:10px;">+</span>
+                <span style="font-size:9px; color:#aaa;">Add item...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Constraints -->
+          <div style="margin-bottom:10px;">
+            <div style="display:flex; align-items:center; gap:0; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">CONSTRAINTS 约束</label>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px; margin-right:8px;">?</span>
+              <span style="font-size:9px; color:#bbb;">Add items to list</span>
+            </div>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:10px; color:#aaa;">Add constraints...</div>
+          </div>
+
+          <!-- Output Format (field) -->
+          <div style="margin-bottom:10px;">
+            <div style="display:flex; align-items:center; gap:0; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">OUTPUT FORMAT 输出格式</label>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px; margin-right:8px;">?</span>
+              <span style="font-size:9px; color:#bbb;">Select or type custom</span>
+            </div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px;">
+              <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">paragraph</span>
+              <span style="background:#fff3cd; color:#1a1a1a; padding:3px 8px; border-radius:6px; font-size:9px; font-weight:600; border:1.5px solid #f5c518;">list</span>
+              <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">table</span>
+            </div>
+          </div>
+
+          <!-- Question Type -->
+          <div style="margin-bottom:10px;">
+            <div style="display:flex; align-items:center; gap:0; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">QUESTION TYPE 问题类型</label>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px; margin-right:8px;">?</span>
+              <span style="font-size:9px; color:#bbb;">Click to select one</span>
+            </div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <span style="background:#fff3cd; color:#1a1a1a; padding:3px 8px; border-radius:6px; font-size:9px; font-weight:600; border:1.5px solid #f5c518;">conceptual</span>
+              <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">factual</span>
+              <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">how-to</span>
+              <span style="background:#fff; color:#888; padding:3px 8px; border-radius:6px; font-size:9px; border:1px solid #e8e2d8;">opinion</span>
+            </div>
+          </div>
+
+          <!-- Audience -->
+          <div style="margin-bottom:10px;">
+            <div style="display:flex; align-items:center; gap:0; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">AUDIENCE 目标受众</label>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px; margin-right:8px;">?</span>
+              <span style="font-size:9px; color:#bbb;">Enter text freely</span>
+            </div>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a;">Mid-level React developers</div>
+          </div>
+
+          <!-- Add Field -->
+          <div style="text-align:center; margin-top:4px;">
+            <button style="background:#fff; color:#1a1a1a; border:1.5px dashed #d4d0c8; border-radius:8px; padding:6px 20px; font-size:10px; cursor:pointer; font-weight:600;">+ Add Field 添加字段</button>
+          </div>
+        </div>
+
+        <!-- RIGHT: Preview (scrollable, sticky container) -->
+        <div style="flex:1; overflow-y:auto; padding-left:12px; display:flex; flex-direction:column;">
+
+          <!-- Preview header: Output Language + Output Format -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; margin-top:8px; flex-shrink:0;">
+            <!-- Output Language (per-session) -->
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:9px; color:#999; font-weight:600;">OUTPUT</span>
+              <div style="display:flex; border:1px solid #e8e2d8; border-radius:5px; overflow:hidden; font-size:9px;">
+                <span style="padding:2px 7px; background:#1a1a1a; color:#f5c518; font-weight:600; cursor:pointer;">EN</span>
+                <span style="padding:2px 7px; color:#888; cursor:pointer;">中</span>
+              </div>
+            </div>
+            <!-- Output Format (per-session) -->
+            <div style="display:flex; gap:3px;">
+              <span style="background:#1a1a1a; color:#f5c518; padding:2px 7px; border-radius:4px; font-size:9px; font-weight:600; cursor:pointer;">MD</span>
+              <span style="background:#f5f3ef; color:#999; padding:2px 7px; border-radius:4px; font-size:9px; cursor:pointer;">JSON</span>
+              <span style="background:#f5f3ef; color:#999; padding:2px 7px; border-radius:4px; font-size:9px; cursor:pointer;">YAML</span>
+              <span style="background:#f5f3ef; color:#999; padding:2px 7px; border-radius:4px; font-size:9px; cursor:pointer;">XML</span>
+            </div>
+          </div>
+
+          <!-- Preview content -->
+          <div style="flex:1; background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:12px; display:flex; flex-direction:column; min-height:0;">
+            <div style="flex:1; font-family:'SF Mono','Cascadia Code',Consolas,monospace; font-size:10px; color:#555; line-height:1.8; white-space:pre-wrap; overflow-y:auto;"># Intent
+How do React hooks compare to class components for state management?
+
+## Context
+Building a mid-size React app, team is familiar with class components
+
+## Requirements
+- Include performance comparison
+
+## Output Format
+list
+
+## Question Type
+conceptual
+
+## Audience
+Mid-level React developers</div>
+
+            <!-- Copy button: sticky at bottom -->
+            <div style="margin-top:10px; padding-top:8px; border-top:1px solid #f0ebe4; flex-shrink:0;">
+              <button style="background:#f5c518; color:#1a1a1a; border:none; border-radius:8px; padding:7px 16px; font-size:11px; font-weight:700; cursor:pointer; width:100%;">Copy to Clipboard</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Annotation -->
+<div style="margin-top:16px; padding:12px 16px; background:#fff8e1; border-radius:8px; border:1px solid #f0e6c8;">
+  <h3 style="margin-top:0; font-size:14px;">Key Decisions Reflected</h3>
+  <div style="font-size:12px; color:#555; line-height:1.8;">
+    <strong>Top Bar:</strong> Logo · History · Settings · UI Language [EN/中]<br>
+    <strong>Task Selector:</strong> 6 cards in a single row (3×2 on narrower screens via CSS grid auto-wrap)<br>
+    <strong>Editor (left):</strong> Compact layout, all field labels follow NAME [?] hint pattern<br>
+    <strong>Preview header (right):</strong> Output Language [EN/中] on the left + Output Format [MD/JSON/YAML/XML] on the right<br>
+    <strong>Scrolling:</strong> Left and right sides scroll independently<br>
+    <strong>Copy button:</strong> Pinned at bottom of preview panel<br>
+    <strong>Defaults:</strong> Output Language + Format initialize from Settings, can be overridden here per-session
+  </div>
+</div>

@@ -1,0 +1,260 @@
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<h2>Component Details</h2>
+<p class="subtitle">Field input types, Add Field panel, and AI Fill interaction</p>
+
+<!-- Section 1: Field Input Types -->
+<div class="section">
+  <h3>1. Field Input Types (8 types from PRD)</h3>
+  <div class="mockup">
+    <div class="mockup-header">All 8 input types in Sunflower+Ink theme</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+
+        <!-- textarea -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">TEXTAREA — intent, context, source_content</label>
+          <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:48px; line-height:1.5;">Building a mid-size React app, team has 3 years experience with class components but wants to modernize...</div>
+        </div>
+
+        <!-- text -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">TEXT — role, audience, scope</label>
+          <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; height:20px; line-height:20px;">Senior React developer</div>
+        </div>
+
+        <!-- select -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">SELECT — question_type, detail_level, analyze_type</label>
+          <div style="display:flex; gap:4px; flex-wrap:wrap;">
+            <span style="background:#fff3cd; color:#1a1a1a; padding:4px 10px; border-radius:6px; font-size:10px; font-weight:600; border:1.5px solid #f5c518;">conceptual</span>
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8; cursor:pointer;">factual</span>
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8; cursor:pointer;">how-to</span>
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8; cursor:pointer;">opinion</span>
+          </div>
+        </div>
+
+        <!-- combo -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">COMBO — output_format, tone, content_type</label>
+          <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px;">
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8; cursor:pointer;">paragraph</span>
+            <span style="background:#fff3cd; color:#1a1a1a; padding:4px 10px; border-radius:6px; font-size:10px; font-weight:600; border:1.5px solid #f5c518;">list</span>
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8; cursor:pointer;">table</span>
+          </div>
+          <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:6px 8px; font-size:10px; color:#aaa; display:flex; align-items:center; gap:4px;">
+            <span style="color:#ccc;">✏️</span> or type custom value...
+          </div>
+        </div>
+
+        <!-- list -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">LIST — requirements, constraints, criteria</label>
+          <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px;">
+            <div style="display:flex; align-items:center; gap:6px; padding:3px 0; border-bottom:1px solid #f5f3ef;">
+              <span style="color:#ccc; font-size:10px; cursor:grab;">⠿</span>
+              <span style="font-size:11px; color:#1a1a1a; flex:1;">Include performance comparison</span>
+              <span style="color:#ccc; font-size:10px; cursor:pointer;">✕</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; padding:3px 0; border-bottom:1px solid #f5f3ef;">
+              <span style="color:#ccc; font-size:10px; cursor:grab;">⠿</span>
+              <span style="font-size:11px; color:#1a1a1a; flex:1;">Show migration path</span>
+              <span style="color:#ccc; font-size:10px; cursor:pointer;">✕</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; padding:3px 0;">
+              <span style="color:#ddd; font-size:10px;">+</span>
+              <span style="font-size:10px; color:#aaa;">Add item...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- toggle -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">TOGGLE — include_tests</label>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:36px; height:20px; background:#f5c518; border-radius:10px; position:relative; cursor:pointer;">
+              <div style="width:16px; height:16px; background:#1a1a1a; border-radius:50%; position:absolute; top:2px; right:2px;"></div>
+            </div>
+            <span style="font-size:11px; color:#1a1a1a;">Include tests in output</span>
+          </div>
+        </div>
+
+        <!-- number -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">NUMBER — idea_count</label>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button style="width:28px; height:28px; background:#fff; border:1.5px solid #e8e2d8; border-radius:6px; font-size:14px; color:#999; cursor:pointer; display:flex; align-items:center; justify-content:center;">−</button>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:4px 12px; font-size:13px; font-weight:600; color:#1a1a1a; min-width:40px; text-align:center;">5</div>
+            <button style="width:28px; height:28px; background:#1a1a1a; border:none; border-radius:6px; font-size:14px; color:#f5c518; cursor:pointer; display:flex; align-items:center; justify-content:center;">+</button>
+          </div>
+        </div>
+
+        <!-- key-value -->
+        <div>
+          <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px; display:block; margin-bottom:4px;">KEY-VALUE — custom_fields</label>
+          <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px;">
+            <div style="display:flex; gap:6px; align-items:center; padding:3px 0; border-bottom:1px solid #f5f3ef;">
+              <span style="font-size:10px; color:#1a1a1a; font-weight:600; min-width:60px; background:#f5f3ef; padding:2px 6px; border-radius:4px;">framework</span>
+              <span style="font-size:10px; color:#1a1a1a; flex:1;">React 18</span>
+              <span style="color:#ccc; font-size:10px; cursor:pointer;">✕</span>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center; padding:3px 0;">
+              <span style="font-size:10px; color:#aaa; min-width:60px;">+ key</span>
+              <span style="font-size:10px; color:#aaa; flex:1;">value</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Add Field Panel -->
+<div class="section">
+  <h3>2. Add Field Panel (collapsed → expanded)</h3>
+  <div class="split">
+    <div class="mockup">
+      <div class="mockup-header">Collapsed state</div>
+      <div class="mockup-body" style="padding:0;">
+        <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+          <div style="font-size:10px; color:#aaa; margin-bottom:8px;">... fields above ...</div>
+          <button style="background:#fff; color:#1a1a1a; border:1.5px dashed #d4d0c8; border-radius:8px; padding:8px 20px; font-size:11px; cursor:pointer; font-weight:600; width:100%; display:flex; align-items:center; justify-content:center; gap:4px;">
+            <span style="font-size:14px;">+</span> Add Field 添加字段
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <div class="mockup-header">Expanded state</div>
+      <div class="mockup-body" style="padding:0;">
+        <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+          <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; overflow:hidden;">
+            <!-- Task optional header -->
+            <div style="background:#1a1a1a; color:#f5c518; padding:6px 12px; font-size:9px; font-weight:700; letter-spacing:0.5px;">
+              TASK FIELDS 任务字段
+            </div>
+            <!-- Task optional fields -->
+            <div style="padding:4px 0;">
+              <div style="display:flex; align-items:center; padding:6px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+                <div style="flex:1;">
+                  <div style="font-size:11px; font-weight:600; color:#1a1a1a;">knowledge_level</div>
+                  <div style="font-size:9px; color:#999;">Your existing knowledge: beginner / intermediate / expert</div>
+                </div>
+                <span style="color:#f5c518; font-size:16px; font-weight:700;">+</span>
+              </div>
+            </div>
+
+            <!-- Universal optional header -->
+            <div style="background:#f5f3ef; color:#999; padding:6px 12px; font-size:9px; font-weight:700; letter-spacing:0.5px;">
+              UNIVERSAL FIELDS 通用字段
+            </div>
+            <div style="padding:4px 0;">
+              <div style="display:flex; align-items:center; padding:6px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+                <div style="flex:1;">
+                  <div style="font-size:11px; font-weight:600; color:#1a1a1a;">goal</div>
+                  <div style="font-size:9px; color:#999;">Desired end state or outcome</div>
+                </div>
+                <span style="color:#f5c518; font-size:16px; font-weight:700;">+</span>
+              </div>
+              <div style="display:flex; align-items:center; padding:6px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+                <div style="flex:1;">
+                  <div style="font-size:11px; font-weight:600; color:#1a1a1a;">role</div>
+                  <div style="font-size:9px; color:#999;">Role the AI should assume</div>
+                </div>
+                <span style="color:#f5c518; font-size:16px; font-weight:700;">+</span>
+              </div>
+              <div style="display:flex; align-items:center; padding:6px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+                <div style="flex:1;">
+                  <div style="font-size:11px; font-weight:600; color:#1a1a1a;">examples</div>
+                  <div style="font-size:9px; color:#999;">Reference examples for desired output</div>
+                </div>
+                <span style="color:#f5c518; font-size:16px; font-weight:700;">+</span>
+              </div>
+              <div style="padding:6px 12px; font-size:10px; color:#ccc; text-align:center;">... more fields ...</div>
+            </div>
+
+            <!-- Custom fields always at bottom -->
+            <div style="background:#fff8e1; padding:8px 12px; display:flex; align-items:center; cursor:pointer; border-top:1.5px solid #f0e6c8;">
+              <div style="flex:1;">
+                <div style="font-size:11px; font-weight:600; color:#1a1a1a;">custom_fields</div>
+                <div style="font-size:9px; color:#999;">Add your own key-value pairs</div>
+              </div>
+              <span style="color:#f5c518; font-size:16px; font-weight:700;">+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: AI Fill Flow -->
+<div class="section">
+  <h3>3. AI Fill Flow</h3>
+  <div class="mockup">
+    <div class="mockup-header">AI Fill states: idle → loading → filled</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; display:flex; gap:12px;">
+
+        <!-- State 1: Idle -->
+        <div style="flex:1;">
+          <div style="font-size:9px; color:#999; font-weight:600; text-align:center; margin-bottom:6px;">IDLE</div>
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600;">INTENT</label>
+              <button style="background:#1a1a1a; color:#f5c518; border:none; border-radius:6px; padding:3px 10px; font-size:8px; font-weight:700; cursor:pointer;">✨ AI Fill</button>
+            </div>
+            <div style="font-size:10px; color:#1a1a1a; line-height:1.4;">How do hooks compare to class components?</div>
+            <div style="margin-top:6px; display:flex; align-items:center; gap:4px;">
+              <div style="width:14px; height:14px; border:1.5px solid #e8e2d8; border-radius:3px;"></div>
+              <span style="font-size:9px; color:#999;">Allow AI to add fields</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- State 2: Loading -->
+        <div style="flex:1;">
+          <div style="font-size:9px; color:#999; font-weight:600; text-align:center; margin-bottom:6px;">LOADING</div>
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px; opacity:0.8;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600;">INTENT</label>
+              <button style="background:#f5c518; color:#1a1a1a; border:none; border-radius:6px; padding:3px 10px; font-size:8px; font-weight:700;" disabled>⟳ Filling...</button>
+            </div>
+            <div style="font-size:10px; color:#1a1a1a; line-height:1.4;">How do hooks compare to class components?</div>
+            <div style="margin-top:6px; font-size:9px; color:#999;">
+              <div style="background:#fff3cd; height:3px; border-radius:2px; overflow:hidden;">
+                <div style="background:#f5c518; height:100%; width:60%; border-radius:2px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- State 3: Filled -->
+        <div style="flex:1;">
+          <div style="font-size:9px; color:#999; font-weight:600; text-align:center; margin-bottom:6px;">FILLED</div>
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600;">INTENT</label>
+              <button style="background:#1a1a1a; color:#f5c518; border:none; border-radius:6px; padding:3px 10px; font-size:8px; font-weight:700; cursor:pointer;">✨ AI Fill</button>
+            </div>
+            <div style="font-size:10px; color:#1a1a1a; line-height:1.4;">How do hooks compare to class components?</div>
+            <div style="margin-top:6px; font-size:8px; color:#4a9; display:flex; align-items:center; gap:3px;">
+              ✓ AI filled 5 fields
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:8px; padding:10px 14px; background:#fff8e1; border-radius:8px; border:1px solid #f0e6c8; font-size:13px; color:#555;">
+    <strong>AI Fill behavior:</strong><br>
+    • Button enabled only when: task type selected + intent not empty + API key configured<br>
+    • Default mode: only fills fields currently in editor<br>
+    • "Allow AI to add fields" checked: AI can add optional fields from the template<br>
+    • AI-filled fields get a subtle highlight (light yellow background) so user knows which were auto-filled<br>
+    • User can edit any AI-filled value before compiling
+  </div>
+</div>

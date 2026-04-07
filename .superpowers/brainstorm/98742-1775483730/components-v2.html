@@ -1,0 +1,344 @@
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<h2>Component Details — v2</h2>
+<p class="subtitle">Updated: operation hints, help tooltips (?), user-friendly grouping</p>
+
+<!-- Section 1: Field Input Types with hints + help -->
+<div class="section">
+  <h3>1. Field Labels: Name + Operation Hint + Help (?)</h3>
+  <div class="mockup">
+    <div class="mockup-header">Label pattern: every field has 3 elements</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+
+        <!-- Pattern explanation -->
+        <div style="background:#fff8e1; border:1px solid #f0e6c8; border-radius:8px; padding:10px 12px; margin-bottom:14px; font-size:11px; color:#555; line-height:1.6;">
+          <strong>Label pattern:</strong>
+          <code style="background:#fff; padding:2px 6px; border-radius:4px; font-size:10px;">FIELD NAME</code>
+          <span style="color:#999; font-size:10px; margin:0 4px;">·</span>
+          <span style="color:#888; font-size:10px;">operation hint</span>
+          <span style="color:#999; font-size:10px; margin:0 4px;"> </span>
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+
+          <!-- textarea with hint + help -->
+          <div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">CONTEXT 上下文</label>
+              <span style="font-size:9px; color:#bbb;">Enter text freely</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;" title="click to expand">?</span>
+            </div>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:40px; line-height:1.5;">Building a mid-size React app, team has 3 years experience...</div>
+          </div>
+
+          <!-- select with hint + help -->
+          <div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">QUESTION TYPE 问题类型</label>
+              <span style="font-size:9px; color:#bbb;">Click to select one</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+            </div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <span style="background:#fff3cd; color:#1a1a1a; padding:4px 10px; border-radius:6px; font-size:10px; font-weight:600; border:1.5px solid #f5c518;">conceptual</span>
+              <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8; cursor:pointer;">factual</span>
+              <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8; cursor:pointer;">how-to</span>
+            </div>
+          </div>
+
+          <!-- combo with hint + help -->
+          <div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">OUTPUT FORMAT 输出格式</label>
+              <span style="font-size:9px; color:#bbb;">Select or type custom</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+            </div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px;">
+              <span style="background:#fff3cd; color:#1a1a1a; padding:4px 10px; border-radius:6px; font-size:10px; font-weight:600; border:1.5px solid #f5c518;">list</span>
+              <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8;">table</span>
+              <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8;">code</span>
+            </div>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:6px 8px; font-size:10px; color:#aaa;">or type custom value...</div>
+          </div>
+
+          <!-- list with hint + help -->
+          <div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">REQUIREMENTS 需求</label>
+              <span style="font-size:9px; color:#bbb;">Add items to list</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+            </div>
+            <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px;">
+              <div style="display:flex; align-items:center; gap:6px; padding:3px 0; border-bottom:1px solid #f5f3ef;">
+                <span style="color:#ccc; font-size:10px;">⠿</span>
+                <span style="font-size:11px; color:#1a1a1a; flex:1;">Include performance comparison</span>
+                <span style="color:#ccc; font-size:10px; cursor:pointer;">✕</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px; padding:3px 0;">
+                <span style="color:#ddd; font-size:10px;">+</span>
+                <span style="font-size:10px; color:#aaa;">Add item...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- toggle with hint + help -->
+          <div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">INCLUDE TESTS</label>
+              <span style="font-size:9px; color:#bbb;">Toggle on/off</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:36px; height:20px; background:#f5c518; border-radius:10px; position:relative; cursor:pointer;">
+                <div style="width:16px; height:16px; background:#1a1a1a; border-radius:50%; position:absolute; top:2px; right:2px;"></div>
+              </div>
+              <span style="font-size:11px; color:#1a1a1a;">Include tests in output</span>
+            </div>
+          </div>
+
+          <!-- number with hint + help -->
+          <div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">IDEA COUNT 方案数量</label>
+              <span style="font-size:9px; color:#bbb;">Click +/− or type number</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button style="width:28px; height:28px; background:#fff; border:1.5px solid #e8e2d8; border-radius:6px; font-size:14px; color:#999; cursor:pointer;">−</button>
+              <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:4px 12px; font-size:13px; font-weight:600; color:#1a1a1a; min-width:40px; text-align:center;">5</div>
+              <button style="width:28px; height:28px; background:#1a1a1a; border:none; border-radius:6px; font-size:14px; color:#f5c518; cursor:pointer;">+</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 1b: Help tooltip expanded state -->
+<div class="section">
+  <h3>1b. Help (?) Expanded State</h3>
+  <div class="mockup">
+    <div class="mockup-header">Clicking ? expands inline help below the label</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+
+        <!-- Field with help collapsed -->
+        <div style="margin-bottom:14px;">
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+            <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">CONTEXT 上下文</label>
+            <span style="font-size:9px; color:#bbb;">Enter text freely</span>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+          </div>
+          <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:24px;">Team is migrating from Angular to React...</div>
+        </div>
+
+        <!-- Field with help EXPANDED -->
+        <div style="margin-bottom:14px;">
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+            <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">QUESTION TYPE 问题类型</label>
+            <span style="font-size:9px; color:#bbb;">Click to select one</span>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#1a1a1a; color:#f5c518; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+          </div>
+          <!-- Expanded help card -->
+          <div style="background:#fff8e1; border:1.5px solid #f5c518; border-radius:8px; padding:10px 12px; margin-bottom:6px; font-size:10px; line-height:1.6; color:#555;">
+            <div style="font-weight:700; color:#1a1a1a; margin-bottom:4px;">What is this?</div>
+            <div>Categorize your question so AI knows how to structure the answer.</div>
+            <div style="margin-top:6px; font-weight:700; color:#1a1a1a; margin-bottom:2px;">Options explained:</div>
+            <div>• <strong>factual</strong> — verifiable facts, data, definitions</div>
+            <div>• <strong>conceptual</strong> — explain principles, how things work</div>
+            <div>• <strong>how-to</strong> — step-by-step instructions</div>
+            <div>• <strong>opinion</strong> — subjective assessment, recommendations</div>
+            <div style="margin-top:6px; font-weight:700; color:#1a1a1a; margin-bottom:2px;">Example:</div>
+            <div style="color:#888; font-style:italic;">"What are React hooks?" → factual<br>"Why use hooks over classes?" → conceptual</div>
+          </div>
+          <div style="display:flex; gap:4px; flex-wrap:wrap;">
+            <span style="background:#fff3cd; color:#1a1a1a; padding:4px 10px; border-radius:6px; font-size:10px; font-weight:600; border:1.5px solid #f5c518;">conceptual</span>
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8;">factual</span>
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8;">how-to</span>
+            <span style="background:#fff; color:#888; padding:4px 10px; border-radius:6px; font-size:10px; border:1px solid #e8e2d8;">opinion</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Add Field Panel with user-friendly labels -->
+<div class="section">
+  <h3>2. Add Field Panel — "Recommended" + "Others"</h3>
+  <div class="mockup">
+    <div class="mockup-header">User-friendly grouping with help (?) on each field</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+        <div style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; overflow:hidden;">
+
+          <!-- Recommended header -->
+          <div style="background:#1a1a1a; color:#f5c518; padding:7px 12px; font-size:10px; font-weight:700; letter-spacing:0.3px;">
+            ★ Recommended 推荐
+          </div>
+          <div style="padding:2px 0;">
+            <div style="display:flex; align-items:center; padding:8px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:5px;">
+                  <span style="font-size:11px; font-weight:600; color:#1a1a1a;">knowledge_level</span>
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:13px; height:13px; border-radius:50%; background:#f0ebe4; color:#999; font-size:8px; font-weight:700; cursor:pointer;">?</span>
+                </div>
+                <div style="font-size:9px; color:#999; margin-top:1px;">Your existing knowledge level on this topic</div>
+              </div>
+              <span style="color:#f5c518; font-size:18px; font-weight:700; padding:0 4px; cursor:pointer;">+</span>
+            </div>
+          </div>
+
+          <!-- Others header -->
+          <div style="background:#f5f3ef; color:#888; padding:7px 12px; font-size:10px; font-weight:700; letter-spacing:0.3px;">
+            Others 其它
+          </div>
+          <div style="padding:2px 0;">
+            <div style="display:flex; align-items:center; padding:8px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:5px;">
+                  <span style="font-size:11px; font-weight:600; color:#1a1a1a;">goal</span>
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:13px; height:13px; border-radius:50%; background:#f0ebe4; color:#999; font-size:8px; font-weight:700; cursor:pointer;">?</span>
+                </div>
+                <div style="font-size:9px; color:#999; margin-top:1px;">Desired end state or outcome</div>
+              </div>
+              <span style="color:#f5c518; font-size:18px; font-weight:700; padding:0 4px; cursor:pointer;">+</span>
+            </div>
+            <div style="display:flex; align-items:center; padding:8px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:5px;">
+                  <span style="font-size:11px; font-weight:600; color:#1a1a1a;">role</span>
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:13px; height:13px; border-radius:50%; background:#f0ebe4; color:#999; font-size:8px; font-weight:700; cursor:pointer;">?</span>
+                </div>
+                <div style="font-size:9px; color:#999; margin-top:1px;">Role the AI should assume</div>
+              </div>
+              <span style="color:#f5c518; font-size:18px; font-weight:700; padding:0 4px; cursor:pointer;">+</span>
+            </div>
+            <div style="display:flex; align-items:center; padding:8px 12px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:5px;">
+                  <span style="font-size:11px; font-weight:600; color:#1a1a1a;">examples</span>
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:13px; height:13px; border-radius:50%; background:#f0ebe4; color:#999; font-size:8px; font-weight:700; cursor:pointer;">?</span>
+                </div>
+                <div style="font-size:9px; color:#999; margin-top:1px;">Reference examples for desired output</div>
+              </div>
+              <span style="color:#f5c518; font-size:18px; font-weight:700; padding:0 4px; cursor:pointer;">+</span>
+            </div>
+            <div style="padding:6px 12px; font-size:10px; color:#ccc; text-align:center;">... more fields ...</div>
+          </div>
+
+          <!-- Custom fields -->
+          <div style="background:#fff8e1; padding:8px 12px; display:flex; align-items:center; cursor:pointer; border-top:1.5px solid #f0e6c8;">
+            <div style="flex:1;">
+              <div style="display:flex; align-items:center; gap:5px;">
+                <span style="font-size:11px; font-weight:600; color:#1a1a1a;">custom_fields</span>
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:13px; height:13px; border-radius:50%; background:#f0ebe4; color:#999; font-size:8px; font-weight:700; cursor:pointer;">?</span>
+              </div>
+              <div style="font-size:9px; color:#999; margin-top:1px;">Add your own key-value pairs</div>
+            </div>
+            <span style="color:#f5c518; font-size:18px; font-weight:700; padding:0 4px; cursor:pointer;">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: AI Fill with help tooltip -->
+<div class="section">
+  <h3>3. AI Fill — with Help (?) on checkbox</h3>
+  <div class="mockup">
+    <div class="mockup-header">"Allow AI to add fields" checkbox with help explanation</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#fffdf5; padding:16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+
+        <!-- Intent area -->
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <label style="font-size:9px; color:#999; font-weight:600; letter-spacing:0.5px;">INTENT 意图</label>
+              <span style="font-size:9px; color:#bbb;">Enter text freely</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+            </div>
+            <button style="background:#1a1a1a; color:#f5c518; border:none; border-radius:6px; padding:4px 12px; font-size:9px; font-weight:700; cursor:pointer;">✨ AI Fill</button>
+          </div>
+          <div style="background:#fff; border:2px solid #f5c518; border-radius:8px; padding:8px; font-size:11px; color:#1a1a1a; min-height:28px; line-height:1.5; box-shadow:0 1px 4px rgba(245,197,24,0.1);">How do React hooks compare to class components for state management?</div>
+        </div>
+
+        <!-- Checkbox: help collapsed -->
+        <div style="margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:15px; height:15px; border:1.5px solid #e8e2d8; border-radius:3px; cursor:pointer;"></div>
+            <span style="font-size:10px; color:#555;">Allow AI to add fields</span>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+          </div>
+        </div>
+
+        <div style="border-top:1.5px dashed #e8e2d8; padding-top:14px;">
+          <div style="font-size:10px; color:#888; margin-bottom:8px; font-weight:600;">↓ Same checkbox with help expanded:</div>
+        </div>
+
+        <!-- Checkbox: help expanded -->
+        <div>
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+            <div style="width:15px; height:15px; border:1.5px solid #e8e2d8; border-radius:3px; cursor:pointer;"></div>
+            <span style="font-size:10px; color:#555;">Allow AI to add fields</span>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#1a1a1a; color:#f5c518; font-size:9px; font-weight:700; cursor:pointer;">?</span>
+          </div>
+          <div style="background:#fff8e1; border:1.5px solid #f5c518; border-radius:8px; padding:10px 12px; font-size:10px; line-height:1.6; color:#555; margin-left:21px;">
+            <div style="font-weight:700; color:#1a1a1a; margin-bottom:3px;">What does this do?</div>
+            <div>By default, AI Fill only populates fields already shown in the editor. When this option is checked, AI can also <strong>discover and add</strong> relevant optional fields it thinks are useful for your intent.</div>
+            <div style="margin-top:6px; font-weight:700; color:#1a1a1a; margin-bottom:2px;">Example:</div>
+            <div style="color:#888; font-style:italic;">If you type "Write a technical blog post about WebSocket" with this checked, AI might add the optional fields "tone", "target_length", and "structure" because they're relevant to writing tasks — even if you hadn't added them yourself.</div>
+            <div style="margin-top:6px; font-weight:700; color:#1a1a1a; margin-bottom:2px;">Note:</div>
+            <div style="color:#888;">You can always review and remove any AI-added fields before compiling.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Operation hints reference -->
+<div style="margin-top:16px; padding:12px 16px; background:#fff8e1; border-radius:8px; border:1px solid #f0e6c8;">
+  <h3 style="margin-top:0; font-size:14px;">Operation Hints per Input Type</h3>
+  <table style="width:100%; font-size:12px; border-collapse:collapse;">
+    <tr style="border-bottom:1px solid #f0e6c8;">
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">textarea</td>
+      <td style="padding:4px 8px; color:#888;">Enter text freely</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0e6c8;">
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">text</td>
+      <td style="padding:4px 8px; color:#888;">Enter text freely</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0e6c8;">
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">select</td>
+      <td style="padding:4px 8px; color:#888;">Click to select one</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0e6c8;">
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">combo</td>
+      <td style="padding:4px 8px; color:#888;">Select or type custom</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0e6c8;">
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">list</td>
+      <td style="padding:4px 8px; color:#888;">Add items to list</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0e6c8;">
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">toggle</td>
+      <td style="padding:4px 8px; color:#888;">Toggle on/off</td>
+    </tr>
+    <tr style="border-bottom:1px solid #f0e6c8;">
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">number</td>
+      <td style="padding:4px 8px; color:#888;">Click +/− or type number</td>
+    </tr>
+    <tr>
+      <td style="padding:4px 8px; font-weight:600; color:#1a1a1a;">key-value</td>
+      <td style="padding:4px 8px; color:#888;">Add key-value pairs</td>
+    </tr>
+  </table>
+</div>

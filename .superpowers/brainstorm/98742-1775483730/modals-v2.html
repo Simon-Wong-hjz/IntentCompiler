@@ -1,0 +1,180 @@
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<h2>Modal Designs — v2</h2>
+<p class="subtitle">Settings updated: defaults for output language + output format. UI language stays on Top Bar.</p>
+
+<div class="split">
+  <!-- Settings Modal -->
+  <div class="mockup">
+    <div class="mockup-header">Settings Modal (updated)</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:rgba(0,0,0,0.3); padding:24px 16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; min-height:440px; display:flex; align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:12px; width:100%; max-width:400px; box-shadow:0 8px 32px rgba(0,0,0,0.15); overflow:hidden;">
+          <!-- Modal header -->
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid #f0ebe4;">
+            <span style="font-size:15px; font-weight:800; color:#1a1a1a;">Settings 设置</span>
+            <span style="color:#ccc; font-size:18px; cursor:pointer; line-height:1;">✕</span>
+          </div>
+
+          <div style="padding:18px;">
+
+            <!-- Section: Output Defaults -->
+            <div style="margin-bottom:6px;">
+              <span style="font-size:10px; color:#999; font-weight:600; letter-spacing:0.5px;">OUTPUT DEFAULTS 输出默认值</span>
+            </div>
+
+            <!-- Default output language -->
+            <div style="margin-bottom:16px;">
+              <div style="display:flex; align-items:center; gap:0; margin-bottom:6px;">
+                <label style="font-size:10px; color:#666; font-weight:600;">Default Output Language 默认输出语言</label>
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px;">?</span>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <span style="background:#1a1a1a; color:#f5c518; padding:6px 14px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer;">English</span>
+                <span style="background:#fff; color:#888; padding:6px 14px; border-radius:6px; font-size:11px; border:1px solid #e8e2d8; cursor:pointer;">中文</span>
+              </div>
+              <div style="font-size:9px; color:#bbb; margin-top:4px;">The language AI should respond in. Can be overridden per session.</div>
+            </div>
+
+            <!-- Default output format -->
+            <div style="margin-bottom:18px;">
+              <div style="display:flex; align-items:center; gap:0; margin-bottom:6px;">
+                <label style="font-size:10px; color:#666; font-weight:600;">Default Output Format 默认输出格式</label>
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:#f0ebe4; color:#999; font-size:9px; font-weight:700; cursor:pointer; margin-left:4px;">?</span>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <span style="background:#1a1a1a; color:#f5c518; padding:6px 14px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer;">Markdown</span>
+                <span style="background:#fff; color:#888; padding:6px 14px; border-radius:6px; font-size:11px; border:1px solid #e8e2d8; cursor:pointer;">JSON</span>
+                <span style="background:#fff; color:#888; padding:6px 14px; border-radius:6px; font-size:11px; border:1px solid #e8e2d8; cursor:pointer;">YAML</span>
+                <span style="background:#fff; color:#888; padding:6px 14px; border-radius:6px; font-size:11px; border:1px solid #e8e2d8; cursor:pointer;">XML</span>
+              </div>
+              <div style="font-size:9px; color:#bbb; margin-top:4px;">The format for compiled output. Can be overridden per session.</div>
+            </div>
+
+            <!-- Divider: AI Configuration -->
+            <div style="border-top:1.5px solid #f0ebe4; margin:18px 0; position:relative;">
+              <span style="position:absolute; top:-9px; left:0; background:#fff; padding-right:8px; font-size:10px; color:#999; font-weight:600; letter-spacing:0.5px;">AI CONFIGURATION</span>
+            </div>
+
+            <!-- AI Provider -->
+            <div style="margin-bottom:14px;">
+              <div style="display:flex; align-items:center; gap:5px; margin-bottom:6px;">
+                <label style="font-size:10px; color:#666; font-weight:600;">AI Provider</label>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <span style="background:#1a1a1a; color:#f5c518; padding:6px 14px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer;">OpenAI</span>
+                <span style="background:#fff; color:#888; padding:6px 14px; border-radius:6px; font-size:11px; border:1px solid #e8e2d8; cursor:pointer;">Anthropic</span>
+              </div>
+            </div>
+
+            <!-- API Key input -->
+            <div style="margin-bottom:14px;">
+              <div style="display:flex; align-items:center; gap:5px; margin-bottom:6px;">
+                <label style="font-size:10px; color:#666; font-weight:600;">API Key</label>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <div style="flex:1; background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px 10px; font-size:11px; color:#1a1a1a; font-family:monospace; letter-spacing:1px;">sk-••••••••••••••••3kF9</div>
+                <button style="background:#fff; border:1.5px solid #e8e2d8; border-radius:8px; padding:8px 10px; font-size:10px; color:#888; cursor:pointer; white-space:nowrap;">Show</button>
+              </div>
+            </div>
+
+            <!-- Key status -->
+            <div style="display:flex; align-items:center; gap:6px; padding:8px 10px; background:#f0faf0; border-radius:8px; margin-bottom:14px;">
+              <span style="color:#4a9; font-size:12px;">✓</span>
+              <span style="font-size:10px; color:#4a9; font-weight:600;">Key verified — OpenAI GPT-4o</span>
+            </div>
+
+            <!-- Security note -->
+            <div style="font-size:9px; color:#bbb; line-height:1.5;">
+              🔒 Your API key is stored locally in your browser (IndexedDB) and is only sent to the AI provider's API. It never reaches our servers.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Modal (unchanged) -->
+  <div class="mockup">
+    <div class="mockup-header">History Modal (unchanged)</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:rgba(0,0,0,0.3); padding:24px 16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; min-height:440px; display:flex; align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:12px; width:100%; max-width:400px; box-shadow:0 8px 32px rgba(0,0,0,0.15); overflow:hidden;">
+          <!-- Modal header -->
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid #f0ebe4;">
+            <span style="font-size:15px; font-weight:800; color:#1a1a1a;">History 历史记录</span>
+            <span style="color:#ccc; font-size:18px; cursor:pointer; line-height:1;">✕</span>
+          </div>
+
+          <div style="padding:8px 0; max-height:340px; overflow-y:auto;">
+            <div style="display:flex; align-items:flex-start; gap:10px; padding:12px 18px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <span style="background:#1a1a1a; color:#f5c518; padding:2px 8px; border-radius:4px; font-size:9px; font-weight:700; white-space:nowrap; margin-top:1px;">Ask</span>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:12px; color:#1a1a1a; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">How do React hooks compare to class components?</div>
+                <div style="font-size:9px; color:#bbb; margin-top:2px;">2 min ago · Markdown</div>
+              </div>
+              <span style="color:#ddd; font-size:12px; cursor:pointer; padding:2px; flex-shrink:0;">🗑</span>
+            </div>
+
+            <div style="display:flex; align-items:flex-start; gap:10px; padding:12px 18px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <span style="background:#fff3cd; color:#1a1a1a; padding:2px 8px; border-radius:4px; font-size:9px; font-weight:700; white-space:nowrap; border:1px solid #f0e6c8; margin-top:1px;">Create</span>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:12px; color:#1a1a1a; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Write a Python script to batch rename files using regex</div>
+                <div style="font-size:9px; color:#bbb; margin-top:2px;">1 hour ago · JSON</div>
+              </div>
+              <span style="color:#ddd; font-size:12px; cursor:pointer; padding:2px; flex-shrink:0;">🗑</span>
+            </div>
+
+            <div style="display:flex; align-items:flex-start; gap:10px; padding:12px 18px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <span style="background:#fff3cd; color:#1a1a1a; padding:2px 8px; border-radius:4px; font-size:9px; font-weight:700; white-space:nowrap; border:1px solid #f0e6c8; margin-top:1px;">Analyze</span>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:12px; color:#1a1a1a; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Compare PostgreSQL vs MongoDB for our e-commerce platform</div>
+                <div style="font-size:9px; color:#bbb; margin-top:2px;">Yesterday · YAML</div>
+              </div>
+              <span style="color:#ddd; font-size:12px; cursor:pointer; padding:2px; flex-shrink:0;">🗑</span>
+            </div>
+
+            <div style="display:flex; align-items:flex-start; gap:10px; padding:12px 18px; cursor:pointer; border-bottom:1px solid #f5f3ef;">
+              <span style="background:#fff3cd; color:#1a1a1a; padding:2px 8px; border-radius:4px; font-size:9px; font-weight:700; white-space:nowrap; border:1px solid #f0e6c8; margin-top:1px;">Ideate</span>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:12px; color:#1a1a1a; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Design a notification system for our mobile app</div>
+                <div style="font-size:9px; color:#bbb; margin-top:2px;">2 days ago · Markdown</div>
+              </div>
+              <span style="color:#ddd; font-size:12px; cursor:pointer; padding:2px; flex-shrink:0;">🗑</span>
+            </div>
+
+            <div style="display:flex; align-items:flex-start; gap:10px; padding:12px 18px; cursor:pointer;">
+              <span style="background:#fff3cd; color:#1a1a1a; padding:2px 8px; border-radius:4px; font-size:9px; font-weight:700; white-space:nowrap; border:1px solid #f0e6c8; margin-top:1px;">Execute</span>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:12px; color:#1a1a1a; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Set up CI/CD pipeline for our Node.js monorepo</div>
+                <div style="font-size:9px; color:#bbb; margin-top:2px;">3 days ago · Markdown</div>
+              </div>
+              <span style="color:#ddd; font-size:12px; cursor:pointer; padding:2px; flex-shrink:0;">🗑</span>
+            </div>
+          </div>
+
+          <div style="padding:10px 18px; border-top:1px solid #f0ebe4; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:10px; color:#bbb;">5 records</span>
+            <button style="background:none; border:none; font-size:10px; color:#e55; cursor:pointer; font-weight:600;">Clear All 清空全部</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change summary -->
+<div style="margin-top:16px; padding:12px 16px; background:#fff8e1; border-radius:8px; border:1px solid #f0e6c8;">
+  <h3 style="margin-top:0; font-size:14px;">What Changed</h3>
+  <div style="font-size:12px; color:#555; line-height:1.8;">
+    <strong>Settings Modal:</strong><br>
+    • Removed "Language" toggle (UI language stays on Top Bar)<br>
+    • Added "Default Output Language" with ? help — sets what new sessions start with<br>
+    • Renamed to "Default Output Format" — clarifies this is a default, overridable per session<br>
+    • Both defaults have subtitle: "Can be overridden per session"<br>
+    • Grouped under "OUTPUT DEFAULTS" section header<br><br>
+    <strong>Main page (next step):</strong><br>
+    • Need to add per-session Output Language selector<br>
+    • Output Format selector already exists in preview area header
+  </div>
+</div>
