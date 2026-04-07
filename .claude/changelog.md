@@ -1,5 +1,10 @@
 # Changelog
 
+## [2026-04-07] - Batch 8, Tasks 20-22: Wiring + Polish
+- **Task 20**: Replaced stub `src/App.tsx` with full compile loop — `useState` for selectedType and fieldValues, `useCompiler` for output, `useCallback` handlers, renders `PageLayout` with all props wired
+- **Task 21**: Updated `src/components/editor/EditorArea.tsx` to accept `selectedType` prop; added two empty states: "Select a task type" (no selection) and "Coming soon" (type selected but no fields). Updated `src/components/layout/PageLayout.tsx` to pass `selectedType` down to EditorArea
+- **Task 22**: Added Google Fonts preconnect + Plus Jakarta Sans link to `index.html`; added `body` font-family stack (Plus Jakarta Sans → PingFang SC → Microsoft YaHei → Noto Sans SC → system-ui) with font smoothing to `src/index.css`
+
 ## [2026-04-07] - Batch 7, Tasks 16-19: EditorArea + PreviewArea + CopyButton + PageLayout
 - **Task 16**: Created `src/components/editor/EditorArea.tsx` — separates intent field from other default fields, renders empty-state when no task type selected
 - **Task 17**: Created `src/components/preview/PreviewArea.tsx` — monospace output pane with empty-state and CopyButton footer
