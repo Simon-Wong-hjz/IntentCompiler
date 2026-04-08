@@ -1,79 +1,98 @@
 import type { FieldDefinition } from '@/registry/types';
 import { TextareaField } from '@/components/editor/fields/TextareaField';
 import { TextField } from '@/components/editor/fields/TextField';
-import { keyToLabelZh } from '@/lib/format';
+import { SelectField } from '@/components/editor/fields/SelectField';
+import { ComboField } from '@/components/editor/fields/ComboField';
+import { ListField } from '@/components/editor/fields/ListField';
+import { ToggleField } from '@/components/editor/fields/ToggleField';
+import { NumberField } from '@/components/editor/fields/NumberField';
+import { KeyValueField, type KeyValuePair } from '@/components/editor/fields/KeyValueField';
 
 interface FieldRendererProps {
   field: FieldDefinition;
-  value: string;
-  onChange: (value: string) => void;
+  value: unknown;
+  onChange: (value: unknown) => void;
 }
 
 export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
-  const label = keyToLabelZh(field.key);
-
   switch (field.inputType) {
     case 'textarea':
       return (
         <TextareaField
-          fieldKey={field.key}
-          label={label}
-          value={value}
+          field={field}
+          value={(value as string) ?? ''}
           onChange={onChange}
-          placeholder="自由输入"
         />
       );
 
     case 'text':
       return (
         <TextField
-          fieldKey={field.key}
-          label={label}
-          value={value}
+          field={field}
+          value={(value as string) ?? ''}
           onChange={onChange}
-          placeholder="自由输入"
-        />
-      );
-
-    case 'list':
-      return (
-        <TextareaField
-          fieldKey={field.key}
-          label={label}
-          value={value}
-          onChange={onChange}
-          placeholder="每行输入一项"
         />
       );
 
     case 'select':
       return (
-        <TextField
-          fieldKey={field.key}
-          label={`${label}${field.options ? `（${field.options.join(' / ')}）` : ''}`}
-          value={value}
+        <SelectField
+          field={field}
+          value={(value as string) ?? ''}
           onChange={onChange}
-          placeholder={field.options ? field.options.join('、') : '输入内容'}
         />
       );
 
     case 'combo':
       return (
-        <TextField
-          fieldKey={field.key}
-          label={`${label}${field.options ? `（${field.options.join(' / ')}）` : ''}`}
-          value={value}
+        <ComboField
+          field={field}
+          value={(value as string) ?? ''}
           onChange={onChange}
-          placeholder={field.options ? `${field.options.join('、')} 或自定义` : '选择或输入自定义值'}
+        />
+      );
+
+    case 'list':
+      return (
+        <ListField
+          field={field}
+          value={(value as string[]) ?? []}
+          onChange={onChange}
+        />
+      );
+
+    case 'toggle':
+      return (
+        <ToggleField
+          field={field}
+          value={(value as boolean) ?? false}
+          onChange={onChange}
+        />
+      );
+
+    case 'number':
+      return (
+        <NumberField
+          field={field}
+          value={(value as number) ?? 0}
+          onChange={onChange}
+        />
+      );
+
+    case 'key-value':
+      return (
+        <KeyValueField
+          field={field}
+          value={(value as KeyValuePair[]) ?? []}
+          onChange={onChange}
         />
       );
 
     default:
       return (
         <TextField
-          fieldKey={field.key}
-          label={label}
-          value={value}
+          field={field}
+          value={(value as string) ?? ''}
           onChange={onChange}
           placeholder="输入内容"
         />

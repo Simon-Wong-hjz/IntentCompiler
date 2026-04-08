@@ -1,29 +1,25 @@
+import { FieldLabel } from '@/components/editor/FieldLabel';
+import type { FieldDefinition } from '@/registry/types';
+
 interface TextFieldProps {
-  fieldKey: string;
-  label: string;
+  field: FieldDefinition;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
 }
 
 export function TextField({
-  fieldKey,
-  label,
+  field,
   value,
   onChange,
-  placeholder,
+  placeholder = '自由输入',
 }: TextFieldProps) {
   return (
     <div className="flex flex-col gap-1">
-      <label
-        htmlFor={fieldKey}
-        className="text-xs uppercase text-ink-muted font-semibold tracking-wide"
-      >
-        {label}
-      </label>
+      <FieldLabel fieldKey={field.key} inputType={field.inputType} />
       <input
         type="text"
-        id={fieldKey}
+        id={field.key}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}

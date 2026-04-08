@@ -8,8 +8,8 @@ interface PageLayoutProps {
   selectedType: TaskType | null;
   onSelectType: (type: TaskType) => void;
   fields: FieldDefinition[];
-  fieldValues: Record<string, string>;
-  onFieldChange: (key: string, value: string) => void;
+  fieldValues: Record<string, unknown>;
+  onFieldChange: (key: string, value: unknown) => void;
   compiledOutput: string;
   hasContent: boolean;
   canCopy: boolean;

@@ -16,15 +16,20 @@ registry/
 ├── types.ts               # Type definitions (TaskType, FieldDefinition, TaskTemplate)
 ├── template-registry.ts   # Central registry — getTemplate(), getAllTaskTypes()
 └── task-types/
-    └── ask.ts             # Ask task field definitions (Phase 1)
-    # create.ts, transform.ts, etc. will be added in Phase 2
+    ├── ask.ts             # Ask task (7 defaults + 14 optionals)
+    ├── create.ts          # Create task (8 defaults + 16 optionals)
+    ├── transform.ts       # Transform task (7 defaults + 15 optionals)
+    ├── analyze.ts         # Analyze task (8 defaults + 15 optionals)
+    ├── ideate.ts          # Ideate task (9 defaults + 14 optionals)
+    └── execute.ts         # Execute task (7 defaults + 16 optionals)
 ```
 
 ## How to Add a New Task Type
 
-1. Create `task-types/<type>.ts` exporting a `FieldDefinition[]` array (follow `ask.ts` as reference)
-2. Import it in `template-registry.ts` and add a `TaskTemplate` entry to the `templates` array
+1. Create `task-types/<type>.ts` exporting a `TaskTemplate` object (follow `create.ts` as reference) — or export a `FieldDefinition[]` array (like `ask.ts`)
+2. Import it in `template-registry.ts` and add it to the `templates` array
 3. The field order in the array determines render order in the editor
+4. All task types should end with `custom_fields` (key-value, universal, optional) as the last field
 
 ## Field Classification Model
 
@@ -32,10 +37,10 @@ Every field has two independent axes:
 - **Scope**: `'universal'` (appears in all task types, e.g., intent) or `'task'` (task-specific)
 - **Visibility**: `'default'` (shown immediately) or `'optional'` (hidden in "Add Field" panel)
 
-Phase 2 will implement progressive disclosure — filtering fields by visibility.
+Progressive disclosure is implemented in `EditorArea` — default fields are always shown, optional fields appear in the `AddFieldPanel` until the user adds them.
 
 ## Conventions
 
-- Field `key` values use `camelCase` (e.g., `'outputFormat'`, `'targetAudience'`)
+- Field `key` values use `snake_case` (e.g., `'output_format'`, `'target_length'`)
 - Bilingual strings use `{ en: string; zh: string }` — Chinese is primary
 - The `templates` array in `template-registry.ts` is not exported; access via `getTemplate()` / `getAllTaskTypes()`

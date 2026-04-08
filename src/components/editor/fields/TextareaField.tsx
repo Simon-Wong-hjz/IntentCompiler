@@ -1,8 +1,9 @@
 import { useCallback, useRef, useEffect } from 'react';
+import { FieldLabel } from '@/components/editor/FieldLabel';
+import type { FieldDefinition } from '@/registry/types';
 
 interface TextareaFieldProps {
-  fieldKey: string;
-  label: string;
+  field: FieldDefinition;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -10,11 +11,10 @@ interface TextareaFieldProps {
 }
 
 export function TextareaField({
-  fieldKey,
-  label,
+  field,
   value,
   onChange,
-  placeholder,
+  placeholder = '自由输入',
   minHeight = 36,
 }: TextareaFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -32,15 +32,10 @@ export function TextareaField({
 
   return (
     <div className="flex flex-col gap-1">
-      <label
-        htmlFor={fieldKey}
-        className="text-xs uppercase text-ink-muted font-semibold tracking-wide"
-      >
-        {label}
-      </label>
+      <FieldLabel fieldKey={field.key} inputType={field.inputType} />
       <textarea
         ref={textareaRef}
-        id={fieldKey}
+        id={field.key}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onInput={autoExpand}

@@ -6,7 +6,7 @@ import type { OutputFormat } from '@/compiler/types';
 
 export function useCompiler(
   fieldDefinitions: FieldDefinition[],
-  fieldValues: Record<string, string>,
+  fieldValues: Record<string, unknown>,
   format: OutputFormat = 'markdown',
 ) {
   const compiledOutput = useMemo(() => {

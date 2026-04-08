@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-04-08] - Phase 2: All 6 task types + all input type renderers + progressive disclosure
+- **5 new task type definitions**: Created `create.ts`, `transform.ts`, `analyze.ts`, `ideate.ts`, `execute.ts` in `src/registry/task-types/` — each exports a complete `TaskTemplate` with universal defaults, task defaults, task optionals, and universal optionals ending with `custom_fields`
+- **Extended Ask with optional fields**: Added `knowledge_level` (task optional) and 13 universal optionals to `ask.ts` so all 6 types share the same progressive disclosure structure
+- **Updated template-registry**: Replaced 5 stub entries (`fields: []`) with imported modules; changed `getTemplate()` return type from `TaskTemplate | undefined` to `TaskTemplate` (throws on unknown type)
+- **FieldLabel component**: `src/components/editor/FieldLabel.tsx` — standardized label pattern with Chinese field names via `keyToLabelZh()` and Chinese operation hints (`自由输入文本`, `点击选择一项`, `添加列表项`, etc.). Integrated into IntentField, TextareaField, TextField
+- **Expanded FIELD_LABELS_ZH**: Added 35 Chinese labels covering all field keys across all 6 task types
+- **6 new field components**: SelectField (pill buttons), ComboField (pills + custom text input), ListField (with @dnd-kit drag-reorder), ToggleField (custom switch), NumberField (stepper +/−), KeyValueField (key-value pair manager)
+- **Updated FieldRenderer**: Full dispatch for all 8 `InputType` variants; replaced Phase 1 fallbacks with dedicated components
+- **Type system widening**: Changed `fieldValues` from `Record<string, string>` to `Record<string, unknown>` across App.tsx, PageLayout.tsx, EditorArea.tsx, useCompiler.ts; updated MarkdownFormatter to format arrays as bullet lists, booleans as 是/否, key-value pairs as `**key**: value`
+- **AddFieldPanel**: Progressive disclosure panel with "★ 推荐" (task optionals), "其他" (universal optionals), "自定义字段" sections; Chinese descriptions for all optional fields
+- **EditorArea integration**: Manages `addedFields` state, renders default + added optional fields, shows AddFieldPanel for remaining optionals; resets `addedFields` on task type switch
+- **Refactored TextareaField/TextField props**: Changed from `(fieldKey, label, value, onChange)` to `(field, value, onChange)` — components now self-derive labels from `FieldDefinition`
+- **New dependencies**: `@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities` for ListField drag-reorder
+- **Tests**: 72 total (was 15) — added `all-task-types.test.ts` (30 tests), `SelectField.test.tsx` (5), `ListField.test.tsx` (6), `AddFieldPanel.test.tsx` (7); updated `template-registry.test.ts` for new return type and populated Create fields
+- **Build**: 298KB JS + 29KB CSS (was 228KB + 28KB)
+
 ## [2026-04-08] - Restructure CLAUDE.md into modular architecture
 - Rewrote root `CLAUDE.md` as concise navigation hub (~95 lines): fixed stale project status ("Pre-implementation" → Phase 1 complete), corrected tech stack versions (React 19, TypeScript 6, Vite 8, Tailwind v4), replaced planned `src/` tree with actual structure, added `@/` path alias convention, added links to module-level CLAUDE.md files
 - Created `src/registry/CLAUDE.md` — Template Registry guidance: types, how to add task types, field classification model, naming conventions

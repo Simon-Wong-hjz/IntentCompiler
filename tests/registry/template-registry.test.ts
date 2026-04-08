@@ -25,10 +25,9 @@ describe('Template Registry', () => {
 
   it('returns Ask template with correct default fields', () => {
     const template = getTemplate('ask');
-    expect(template).toBeDefined();
-    expect(template!.type).toBe('ask');
+    expect(template.type).toBe('ask');
 
-    const defaultFields = template!.fields.filter(
+    const defaultFields = template.fields.filter(
       (f) => f.visibility === 'default'
     );
     const defaultKeys = defaultFields.map((f) => f.key);
@@ -46,7 +45,7 @@ describe('Template Registry', () => {
 
   it('marks intent as required', () => {
     const template = getTemplate('ask');
-    const intent = template!.fields.find((f) => f.key === 'intent');
+    const intent = template.fields.find((f) => f.key === 'intent');
     expect(intent).toBeDefined();
     expect(intent!.required).toBe(true);
     expect(intent!.inputType).toBe('textarea');
@@ -56,7 +55,7 @@ describe('Template Registry', () => {
   it('returns correct input types for Ask fields', () => {
     const template = getTemplate('ask');
     const fieldMap = new Map(
-      template!.fields.map((f) => [f.key, f])
+      template.fields.map((f) => [f.key, f])
     );
 
     expect(fieldMap.get('context')!.inputType).toBe('textarea');
@@ -67,11 +66,13 @@ describe('Template Registry', () => {
     expect(fieldMap.get('audience')!.inputType).toBe('text');
   });
 
-  it('returns Create template with empty fields (not yet implemented)', () => {
+  it('returns Create template with populated fields', () => {
     const template = getTemplate('create');
-    expect(template).toBeDefined();
-    expect(template!.type).toBe('create');
-    // Create fields are not populated until Phase 2
-    expect(template!.fields).toEqual([]);
+    expect(template.type).toBe('create');
+    expect(template.fields.length).toBeGreaterThan(0);
+  });
+
+  it('throws for unknown task type', () => {
+    expect(() => getTemplate('unknown' as TaskType)).toThrow('Unknown task type: unknown');
   });
 });

@@ -1,5 +1,6 @@
 import { useCallback, useRef, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { FieldLabel } from '@/components/editor/FieldLabel';
 
 interface IntentFieldProps {
   value: string;
@@ -31,12 +32,7 @@ export function IntentField({ value, onChange }: IntentFieldProps) {
 
   return (
     <div className="flex flex-col gap-1">
-      <label
-        htmlFor="intent"
-        className="text-xs uppercase text-ink-muted font-semibold tracking-wide"
-      >
-        意图
-      </label>
+      <FieldLabel fieldKey="intent" inputType="textarea" />
       <textarea
         ref={textareaRef}
         id="intent"
