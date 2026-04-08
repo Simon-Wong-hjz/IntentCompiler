@@ -2,31 +2,13 @@
 
 ## Must Verify
 
-| Item | Status | Comment |
-|------|--------|---------|
-| 74 unit tests pass: `npm run test` — covers registry, compiler, formatters, and field components | PASS | 74/74 pass across 7 test files, 1.87s |
-| Production build succeeds: `npm run build` — expected ~300KB JS + ~30KB CSS | PASS | 301.57KB JS + 29.94KB CSS, built in 252ms |
-| All 6 task types render their fields when selected (not just Ask) | PASS | Playwright verified: 创作 (Create) renders all default fields correctly |
-| Progressive disclosure: AddFieldPanel shows optional fields grouped as ★ 推荐 / 其他 / 自定义字段 | PASS | Playwright verified: all 3 sections render with correct headers |
-| Task switching preserves intent field value and confirms before clearing other fields | PASS | Playwright verified: confirm dialog shown, intent preserved, background cleared after switch |
-| ESLint passes clean: `npm run lint` | PASS | 0 errors, 1 warning (button.tsx fast-refresh — tracked in Safe to Ignore) |
+(all passed)
 
 ## Should Verify
 
-| Item | Status | Comment |
-|------|--------|---------|
-| ListField "+" button adds items (not just Enter key) | PASS | Playwright verified: typed "支持中文", clicked "+", item added to list |
-| ListField drag reorder has no snap-back animation | PASS | Playwright drag: 第一项↔第二项 reordered successfully, no snap-back, preview updated |
-| KeyValueField "+" button adds pairs and drag-reorder works | PASS | Playwright: "+" added 语言:TS + 框架:React, drag reorder swapped order correctly |
-| ToggleField knob stays within switch bounds in both on/off states | PASS | Playwright verified: off state (knob left), on state (knob right, gold bg), no overflow |
-| ComboField renders correctly for formerly-select fields (question_type, detail_level, etc.) | PASS | Playwright verified: 输出格式, 内容类型, 语气 all show pills + custom text input |
-| AddFieldPanel expand/collapse animation is smooth + scrolls into view | PASS | Playwright verified: slide-expand animation plays, panel scrolls into view |
-| Add-field "+" shows ✓ feedback before adding | PASS | Playwright verified: clicked "包含测试" +, field appeared in editor after delay |
-| Help badge (?) is visible with border ring at superscript position | PASS | Playwright verified: all field labels show circled ? with visible border |
-| All buttons show pointer cursor on hover | PASS | Playwright snapshot confirms `[cursor=pointer]` on all task cards, field buttons, add buttons |
+(all passed)
 
 ## Safe to Ignore
-- README.md doc-debt (stale versions, placeholder setup) — tracked in doc-debt.md, cosmetic
 - No i18n framework installed — react-i18next is Phase 3 scope
 - No persistence — IndexedDB/Dexie.js is Phase 4 scope
 - No AI-enhanced mode — Phase 5 scope
