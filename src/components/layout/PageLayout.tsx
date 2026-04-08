@@ -21,6 +21,9 @@ interface PageLayoutProps {
   outputLanguage: Language;
   onFormatChange: (format: OutputFormat) => void;
   onOutputLanguageChange: (language: Language) => void;
+  onOpenHistory: () => void;
+  onOpenSettings: () => void;
+  onAfterCopy?: () => void;
 }
 
 export function PageLayout({
@@ -39,10 +42,13 @@ export function PageLayout({
   outputLanguage,
   onFormatChange,
   onOutputLanguageChange,
+  onOpenHistory,
+  onOpenSettings,
+  onAfterCopy,
 }: PageLayoutProps) {
   return (
     <div className="h-screen flex flex-col bg-bg-page" style={{ minWidth: '1024px' }}>
-      <TopBar />
+      <TopBar onOpenHistory={onOpenHistory} onOpenSettings={onOpenSettings} />
 
       {/* Spacer for fixed top bar */}
       <div className="flex-shrink-0 h-12" />
@@ -77,6 +83,7 @@ export function PageLayout({
             outputLanguage={outputLanguage}
             onFormatChange={onFormatChange}
             onOutputLanguageChange={onOutputLanguageChange}
+            onAfterCopy={onAfterCopy}
           />
         </div>
       </div>

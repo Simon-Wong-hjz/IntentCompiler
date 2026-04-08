@@ -34,7 +34,12 @@ function UILanguageToggle() {
   );
 }
 
-export function TopBar() {
+interface TopBarProps {
+  onOpenHistory: () => void;
+  onOpenSettings: () => void;
+}
+
+export function TopBar({ onOpenHistory, onOpenSettings }: TopBarProps) {
   const { t } = useTranslation();
 
   return (
@@ -48,14 +53,14 @@ export function TopBar() {
 
       <nav className="flex items-center gap-4">
         <button
-          className="text-sm font-medium text-ink-secondary hover:text-ink-primary cursor-not-allowed opacity-60"
-          disabled
+          onClick={onOpenHistory}
+          className="text-sm font-medium text-ink-secondary hover:text-ink-primary transition-colors"
         >
           {t('topBar.history')}
         </button>
         <button
-          className="text-sm font-medium text-ink-secondary hover:text-ink-primary cursor-not-allowed opacity-60"
-          disabled
+          onClick={onOpenSettings}
+          className="text-sm font-medium text-ink-secondary hover:text-ink-primary transition-colors"
         >
           {t('topBar.settings')}
         </button>

@@ -5,15 +5,17 @@ import { cn } from '@/lib/utils';
 interface CopyButtonProps {
   text: string;
   disabled: boolean;
+  onAfterCopy?: () => void;
 }
 
-export function CopyButton({ text, disabled }: CopyButtonProps) {
+export function CopyButton({ text, disabled, onAfterCopy }: CopyButtonProps) {
   const { t } = useTranslation();
   const { status, copy } = useClipboard(1500);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!disabled) {
-      copy(text);
+      await copy(text);
+      onAfterCopy?.();
     }
   };
 

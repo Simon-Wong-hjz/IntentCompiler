@@ -11,6 +11,7 @@ interface PreviewAreaProps {
   outputLanguage: Language;
   onFormatChange: (format: OutputFormat) => void;
   onOutputLanguageChange: (language: Language) => void;
+  onAfterCopy?: () => void;
 }
 
 export function PreviewArea({
@@ -21,6 +22,7 @@ export function PreviewArea({
   outputLanguage,
   onFormatChange,
   onOutputLanguageChange,
+  onAfterCopy,
 }: PreviewAreaProps) {
   const { t } = useTranslation();
 
@@ -54,7 +56,7 @@ export function PreviewArea({
       </div>
 
       <div className="flex-shrink-0 px-5 py-3 border-t border-border-light">
-        <CopyButton text={compiledOutput} disabled={!canCopy} />
+        <CopyButton text={compiledOutput} disabled={!canCopy} onAfterCopy={onAfterCopy} />
       </div>
     </div>
   );
