@@ -1,16 +1,40 @@
+import { useTranslation } from 'react-i18next';
 import { CopyButton } from '@/components/preview/CopyButton';
+import { PreviewHeader } from '@/components/preview/PreviewHeader';
+import type { OutputFormat, Language } from '@/compiler/types';
 
 interface PreviewAreaProps {
   compiledOutput: string;
   hasContent: boolean;
   canCopy: boolean;
+  outputFormat: OutputFormat;
+  outputLanguage: Language;
+  onFormatChange: (format: OutputFormat) => void;
+  onOutputLanguageChange: (language: Language) => void;
 }
 
-export function PreviewArea({ compiledOutput, hasContent, canCopy }: PreviewAreaProps) {
+export function PreviewArea({
+  compiledOutput,
+  hasContent,
+  canCopy,
+  outputFormat,
+  outputLanguage,
+  onFormatChange,
+  onOutputLanguageChange,
+}: PreviewAreaProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col h-full">
+      <PreviewHeader
+        outputFormat={outputFormat}
+        outputLanguage={outputLanguage}
+        onFormatChange={onFormatChange}
+        onLanguageChange={onOutputLanguageChange}
+      />
+
       <div
-        className="flex-1 overflow-y-auto bg-bg-surface border-[1.5px] border-border-default rounded-lg m-5 mb-0 p-4"
+        className="flex-1 overflow-y-auto bg-bg-surface border-[1.5px] border-border-default rounded-lg mx-5 mb-0 p-4"
         style={{
           fontFamily: "'SF Mono', 'Cascadia Code', Consolas, monospace",
           fontSize: '14px',
@@ -24,7 +48,7 @@ export function PreviewArea({ compiledOutput, hasContent, canCopy }: PreviewArea
           </pre>
         ) : (
           <div className="flex items-center justify-center h-full text-ink-muted text-sm">
-            选择任务类型并填写字段以查看预览
+            {t('preview.emptyState')}
           </div>
         )}
       </div>
