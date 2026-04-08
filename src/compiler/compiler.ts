@@ -1,6 +1,17 @@
 import type { FieldDefinition } from '@/registry/types';
-import type { OrderedField } from '@/compiler/types';
+import type { OrderedField, Language } from '@/compiler/types';
 import { keyToLabel } from '@/lib/format';
+import en from '@/i18n/locales/en.json';
+import zh from '@/i18n/locales/zh.json';
+
+const fieldLabels: Record<Language, Record<string, string>> = {
+  en: en.fields,
+  zh: zh.fields,
+};
+
+function getFieldLabel(fieldKey: string, outputLanguage: Language): string {
+  return fieldLabels[outputLanguage]?.[fieldKey] ?? keyToLabel(fieldKey);
+}
 
 function hasValue(value: unknown): boolean {
   if (value === undefined || value === null) return false;
@@ -12,6 +23,7 @@ function hasValue(value: unknown): boolean {
 export function compileFields(
   fieldDefinitions: FieldDefinition[],
   fieldValues: Record<string, unknown>,
+  outputLanguage: Language = 'en',
 ): OrderedField[] {
   const result: OrderedField[] = [];
 
@@ -21,7 +33,7 @@ export function compileFields(
 
     result.push({
       key: def.key,
-      label: keyToLabel(def.key),
+      label: getFieldLabel(def.key, outputLanguage),
       value,
     });
   }

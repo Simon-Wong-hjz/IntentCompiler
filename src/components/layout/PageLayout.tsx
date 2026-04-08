@@ -3,6 +3,7 @@ import { TaskSelector } from '@/components/task-selector/TaskSelector';
 import { EditorArea } from '@/components/editor/EditorArea';
 import { PreviewArea } from '@/components/preview/PreviewArea';
 import type { TaskType, FieldDefinition } from '@/registry/types';
+import type { OutputFormat, Language } from '@/compiler/types';
 
 interface PageLayoutProps {
   selectedType: TaskType | null;
@@ -16,6 +17,10 @@ interface PageLayoutProps {
   addedFields: FieldDefinition[];
   onAddField: (field: FieldDefinition) => void;
   onRemoveField: (fieldKey: string) => void;
+  outputFormat: OutputFormat;
+  outputLanguage: Language;
+  onFormatChange: (format: OutputFormat) => void;
+  onOutputLanguageChange: (language: Language) => void;
 }
 
 export function PageLayout({
@@ -30,6 +35,10 @@ export function PageLayout({
   addedFields,
   onAddField,
   onRemoveField,
+  outputFormat,
+  outputLanguage,
+  onFormatChange,
+  onOutputLanguageChange,
 }: PageLayoutProps) {
   return (
     <div className="h-screen flex flex-col bg-bg-page" style={{ minWidth: '1024px' }}>
@@ -64,6 +73,10 @@ export function PageLayout({
             compiledOutput={compiledOutput}
             hasContent={hasContent}
             canCopy={canCopy}
+            outputFormat={outputFormat}
+            outputLanguage={outputLanguage}
+            onFormatChange={onFormatChange}
+            onOutputLanguageChange={onOutputLanguageChange}
           />
         </div>
       </div>

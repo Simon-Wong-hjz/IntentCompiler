@@ -1,13 +1,19 @@
 import { useState, useCallback } from 'react';
+import '@/i18n/config';
+import { useTranslation } from 'react-i18next';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { getTemplate } from '@/registry/template-registry';
 import { useCompiler } from '@/hooks/useCompiler';
 import type { TaskType, FieldDefinition } from '@/registry/types';
+import type { OutputFormat, Language } from '@/compiler/types';
 
 function App() {
   const [selectedType, setSelectedType] = useState<TaskType | null>(null);
   const [fieldValues, setFieldValues] = useState<Record<string, unknown>>({});
   const [addedFields, setAddedFields] = useState<FieldDefinition[]>([]);
+  const [outputFormat, setOutputFormat] = useState<OutputFormat>('markdown');
+  const [outputLanguage, setOutputLanguage] = useState<Language>('zh');
+  const { t } = useTranslation();
 
   // Get the current template's field definitions
   const template = selectedType ? getTemplate(selectedType) : undefined;
@@ -29,7 +35,8 @@ function App() {
   const { compiledOutput, hasContent } = useCompiler(
     displayOrderFields,
     fieldValues,
-    'markdown',
+    outputFormat,
+    outputLanguage,
   );
 
   // Copy requires both content and a non-empty Intent
@@ -53,9 +60,7 @@ function App() {
 
       if (selectedType !== null && hasNonIntentValues) {
         if (
-          !window.confirm(
-            '切换任务类型将清空除"意图"之外的所有字段，是否继续？',
-          )
+          !window.confirm(t('editor.switchTaskConfirm'))
         ) {
           return;
         }
@@ -99,6 +104,10 @@ function App() {
       addedFields={addedFields}
       onAddField={handleAddField}
       onRemoveField={handleRemoveField}
+      outputFormat={outputFormat}
+      outputLanguage={outputLanguage}
+      onFormatChange={setOutputFormat}
+      onOutputLanguageChange={setOutputLanguage}
     />
   );
 }
