@@ -10,7 +10,7 @@ function escapeXml(text: string): string {
 }
 
 function sanitizeTagName(label: string): string {
-  return label.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_\-\.]/g, '');
+  return label.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_\-.]/g, '');
 }
 
 function serializeValue(value: unknown, indent: string): string {

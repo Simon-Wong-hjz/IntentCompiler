@@ -71,7 +71,7 @@ function App() {
       setFieldValues(intentValue ? { intent: intentValue } : {});
       setAddedFields([]);
     },
-    [selectedType, fieldValues],
+    [selectedType, fieldValues, t],
   );
 
   const handleFieldChange = useCallback((key: string, value: unknown) => {
