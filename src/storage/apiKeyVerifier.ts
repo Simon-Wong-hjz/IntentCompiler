@@ -1,6 +1,6 @@
 export interface VerifyResult {
   success: boolean;
-  provider?: string;
+  apiType?: string;
   model?: string;
   error?: string;
 }
@@ -11,7 +11,7 @@ export interface VerifyResult {
  * Real verification logic replaces this in Phase 5.
  */
 export async function verifyApiKey(
-  provider: string,
+  apiType: string,
   _apiKey: string
 ): Promise<VerifyResult> {
   // Simulate network delay
@@ -26,14 +26,9 @@ export async function verifyApiKey(
   }
 
   // Mock success — in Phase 5 this will make a real API call
-  const modelMap: Record<string, string> = {
-    openai: 'GPT-4o',
-    anthropic: 'Claude Sonnet',
-  };
-
   return {
     success: true,
-    provider: provider === 'openai' ? 'OpenAI' : 'Anthropic',
-    model: modelMap[provider] ?? 'Unknown',
+    apiType: apiType === 'openai' ? 'OpenAI' : 'Anthropic',
+    model: apiType === 'openai' ? 'GPT-4o' : 'Claude Sonnet',
   };
 }

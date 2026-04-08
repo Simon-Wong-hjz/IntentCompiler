@@ -4,9 +4,13 @@ import { db, type Preference } from './db';
 export type PreferenceKey =
   | 'defaultOutputLanguage'
   | 'defaultOutputFormat'
-  | 'aiProvider'
+  | 'aiApiType'
   | 'apiKey_openai'
   | 'apiKey_anthropic'
+  | 'apiEndpoint_openai'
+  | 'apiEndpoint_anthropic'
+  | 'model_openai'
+  | 'model_anthropic'
   | 'uiLanguage';
 
 /**

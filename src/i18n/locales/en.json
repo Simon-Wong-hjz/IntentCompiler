@@ -200,14 +200,18 @@
     "defaultOutputFormat": "Default Output Format",
     "canBeOverridden": "Can be overridden per session",
     "aiConfiguration": "AI Configuration",
-    "aiProvider": "AI Provider",
+    "aiApiType": "API Type",
+    "aiApiTypeHint": "Choose API-compatible format; supports any compatible endpoint",
+    "apiEndpoint": "API Endpoint",
+    "apiEndpointHint": "You may enter a third-party compatible endpoint URL",
+    "model": "Model",
     "apiKey": "API Key",
     "show": "Show",
     "hide": "Hide",
     "verifying": "Verifying...",
     "keyVerified": "Key verified",
     "invalidKey": "Invalid API key. Please check and try again.",
-    "securityNote": "Your API key is stored locally in your browser and is only sent to the AI provider's API. It is never sent to any other server."
+    "securityNote": "Your API key is stored locally in your browser and is only sent to the API endpoint you configure. It is never sent to any other server."
   },
   "history": {
     "title": "History",

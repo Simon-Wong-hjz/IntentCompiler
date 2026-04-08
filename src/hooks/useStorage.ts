@@ -18,18 +18,26 @@ import type { HistoryRecord } from '../storage/db';
 export interface PreferencesState {
   defaultOutputLanguage: string;
   defaultOutputFormat: string;
-  aiProvider: string;
+  aiApiType: string;
   apiKey_openai: string;
   apiKey_anthropic: string;
+  apiEndpoint_openai: string;
+  apiEndpoint_anthropic: string;
+  model_openai: string;
+  model_anthropic: string;
   uiLanguage: string;
 }
 
 const DEFAULT_PREFERENCES: PreferencesState = {
   defaultOutputLanguage: 'zh',
   defaultOutputFormat: 'markdown',
-  aiProvider: 'openai',
+  aiApiType: 'openai',
   apiKey_openai: '',
   apiKey_anthropic: '',
+  apiEndpoint_openai: 'https://api.openai.com/v1',
+  apiEndpoint_anthropic: 'https://api.anthropic.com',
+  model_openai: '',
+  model_anthropic: '',
   uiLanguage: 'zh',
 };
 

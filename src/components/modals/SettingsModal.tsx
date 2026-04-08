@@ -42,6 +42,15 @@ function PillSelector({
   );
 }
 
+// Styled label used across the AI config section
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5 block">
+      {children}
+    </span>
+  );
+}
+
 export default function SettingsModal({
   open,
   onClose,
@@ -55,16 +64,24 @@ export default function SettingsModal({
   const apiKeyInputRef = useRef<HTMLInputElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  const currentProvider = preferences.aiProvider || 'openai';
+  const currentApiType = preferences.aiApiType || 'openai';
   const currentApiKey =
-    currentProvider === 'openai'
+    currentApiType === 'openai'
       ? preferences.apiKey_openai
       : preferences.apiKey_anthropic;
+  const currentEndpoint =
+    currentApiType === 'openai'
+      ? preferences.apiEndpoint_openai
+      : preferences.apiEndpoint_anthropic;
+  const currentModel =
+    currentApiType === 'openai'
+      ? preferences.model_openai
+      : preferences.model_anthropic;
 
-  // Reset verify status when provider changes (render-time pattern)
-  const [prevProvider, setPrevProvider] = useState(currentProvider);
-  if (prevProvider !== currentProvider) {
-    setPrevProvider(currentProvider);
+  // Reset verify status when API type changes (render-time pattern)
+  const [prevApiType, setPrevApiType] = useState(currentApiType);
+  if (prevApiType !== currentApiType) {
+    setPrevApiType(currentApiType);
     setVerifyStatus('idle');
     setVerifyResult(null);
     setShowApiKey(false);
@@ -88,16 +105,28 @@ export default function SettingsModal({
 
   const handleApiKeyChange = (value: string) => {
     const key: PreferenceKey =
-      currentProvider === 'openai' ? 'apiKey_openai' : 'apiKey_anthropic';
+      currentApiType === 'openai' ? 'apiKey_openai' : 'apiKey_anthropic';
     onUpdatePreference(key, value);
     setVerifyStatus('idle');
     setVerifyResult(null);
   };
 
+  const handleEndpointChange = (value: string) => {
+    const key: PreferenceKey =
+      currentApiType === 'openai' ? 'apiEndpoint_openai' : 'apiEndpoint_anthropic';
+    onUpdatePreference(key, value);
+  };
+
+  const handleModelChange = (value: string) => {
+    const key: PreferenceKey =
+      currentApiType === 'openai' ? 'model_openai' : 'model_anthropic';
+    onUpdatePreference(key, value);
+  };
+
   const handleVerifyKey = async () => {
     if (!currentApiKey || currentApiKey.trim() === '') return;
     setVerifyStatus('verifying');
-    const result = await verifyApiKey(currentProvider, currentApiKey);
+    const result = await verifyApiKey(currentApiType, currentApiKey);
     setVerifyStatus(result.success ? 'success' : 'error');
     setVerifyResult(result);
   };
@@ -113,6 +142,9 @@ export default function SettingsModal({
       handleVerifyKey();
     }
   };
+
+  const inputClassName =
+    'w-full px-3 py-2 text-sm rounded-lg border border-border-default bg-bg-surface outline-none transition-colors focus:border-accent-primary';
 
   return (
     <div
@@ -202,26 +234,68 @@ export default function SettingsModal({
 
           {/* ── AI Configuration Section ── */}
           <div className="space-y-4">
-            {/* AI Provider */}
+            {/* AI API Type */}
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5 block">
-                {t('settings.aiProvider', 'AI 提供商')}
-              </span>
+              <SectionLabel>
+                {t('settings.aiApiType', 'API 类型')}
+              </SectionLabel>
               <PillSelector
                 options={[
                   { value: 'openai', label: 'OpenAI' },
                   { value: 'anthropic', label: 'Anthropic' },
                 ]}
-                value={currentProvider}
-                onChange={(v) => onUpdatePreference('aiProvider', v)}
+                value={currentApiType}
+                onChange={(v) => onUpdatePreference('aiApiType', v)}
+              />
+              <p className="text-xs text-ink-muted mt-1.5">
+                {t('settings.aiApiTypeHint', '选择 API 兼容格式，支持任意兼容端点')}
+              </p>
+            </div>
+
+            {/* API Endpoint */}
+            <div>
+              <SectionLabel>
+                {t('settings.apiEndpoint', 'API 端点')}
+              </SectionLabel>
+              <input
+                type="url"
+                value={currentEndpoint}
+                onChange={(e) => handleEndpointChange(e.target.value)}
+                placeholder={
+                  currentApiType === 'openai'
+                    ? 'https://api.openai.com/v1'
+                    : 'https://api.anthropic.com'
+                }
+                className={inputClassName}
+              />
+              <p className="text-xs text-ink-muted mt-1.5">
+                {t('settings.apiEndpointHint', '可填写第三方兼容端点地址')}
+              </p>
+            </div>
+
+            {/* Model */}
+            <div>
+              <SectionLabel>
+                {t('settings.model', '模型')}
+              </SectionLabel>
+              <input
+                type="text"
+                value={currentModel}
+                onChange={(e) => handleModelChange(e.target.value)}
+                placeholder={
+                  currentApiType === 'openai'
+                    ? 'gpt-4o'
+                    : 'claude-sonnet-4-20250514'
+                }
+                className={inputClassName}
               />
             </div>
 
             {/* API Key */}
             <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5 block">
+              <SectionLabel>
                 {t('settings.apiKey', 'API 密钥')}
-              </span>
+              </SectionLabel>
               <div className="flex gap-2">
                 <input
                   ref={apiKeyInputRef}
@@ -230,7 +304,7 @@ export default function SettingsModal({
                   onChange={(e) => handleApiKeyChange(e.target.value)}
                   onBlur={handleApiKeyBlur}
                   onKeyDown={handleApiKeyKeyDown}
-                  placeholder={`${currentProvider === 'openai' ? 'sk-...' : 'sk-ant-...'}`}
+                  placeholder={currentApiType === 'openai' ? 'sk-...' : 'sk-ant-...'}
                   className={`flex-1 px-3 py-2 text-sm rounded-lg border bg-bg-surface transition-colors ${
                     verifyStatus === 'error'
                       ? 'border-status-danger'
@@ -255,7 +329,7 @@ export default function SettingsModal({
               )}
               {verifyStatus === 'success' && verifyResult && (
                 <p className="text-xs text-status-success mt-2 font-medium">
-                  ✓ {t('settings.keyVerified', '密钥已验证')} — {verifyResult.provider}{' '}
+                  ✓ {t('settings.keyVerified', '密钥已验证')} — {verifyResult.apiType}{' '}
                   {verifyResult.model}
                 </p>
               )}
@@ -272,7 +346,7 @@ export default function SettingsModal({
               <span>
                 {t(
                   'settings.securityNote',
-                  '您的 API 密钥仅存储在浏览器本地，仅发送至 AI 提供商的 API，不会发送到任何其他服务器。'
+                  '您的 API 密钥仅存储在浏览器本地，仅发送至您配置的 API 端点，不会发送到任何其他服务器。'
                 )}
               </span>
             </div>

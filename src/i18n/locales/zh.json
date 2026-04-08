@@ -200,14 +200,18 @@
     "defaultOutputFormat": "默认输出格式",
     "canBeOverridden": "可在每次使用时覆盖",
     "aiConfiguration": "AI 配置",
-    "aiProvider": "AI 提供商",
+    "aiApiType": "API 类型",
+    "aiApiTypeHint": "选择 API 兼容格式，支持任意兼容端点",
+    "apiEndpoint": "API 端点",
+    "apiEndpointHint": "可填写第三方兼容端点地址",
+    "model": "模型",
     "apiKey": "API 密钥",
     "show": "显示",
     "hide": "隐藏",
     "verifying": "验证中...",
     "keyVerified": "密钥已验证",
     "invalidKey": "无效的 API 密钥，请检查后重试。",
-    "securityNote": "您的 API 密钥仅存储在浏览器本地，仅发送至 AI 提供商的 API，不会发送到任何其他服务器。"
+    "securityNote": "您的 API 密钥仅存储在浏览器本地，仅发送至您配置的 API 端点，不会发送到任何其他服务器。"
   },
   "history": {
     "title": "历史记录",
