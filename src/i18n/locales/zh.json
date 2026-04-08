@@ -193,8 +193,37 @@
     "formatYaml": "YAML",
     "formatXml": "XML"
   },
+  "settings": {
+    "title": "设置",
+    "outputDefaults": "输出默认值",
+    "defaultOutputLanguage": "默认输出语言",
+    "defaultOutputFormat": "默认输出格式",
+    "canBeOverridden": "可在每次使用时覆盖",
+    "aiConfiguration": "AI 配置",
+    "aiProvider": "AI 提供商",
+    "apiKey": "API 密钥",
+    "show": "显示",
+    "hide": "隐藏",
+    "verifying": "验证中...",
+    "keyVerified": "密钥已验证",
+    "invalidKey": "无效的 API 密钥，请检查后重试。",
+    "securityNote": "您的 API 密钥仅存储在浏览器本地，仅发送至 AI 提供商的 API，不会发送到任何其他服务器。"
+  },
+  "history": {
+    "title": "历史记录",
+    "empty": "暂无历史记录",
+    "confirmLoad": "加载此记录？当前编辑器内容将被替换。",
+    "confirmDelete": "删除此记录？",
+    "confirmClearAll": "确认清空全部",
+    "clearAll": "清空全部",
+    "record": "条记录",
+    "records": "条记录"
+  },
   "common": {
     "en": "EN",
-    "zh": "中"
+    "zh": "中",
+    "cancel": "取消",
+    "load": "加载",
+    "delete": "删除"
   }
 }

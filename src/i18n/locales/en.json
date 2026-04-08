@@ -193,8 +193,37 @@
     "formatYaml": "YAML",
     "formatXml": "XML"
   },
+  "settings": {
+    "title": "Settings",
+    "outputDefaults": "Output Defaults",
+    "defaultOutputLanguage": "Default Output Language",
+    "defaultOutputFormat": "Default Output Format",
+    "canBeOverridden": "Can be overridden per session",
+    "aiConfiguration": "AI Configuration",
+    "aiProvider": "AI Provider",
+    "apiKey": "API Key",
+    "show": "Show",
+    "hide": "Hide",
+    "verifying": "Verifying...",
+    "keyVerified": "Key verified",
+    "invalidKey": "Invalid API key. Please check and try again.",
+    "securityNote": "Your API key is stored locally in your browser and is only sent to the AI provider's API. It is never sent to any other server."
+  },
+  "history": {
+    "title": "History",
+    "empty": "No history yet",
+    "confirmLoad": "Load this record? Current editor content will be replaced.",
+    "confirmDelete": "Delete this record?",
+    "confirmClearAll": "Yes, clear all",
+    "clearAll": "Clear All",
+    "record": "record",
+    "records": "records"
+  },
   "common": {
     "en": "EN",
-    "zh": "\u4e2d"
+    "zh": "\u4e2d",
+    "cancel": "Cancel",
+    "load": "Load",
+    "delete": "Delete"
   }
 }
