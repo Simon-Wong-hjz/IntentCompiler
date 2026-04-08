@@ -41,7 +41,8 @@ coverage/
 .cache/
 
 # Claude Code
-/.claude/*.local.json
+/.claude/*.json
+.playwright-mcp/
 
 # Worktrees
 .worktrees/

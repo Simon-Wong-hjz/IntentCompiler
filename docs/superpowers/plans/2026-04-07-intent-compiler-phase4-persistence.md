@@ -8,7 +8,7 @@
 
 **Tech Stack:** Dexie.js 4.x, fake-indexeddb (test), React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, shadcn/ui Dialog (uses unscoped `radix-ui` package), Vitest 4.1, React Testing Library
 
-> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`; shadcn/ui uses unscoped `radix-ui` package (not `@radix-ui/react-*`); if adding Dialog via shadcn CLI, manual file relocation may be needed due to alias resolution. Phase 3 stores UI language in localStorage — this phase migrates it to Dexie.
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07/02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`; shadcn/ui uses unscoped `radix-ui` package (not `@radix-ui/react-*`); if adding Dialog via shadcn CLI, manual file relocation may be needed due to alias resolution. Phase 3 stores UI language in localStorage — this phase migrates it to Dexie.
 
 > **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase:
 > 1. **Task 8 (`DEFAULT_PREFERENCES`):** `uiLanguage` and `defaultOutputLanguage` must default to `'zh'`, not `'en'`.

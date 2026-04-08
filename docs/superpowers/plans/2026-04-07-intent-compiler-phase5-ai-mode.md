@@ -8,7 +8,7 @@
 
 **Tech Stack:** React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, fetch API (no AI SDK dependencies), Vitest 4.1 with `vi.fn()` / `vi.spyOn()` for mocking fetch, React hooks
 
-> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`. Verify React 19.2 hook semantics for custom hooks in this phase.
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07/02-phase-plan-audit.md` for full details. Key differences: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts`; TypeScript 6 has no `baseUrl`. Verify React 19.2 hook semantics for custom hooks in this phase.
 
 > **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase:
 > 1. **Task 7 (AiFillButton):** The hardcoded English strings in the code snippet (`"AI Fill"`, `"Filling..."`, `"Filled N fields"`, `"Fill failed:"`, `"Configure AI provider in Settings"`) are placeholders. Task 15 replaces them with i18n keys. When writing Chinese translations, Chinese is the primary locale — write Chinese strings first.

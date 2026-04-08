@@ -8,7 +8,7 @@
 
 **Tech Stack:** React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, react-i18next (for UI language switching in help content), Vitest 4.1 (for help-content data integrity test).
 
-> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07-02-phase-plan-audit.md` for full details. Key difference for this phase: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts` — CSS custom properties in Task 12 should be added to the `@theme` block, not a separate `:root` selector. The `@import url(...)` for Google Fonts should be placed outside the `@theme` block.
+> **Phase 1 Audit Note:** Phase 1 installed newer versions than originally planned. See `.claude/progress/2026-04-07/02-phase-plan-audit.md` for full details. Key difference for this phase: Tailwind v4 uses `@theme {}` block in `src/index.css` instead of `tailwind.config.ts` — CSS custom properties in Task 12 should be added to the `@theme` block, not a separate `:root` selector. The `@import url(...)` for Google Fonts should be placed outside the `@theme` block.
 
 > **Chinese-First Localization Note:** CLAUDE.md establishes Chinese as the primary UI language. When implementing this phase:
 > 1. **Task 1 (help content):** The `helpContentMap` already includes bilingual `{ en, zh }` objects. Chinese values are the primary user-facing text — ensure they read naturally and are not just English translations.

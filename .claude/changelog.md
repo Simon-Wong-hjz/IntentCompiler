@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-08] - Restructure CLAUDE.md into modular architecture
+- Rewrote root `CLAUDE.md` as concise navigation hub (~95 lines): fixed stale project status ("Pre-implementation" → Phase 1 complete), corrected tech stack versions (React 19, TypeScript 6, Vite 8, Tailwind v4), replaced planned `src/` tree with actual structure, added `@/` path alias convention, added links to module-level CLAUDE.md files
+- Created `src/registry/CLAUDE.md` — Template Registry guidance: types, how to add task types, field classification model, naming conventions
+- Created `src/compiler/CLAUDE.md` — Compiler pipeline docs: two-stage flow (compileFields → Formatter), how to add formatters, hook integration
+- Created `src/components/CLAUDE.md` — UI patterns: component hierarchy diagram, FieldRenderer switch pattern, state flow, task-switching behavior, shadcn/ui conventions
+
 ## [2026-04-07] - Add Chinese-first notes and fix defaults in Phase 2-6 plans
 - **Phase 3**: Added Chinese-First Localization Note; fixed `getStoredLanguage()` fallback from `'en'` to `'zh'`; fixed `fallbackLng` from `'en'` to `'zh'`; fixed `outputLanguage` default state from `'en'` to `'zh'`; updated audit note to mention `keyToLabelZh()` alongside `keyToLabel()`; added notes about preserving canCopy/Intent glow/task-switch behaviors
 - **Phase 4**: Added Chinese-First Localization Note; fixed `DEFAULT_PREFERENCES` `uiLanguage` and `defaultOutputLanguage` from `'en'` to `'zh'`; fixed HistoryModal `uiLanguage` fallback from `'en'` to `'zh'`; added notes about preserving canCopy/Intent glow/task-switch behaviors
@@ -17,7 +23,7 @@
 
 ## [2026-04-07] - Update Phase 2-6 plans with Phase 1 audit findings
 - Updated tech stack sections in all 5 phase plans (Phase 2-6) to reflect actual versions: React 19.2, TypeScript 6, Vite 8, Tailwind CSS v4, Vitest 4.1
-- Added audit note blocks to each phase plan referencing `.claude/progress/2026-04-07-02-phase-plan-audit.md`
+- Added audit note blocks to each phase plan referencing `.claude/progress/2026-04-07/02-phase-plan-audit.md`
 - Fixed Phase 4 path typo: `.worktrees/clean-start` → `.worktrees/implementation`
 - Updated Phase 6 Task 12 CSS to use Tailwind v4 `@theme {}` block instead of `:root` CSS variables
 - Updated Phase 5 Task 7 CSS note to clarify keyframes go outside `@theme` block
