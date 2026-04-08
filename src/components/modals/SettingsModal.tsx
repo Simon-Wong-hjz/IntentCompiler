@@ -13,6 +13,35 @@ interface SettingsModalProps {
 
 type VerifyStatus = 'idle' | 'verifying' | 'success' | 'error';
 
+// Pill selector — defined outside the component to avoid re-creation on render
+function PillSelector({
+  options,
+  value,
+  onChange,
+}: {
+  options: { value: string; label: string }[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div className="flex gap-2">
+      {options.map((opt) => (
+        <button
+          key={opt.value}
+          onClick={() => onChange(opt.value)}
+          className={`px-3 py-1.5 text-sm font-medium rounded-md border transition-colors ${
+            value === opt.value
+              ? 'bg-ink-primary text-accent-primary border-accent-primary'
+              : 'bg-bg-muted text-ink-muted border-border-default hover:bg-bg-accent-light'
+          }`}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function SettingsModal({
   open,
   onClose,
@@ -32,12 +61,14 @@ export default function SettingsModal({
       ? preferences.apiKey_openai
       : preferences.apiKey_anthropic;
 
-  // Reset verify status when provider changes
-  useEffect(() => {
+  // Reset verify status when provider changes (render-time pattern)
+  const [prevProvider, setPrevProvider] = useState(currentProvider);
+  if (prevProvider !== currentProvider) {
+    setPrevProvider(currentProvider);
     setVerifyStatus('idle');
     setVerifyResult(null);
     setShowApiKey(false);
-  }, [currentProvider]);
+  }
 
   // Escape key handler
   useEffect(() => {
@@ -82,33 +113,6 @@ export default function SettingsModal({
       handleVerifyKey();
     }
   };
-
-  // --- Pill selector helper ---
-  const PillSelector = ({
-    options,
-    value,
-    onChange,
-  }: {
-    options: { value: string; label: string }[];
-    value: string;
-    onChange: (v: string) => void;
-  }) => (
-    <div className="flex gap-2">
-      {options.map((opt) => (
-        <button
-          key={opt.value}
-          onClick={() => onChange(opt.value)}
-          className={`px-3 py-1.5 text-sm font-medium rounded-md border transition-colors ${
-            value === opt.value
-              ? 'bg-ink-primary text-accent-primary border-accent-primary'
-              : 'bg-bg-muted text-ink-muted border-border-default hover:bg-bg-accent-light'
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
-    </div>
-  );
 
   return (
     <div

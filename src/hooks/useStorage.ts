@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-  getPreference,
   setPreference,
   getAllPreferences,
   type PreferenceKey,
@@ -84,9 +83,21 @@ export function useHistory() {
     setLoading(false);
   }, []);
 
+  // Load history on mount
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    let cancelled = false;
+    (async () => {
+      const [fetched, total] = await Promise.all([
+        getHistoryRecords(),
+        getHistoryCount(),
+      ]);
+      if (cancelled) return;
+      setRecords(fetched);
+      setCount(total);
+      setLoading(false);
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   const addRecord = useCallback(
     async (record: Omit<HistoryRecord, 'id'>) => {

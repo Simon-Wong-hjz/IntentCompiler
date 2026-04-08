@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-04-09] - Phase 4: Persistence — Settings + History
+- Created Dexie.js database schema (v1) with preferences, history, templates stores (`src/storage/db.ts`)
+- Added preferences CRUD helpers with typed `PreferenceKey` union (`src/storage/preferences.ts`)
+- Added history CRUD helpers with newest-first sorted retrieval (`src/storage/history.ts`)
+- Added React storage hooks: `usePreferences` and `useHistory` (`src/hooks/useStorage.ts`)
+- Added mock API key verifier for Phase 4 (`src/storage/apiKeyVerifier.ts`) — real verification in Phase 5
+- Added bilingual relative timestamp utility (`src/utils/relativeTime.ts`) — "刚刚"/"just now" etc.
+- Created `SettingsModal` with Output Defaults (language + format pill selectors) and AI Configuration (provider, API key with masked input, mock verification) (`src/components/modals/SettingsModal.tsx`)
+- Created `HistoryModal` with sorted records, task type badges, inline load/delete confirmations, Clear All, and empty state (`src/components/modals/HistoryModal.tsx`)
+- Added i18n keys for Settings and History modals (en.json + zh.json: `settings.*`, `history.*`, `common.cancel/load/delete`)
+- Wired TopBar History/Settings as clickable modal triggers (removed disabled state)
+- Added `onAfterCopy` callback chain through `PageLayout → PreviewArea → CopyButton` for history recording
+- Wired App.tsx: load output defaults from Dexie on mount, one-time localStorage→Dexie migration for UI language, modal state, history save on copy, record loading into editor
+- Added 3 test files: `db.test.ts` (4 tests), `preferences.test.ts` (7 tests), `history.test.ts` (8 tests) — all using fake-indexeddb
+- **Totals**: 13 test files / 123 tests pass; lint clean; build 512KB JS + 31KB CSS
+
 ## [2026-04-09] - Manual acceptance fixes: 6 issues across list fields, i18n, formatters, and UX
 - **List field only renders non-empty items**: Added `newItem.trim()` guard in `handleAdd`; compiler filters empty strings from arrays before passing to formatters; add-item row moved outside bordered container with dashed border for visual separation
 - **Enum option values i18n**: Added 33 option translations to both locale files (`options` section); compiler translates combo field values via `getOptionLabel()` based on output language; ComboField pills display translated text via `t('options.${option}')`

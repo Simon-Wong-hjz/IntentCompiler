@@ -32,6 +32,17 @@ export default function HistoryModal({
   const [confirmClearAll, setConfirmClearAll] = useState(false);
   const backdropRef = useRef<HTMLDivElement>(null);
 
+  // Reset confirmations when modal closes (render-time pattern)
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (prevOpen && !open) {
+    setPrevOpen(false);
+    setConfirmLoadId(null);
+    setConfirmDeleteId(null);
+    setConfirmClearAll(false);
+  } else if (!prevOpen && open) {
+    setPrevOpen(true);
+  }
+
   // Escape key handler
   useEffect(() => {
     if (!open) return;
@@ -49,15 +60,6 @@ export default function HistoryModal({
     document.addEventListener('keydown', handleEsc);
     return () => document.removeEventListener('keydown', handleEsc);
   }, [open, onClose, confirmLoadId, confirmDeleteId, confirmClearAll]);
-
-  // Reset confirmations when modal closes
-  useEffect(() => {
-    if (!open) {
-      setConfirmLoadId(null);
-      setConfirmDeleteId(null);
-      setConfirmClearAll(false);
-    }
-  }, [open]);
 
   if (!open) return null;
 
