@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useClipboard } from '@/hooks/useClipboard';
 import { cn } from '@/lib/utils';
 
@@ -7,6 +8,7 @@ interface CopyButtonProps {
 }
 
 export function CopyButton({ text, disabled }: CopyButtonProps) {
+  const { t } = useTranslation();
   const { status, copy } = useClipboard(1500);
 
   const handleClick = () => {
@@ -28,9 +30,9 @@ export function CopyButton({ text, disabled }: CopyButtonProps) {
             : 'bg-accent-primary text-ink-primary cursor-pointer hover:brightness-95 active:scale-[0.99]',
       )}
     >
-      {status === 'success' && '\u2713 已复制！'}
-      {status === 'error' && '\u2717 复制失败'}
-      {status === 'idle' && '复制到剪贴板'}
+      {status === 'success' && t('preview.copied')}
+      {status === 'error' && t('preview.copyFailed')}
+      {status === 'idle' && t('preview.copyToClipboard')}
     </button>
   );
 }

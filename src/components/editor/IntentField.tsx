@@ -1,4 +1,5 @@
 import { useCallback, useRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { FieldLabel } from '@/components/editor/FieldLabel';
 
@@ -8,6 +9,7 @@ interface IntentFieldProps {
 }
 
 export function IntentField({ value, onChange }: IntentFieldProps) {
+  const { t } = useTranslation();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const minHeight = 48;
@@ -41,7 +43,7 @@ export function IntentField({ value, onChange }: IntentFieldProps) {
         onInput={autoExpand}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        placeholder="你想完成什么？"
+        placeholder={t('editor.intentPlaceholder')}
         className={cn(
           'w-full bg-bg-surface border-2 rounded-lg p-2 text-sm text-ink-primary placeholder:text-ink-hint resize-none focus:outline-none transition-all',
           isEmpty

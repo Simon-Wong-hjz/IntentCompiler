@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { FieldLabel } from '@/components/editor/FieldLabel';
 import type { FieldDefinition } from '@/registry/types';
 
@@ -12,8 +13,10 @@ export function TextField({
   field,
   value,
   onChange,
-  placeholder = '自由输入',
+  placeholder,
 }: TextFieldProps) {
+  const { t } = useTranslation();
+  const resolvedPlaceholder = placeholder ?? t('hints.text');
   return (
     <div className="flex flex-col gap-1">
       <FieldLabel fieldKey={field.key} inputType={field.inputType} />
@@ -22,7 +25,7 @@ export function TextField({
         id={field.key}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         className="w-full bg-bg-surface border-[1.5px] border-border-default rounded-lg p-2 text-sm text-ink-primary placeholder:text-ink-hint focus:outline-none focus:border-accent-primary transition-colors"
       />
     </div>

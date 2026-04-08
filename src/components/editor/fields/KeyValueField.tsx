@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DndContext,
   closestCenter,
@@ -39,6 +40,7 @@ interface SortablePairProps {
 }
 
 function SortablePair({ id, index, pair, onUpdate, onDelete }: SortablePairProps) {
+  const { t } = useTranslation();
   const {
     attributes,
     listeners,
@@ -58,7 +60,7 @@ function SortablePair({ id, index, pair, onUpdate, onDelete }: SortablePairProps
         {...attributes}
         {...listeners}
         className="cursor-grab text-sm select-none flex-shrink-0 text-ink-hint"
-        aria-label="拖拽排序"
+        aria-label="drag to reorder"
       >
         ⠿
       </span>
@@ -66,7 +68,7 @@ function SortablePair({ id, index, pair, onUpdate, onDelete }: SortablePairProps
         type="text"
         value={pair.key}
         onChange={(e) => onUpdate(index, { ...pair, key: e.target.value })}
-        placeholder="键"
+        placeholder={t('editor.keyPlaceholder')}
         className="text-sm font-semibold outline-none bg-transparent text-ink-primary"
         style={{ width: '80px' }}
       />
@@ -74,14 +76,14 @@ function SortablePair({ id, index, pair, onUpdate, onDelete }: SortablePairProps
         type="text"
         value={pair.value}
         onChange={(e) => onUpdate(index, { ...pair, value: e.target.value })}
-        placeholder="值"
+        placeholder={t('editor.valuePlaceholder')}
         className="flex-1 text-sm outline-none bg-transparent text-ink-primary"
       />
       <button
         type="button"
         onClick={() => onDelete(index)}
         className="flex-shrink-0 text-sm transition-colors text-ink-hint hover:text-status-danger"
-        aria-label="删除键值对"
+        aria-label="delete pair"
       >
         ✕
       </button>
@@ -92,6 +94,7 @@ function SortablePair({ id, index, pair, onUpdate, onDelete }: SortablePairProps
 let kvNextId = 0;
 
 export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
+  const { t } = useTranslation();
   const [newKey, setNewKey] = useState('');
   const [newValue, setNewValue] = useState('');
 
@@ -182,7 +185,7 @@ export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
             type="button"
             onClick={handleAdd}
             className="text-sm flex-shrink-0 text-accent-primary font-bold hover:scale-110 transition-transform"
-            aria-label="添加键值对"
+            aria-label="add pair"
           >
             +
           </button>
@@ -191,7 +194,7 @@ export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
             value={newKey}
             onChange={(e) => setNewKey(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="键"
+            placeholder={t('editor.keyPlaceholder')}
             className="text-sm outline-none bg-transparent font-semibold text-ink-primary"
             style={{ width: '80px' }}
           />
@@ -200,7 +203,7 @@ export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
             value={newValue}
             onChange={(e) => setNewValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="值"
+            placeholder={t('editor.valuePlaceholder')}
             className="flex-1 text-sm outline-none bg-transparent text-ink-primary"
           />
         </div>

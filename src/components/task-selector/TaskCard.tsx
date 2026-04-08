@@ -1,18 +1,20 @@
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import type { TaskType } from '@/registry/types';
 
 interface TaskCardProps {
-  verb: string;
-  mentalModel: string;
+  taskType: TaskType;
   isSelected: boolean;
   onClick: () => void;
 }
 
 export function TaskCard({
-  verb,
-  mentalModel,
+  taskType,
   isSelected,
   onClick,
 }: TaskCardProps) {
+  const { t } = useTranslation();
+
   return (
     <button
       onClick={onClick}
@@ -29,7 +31,7 @@ export function TaskCard({
           isSelected ? 'text-accent-primary' : 'text-ink-primary',
         )}
       >
-        {verb}
+        {t(`taskTypes.${taskType}.verb`)}
       </span>
       <span
         className={cn(
@@ -37,7 +39,7 @@ export function TaskCard({
           isSelected ? 'text-accent-primary/70' : 'text-ink-muted',
         )}
       >
-        {mentalModel}
+        {t(`taskTypes.${taskType}.mentalModel`)}
       </span>
     </button>
   );

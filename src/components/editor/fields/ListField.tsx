@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DndContext,
   closestCenter,
@@ -57,7 +58,7 @@ function SortableItem({ id, index, text, onUpdate, onDelete }: SortableItemProps
         {...attributes}
         {...listeners}
         className="cursor-grab text-sm select-none flex-shrink-0 text-ink-hint"
-        aria-label="拖拽排序"
+        aria-label="drag to reorder"
       >
         ⠿
       </span>
@@ -71,7 +72,7 @@ function SortableItem({ id, index, text, onUpdate, onDelete }: SortableItemProps
         type="button"
         onClick={() => onDelete(index)}
         className="flex-shrink-0 text-sm transition-colors text-ink-hint hover:text-status-danger"
-        aria-label="Delete item"
+        aria-label="delete item"
       >
         ✕
       </button>
@@ -82,6 +83,7 @@ function SortableItem({ id, index, text, onUpdate, onDelete }: SortableItemProps
 let listNextId = 0;
 
 export function ListField({ field, value, onChange }: ListFieldProps) {
+  const { t } = useTranslation();
   const [newItem, setNewItem] = useState('');
 
   // Stable IDs for @dnd-kit — state (not refs) so they're safe to read during render
@@ -171,7 +173,7 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
             type="button"
             onClick={handleAdd}
             className="text-sm flex-shrink-0 text-accent-primary font-bold hover:scale-110 transition-transform"
-            aria-label="添加项"
+            aria-label="add item"
           >
             +
           </button>
@@ -180,7 +182,7 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="添加项..."
+            placeholder={t('editor.addItem')}
             className="flex-1 text-sm outline-none bg-transparent text-ink-primary placeholder:text-ink-hint"
           />
         </div>

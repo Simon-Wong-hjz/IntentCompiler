@@ -84,7 +84,7 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
           field={field}
           value={(value as string) ?? ''}
           onChange={onChange}
-          placeholder="输入内容"
+          placeholder={undefined}
         />
       );
   }

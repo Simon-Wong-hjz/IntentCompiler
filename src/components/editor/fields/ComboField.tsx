@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { FieldLabel } from '@/components/editor/FieldLabel';
 import type { FieldDefinition } from '@/registry/types';
 
@@ -8,6 +9,7 @@ interface ComboFieldProps {
 }
 
 export function ComboField({ field, value, onChange }: ComboFieldProps) {
+  const { t } = useTranslation();
   const options = field.options ?? [];
   const isOptionSelected = options.includes(value);
   const customText = isOptionSelected ? '' : value;
@@ -51,7 +53,7 @@ export function ComboField({ field, value, onChange }: ComboFieldProps) {
           type="text"
           value={customText}
           onChange={(e) => handleTextChange(e.target.value)}
-          placeholder="或自定义输入..."
+          placeholder={t('editor.orTypeCustom')}
           className="w-full px-3 py-2 text-sm border-0 outline-none bg-bg-surface text-ink-primary placeholder:text-ink-hint"
         />
       </div>

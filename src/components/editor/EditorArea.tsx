@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IntentField } from '@/components/editor/IntentField';
 import { FieldRenderer } from '@/components/editor/FieldRenderer';
 import { AddFieldPanel } from '@/components/editor/AddFieldPanel';
@@ -26,13 +27,14 @@ export function EditorArea({
   onAddField,
   onRemoveField,
 }: EditorAreaProps) {
+  const { t } = useTranslation();
   const [removingFieldKey, setRemovingFieldKey] = useState<string | null>(null);
 
   // No task type selected
   if (!selectedType) {
     return (
       <div className="flex-1 flex items-center justify-center h-full text-ink-muted text-sm p-5">
-        请先在上方选择一个任务类型
+        {t('editor.selectTaskPrompt')}
       </div>
     );
   }
@@ -42,7 +44,7 @@ export function EditorArea({
     return (
       <div className="flex-1 flex flex-col items-center justify-center h-full text-ink-muted text-sm p-5 gap-2">
         <span className="text-2xl">🚧</span>
-        <span>即将推出</span>
+        <span>{t('editor.comingSoon')}</span>
       </div>
     );
   }
@@ -121,7 +123,7 @@ export function EditorArea({
                   onClick={() => handleRemoveClick(field.key)}
                   disabled={isRemoving}
                   className="absolute -top-1 right-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-ink-hint hover:text-status-danger"
-                  aria-label={`移除字段 ${field.key}`}
+                  aria-label={`remove ${field.key}`}
                 >
                   ✕
                 </button>

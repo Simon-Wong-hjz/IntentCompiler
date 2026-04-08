@@ -1,4 +1,5 @@
 import { useCallback, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FieldLabel } from '@/components/editor/FieldLabel';
 import type { FieldDefinition } from '@/registry/types';
 
@@ -14,9 +15,11 @@ export function TextareaField({
   field,
   value,
   onChange,
-  placeholder = '自由输入',
+  placeholder,
   minHeight = 36,
 }: TextareaFieldProps) {
+  const { t } = useTranslation();
+  const resolvedPlaceholder = placeholder ?? t('hints.textarea');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const autoExpand = useCallback(() => {
@@ -39,7 +42,7 @@ export function TextareaField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onInput={autoExpand}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         className="w-full bg-bg-surface border-[1.5px] border-border-default rounded-lg p-2 text-sm text-ink-primary placeholder:text-ink-hint resize-none focus:outline-none focus:border-accent-primary transition-colors"
         style={{ minHeight: `${minHeight}px` }}
       />

@@ -37,7 +37,7 @@ describe('ListField', () => {
   it('removes an item when delete button is clicked', () => {
     const onChange = vi.fn();
     render(<ListField {...defaultProps} onChange={onChange} />);
-    const deleteButtons = screen.getAllByLabelText('Delete item');
+    const deleteButtons = screen.getAllByLabelText('delete item');
     fireEvent.click(deleteButtons[0]);
     expect(onChange).toHaveBeenCalledWith(['item two']);
   });

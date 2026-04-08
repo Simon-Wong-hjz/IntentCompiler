@@ -143,7 +143,7 @@
     "orTypeCustom": "or type custom value...",
     "selectTaskPrompt": "Select a task type above to begin",
     "comingSoon": "Coming soon",
-    "keyPlaceholder": "+ key",
+    "keyPlaceholder": "key",
     "valuePlaceholder": "value",
     "intentPlaceholder": "What do you want to accomplish?",
     "switchTaskConfirm": "Switching task types will clear all fields except Intent. Continue?"
