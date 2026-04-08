@@ -8,7 +8,7 @@ const askDefaultFields: FieldDefinition[] = [
   { key: 'requirements', inputType: 'list', scope: 'universal', visibility: 'default' },
   { key: 'constraints', inputType: 'list', scope: 'universal', visibility: 'default' },
   { key: 'output_format', inputType: 'combo', scope: 'universal', visibility: 'default' },
-  { key: 'question_type', inputType: 'select', scope: 'task', visibility: 'default' },
+  { key: 'question_type', inputType: 'combo', scope: 'task', visibility: 'default' },
   { key: 'audience', inputType: 'text', scope: 'task', visibility: 'default' },
 ];
 

@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { AddFieldPanel } from '@/components/editor/AddFieldPanel';
 import type { FieldDefinition } from '@/registry/types';
 
@@ -20,6 +20,14 @@ describe('AddFieldPanel', () => {
     universalOptionalFields,
     onAddField: vi.fn(),
   };
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
   it('renders collapsed state with "+ 添加字段" button', () => {
     render(<AddFieldPanel {...defaultProps} />);
@@ -55,20 +63,25 @@ describe('AddFieldPanel', () => {
     expect(matches.length).toBeGreaterThanOrEqual(1);
   });
 
-  it('calls onAddField when a field "+" button is clicked', () => {
+  it('calls onAddField after slide-up animation completes', () => {
     const onAddField = vi.fn();
     render(<AddFieldPanel {...defaultProps} onAddField={onAddField} />);
     fireEvent.click(screen.getByText('+ 添加字段'));
     const addButtons = screen.getAllByLabelText(/添加字段/);
     fireEvent.click(addButtons[0]);
+    // onAddField is deferred until the 200ms row-slide-up animation completes
+    expect(onAddField).not.toHaveBeenCalled();
+    act(() => { vi.advanceTimersByTime(200); });
     expect(onAddField).toHaveBeenCalledWith(taskOptionalFields[0]);
   });
 
-  it('collapses when clicking the collapse button', () => {
+  it('collapses when clicking the collapse button (after animation delay)', () => {
     render(<AddFieldPanel {...defaultProps} />);
     fireEvent.click(screen.getByText('+ 添加字段'));
     expect(screen.getByText('★ 推荐')).toBeInTheDocument();
     fireEvent.click(screen.getByText('− 收起'));
+    // Collapse has a 200ms exit animation delay
+    act(() => { vi.advanceTimersByTime(200); });
     expect(screen.getByText('+ 添加字段')).toBeInTheDocument();
   });
 });

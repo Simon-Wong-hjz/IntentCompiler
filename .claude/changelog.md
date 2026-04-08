@@ -1,5 +1,32 @@
 # Changelog
 
+## [2026-04-08] - Removable optional fields with collapse animation
+- **Added optional fields are now removable**: Each field added from AddFieldPanel shows a "✕" button on hover (top-right, `group-hover:opacity-100`); clicking triggers a `field-collapse` CSS animation before removal
+- **`field-collapse` keyframe**: Uses `grid-template-rows: 1fr → 0fr` trick to animate any content height smoothly without hardcoded max-height; 200ms ease-in matches AddFieldPanel's row-slide-up timing
+- **State changes**: `onRemoveField(fieldKey)` in App.tsx removes field from `addedFields` and deletes its value from `fieldValues`; prop threaded through PageLayout → EditorArea
+- 74 tests pass, build clean (302KB JS + 30KB CSS)
+
+## [2026-04-08] - UI polish batch 2: 7 fixes for field editing, compiler ordering, and visual hierarchy
+- **ListField empty adds**: Removed `newItem.trim()` guard — "+" now always adds a row, even when input is empty, allowing batch row creation
+- **ToggleField knob overflow fixed**: Switched from 1.5px fractional border to 2px integer border; knob 14→12px with explicit `left: 0` positioning; 2px clearance on all sides eliminates subpixel overflow
+- **KeyValueField editable pairs**: `SortablePair` now renders `<input>` elements (was read-only `<span>`); added `onUpdate` callback; empty adds allowed (matching ListField)
+- **AddFieldPanel slide-up remove**: Replaced 400ms flash+delay with 200ms `row-slide-up` CSS animation — clicked field collapses upward, rows below slide to fill the gap, then `onAddField` fires; removed unused `flash-success` keyframe
+- **Compiled output matches editor order**: Lifted `addedFields` state from EditorArea to App.tsx; compiler now receives `displayOrderFields = [intent, ...defaults, ...addedOptionals]` instead of template-order fields
+- **KeyValueField markdown output**: Each pair now renders as its own `# key\nvalue` section (was `- **key**: value` bullets under single heading); pairs with all-whitespace key+value are skipped
+- **Visual separation in editor**: Field labels: `text-sm font-bold text-ink-primary` (was `text-xs font-semibold text-ink-muted`); removed `uppercase`/`tracking-wide` (meaningless for Chinese); inter-field gap: 24px (was 10px); added `border-t` dividers between fields; heavier `border-border-default` separator before AddFieldPanel
+- Updated AddFieldPanel test to match synchronous add behavior; 74 tests pass, build clean (301KB JS + 30KB CSS)
+
+## [2026-04-08] - UI polish: 9 fixes across field components, AddFieldPanel, and global interactions
+- **Help button restyled**: Circled `?` at superscript position with visible border ring, hover accent color, and `cursor-help` — replaces flat invisible badge (FieldLabel + AddFieldPanel)
+- **ListField "+" button fixed**: Changed from `<span>` to `<button>` with `onClick={handleAdd}`; fixed drag animation snap-back by using stable `useRef` counter IDs instead of index-based `item-${i}`
+- **KeyValueField "+" button fixed + drag support**: Same `<span>→<button>` fix; added full @dnd-kit sortable context with drag handles (⠿), matching ListField pattern
+- **Merged SelectField into ComboField**: Removed `'select'` from `InputType`, deleted `SelectField.tsx`, changed all 15 `inputType: 'select'` entries to `'combo'` across 6 task type files. ComboField is a superset (pills + custom text input)
+- **ToggleField animation fixed**: Added `p-0` to reset default button padding; adjusted knob size (14×14) and positioning (`top: 1.5px`, `translateX: 2px/18px`) to stay within switch bounds. Removed redundant "是/否 — {name}" text label
+- **AddFieldPanel smooth expand/collapse**: Entrance `slide-expand` animation (250ms) + exit `slide-collapse` animation (200ms); `scrollIntoView` on expand; add-field feedback with 400ms green flash + ✓ checkmark before field is added
+- **"其他" header restyled**: Changed from `bg-bg-page text-ink-muted` to gold `bg-bg-accent-light text-ink-primary`, matching "自定义字段" header
+- **Global cursor:pointer**: Added `button:not(:disabled) { cursor: pointer }` CSS rule to `index.css`
+- Updated module CLAUDE.md files and tests for select→combo rename; 74 tests pass, build clean (300KB JS)
+
 ## [2026-04-08] - Phase 2: All 6 task types + all input type renderers + progressive disclosure
 - **5 new task type definitions**: Created `create.ts`, `transform.ts`, `analyze.ts`, `ideate.ts`, `execute.ts` in `src/registry/task-types/` — each exports a complete `TaskTemplate` with universal defaults, task defaults, task optionals, and universal optionals ending with `custom_fields`
 - **Extended Ask with optional fields**: Added `knowledge_level` (task optional) and 13 universal optionals to `ask.ts` so all 6 types share the same progressive disclosure structure

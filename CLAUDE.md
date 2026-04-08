@@ -62,6 +62,7 @@ src/
 - **Chinese-first UI**: See Language Priority section below
 - **Co-located tests**: `foo.ts` → `foo.test.ts` in the same directory
 - **Type re-exports**: Shared types go through `src/types/index.ts`
+- **Playwright screenshots**: Never save to the project root. Use the system temp directory (e.g. `os.tmpdir()` / `$TMPDIR`) for all Playwright screenshots and artifacts
 
 ### Build & Run
 

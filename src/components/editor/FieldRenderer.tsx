@@ -1,7 +1,6 @@
 import type { FieldDefinition } from '@/registry/types';
 import { TextareaField } from '@/components/editor/fields/TextareaField';
 import { TextField } from '@/components/editor/fields/TextField';
-import { SelectField } from '@/components/editor/fields/SelectField';
 import { ComboField } from '@/components/editor/fields/ComboField';
 import { ListField } from '@/components/editor/fields/ListField';
 import { ToggleField } from '@/components/editor/fields/ToggleField';
@@ -28,15 +27,6 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
     case 'text':
       return (
         <TextField
-          field={field}
-          value={(value as string) ?? ''}
-          onChange={onChange}
-        />
-      );
-
-    case 'select':
-      return (
-        <SelectField
           field={field}
           value={(value as string) ?? ''}
           onChange={onChange}

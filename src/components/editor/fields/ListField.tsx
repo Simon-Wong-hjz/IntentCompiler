@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -81,7 +81,18 @@ function SortableItem({ id, index, text, onUpdate, onDelete }: SortableItemProps
 
 export function ListField({ field, value, onChange }: ListFieldProps) {
   const [newItem, setNewItem] = useState('');
-  const items = value.map((text, i) => ({ id: `item-${i}`, text }));
+
+  // Stable IDs for @dnd-kit — index-based IDs cause snap-back animation
+  const idCounter = useRef(0);
+  const genId = () => `list-${idCounter.current++}`;
+  const idsRef = useRef<string[]>(value.map(() => genId()));
+
+  // Sync IDs when value length changes externally (e.g., task type switch)
+  if (idsRef.current.length !== value.length) {
+    idsRef.current = value.map(() => genId());
+  }
+
+  const items = value.map((text, i) => ({ id: idsRef.current[i], text }));
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -95,15 +106,15 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
     if (over && active.id !== over.id) {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
+      idsRef.current = arrayMove(idsRef.current, oldIndex, newIndex);
       onChange(arrayMove(value, oldIndex, newIndex));
     }
   };
 
   const handleAdd = () => {
-    if (newItem.trim()) {
-      onChange([...value, newItem.trim()]);
-      setNewItem('');
-    }
+    idsRef.current = [...idsRef.current, genId()];
+    onChange([...value, newItem]);
+    setNewItem('');
   };
 
   const handleUpdate = (index: number, text: string) => {
@@ -113,6 +124,7 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
   };
 
   const handleDelete = (index: number) => {
+    idsRef.current = idsRef.current.filter((_, i) => i !== index);
     onChange(value.filter((_, i) => i !== index));
   };
 
@@ -153,7 +165,14 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
         {/* Add item row */}
         {items.length > 0 && <div className="border-t border-border-light" />}
         <div className="flex items-center gap-2 px-2 py-1.5">
-          <span className="text-sm flex-shrink-0 text-ink-hint">+</span>
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="text-sm flex-shrink-0 text-accent-primary font-bold hover:scale-110 transition-transform"
+            aria-label="添加项"
+          >
+            +
+          </button>
           <input
             type="text"
             value={newItem}

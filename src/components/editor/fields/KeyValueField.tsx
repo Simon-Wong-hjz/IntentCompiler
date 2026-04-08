@@ -1,4 +1,21 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { FieldLabel } from '@/components/editor/FieldLabel';
 import type { FieldDefinition } from '@/registry/types';
 
@@ -13,19 +30,112 @@ interface KeyValueFieldProps {
   onChange: (value: KeyValuePair[]) => void;
 }
 
+interface SortablePairProps {
+  id: string;
+  index: number;
+  pair: KeyValuePair;
+  onUpdate: (index: number, pair: KeyValuePair) => void;
+  onDelete: (index: number) => void;
+}
+
+function SortablePair({ id, index, pair, onUpdate, onDelete }: SortablePairProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} className="flex items-center gap-2 px-2 py-1.5">
+      <span
+        {...attributes}
+        {...listeners}
+        className="cursor-grab text-sm select-none flex-shrink-0 text-ink-hint"
+        aria-label="拖拽排序"
+      >
+        ⠿
+      </span>
+      <input
+        type="text"
+        value={pair.key}
+        onChange={(e) => onUpdate(index, { ...pair, key: e.target.value })}
+        placeholder="键"
+        className="text-sm font-semibold outline-none bg-transparent text-ink-primary"
+        style={{ width: '80px' }}
+      />
+      <input
+        type="text"
+        value={pair.value}
+        onChange={(e) => onUpdate(index, { ...pair, value: e.target.value })}
+        placeholder="值"
+        className="flex-1 text-sm outline-none bg-transparent text-ink-primary"
+      />
+      <button
+        type="button"
+        onClick={() => onDelete(index)}
+        className="flex-shrink-0 text-sm transition-colors text-ink-hint hover:text-status-danger"
+        aria-label="删除键值对"
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
 export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
   const [newKey, setNewKey] = useState('');
   const [newValue, setNewValue] = useState('');
 
-  const handleAdd = () => {
-    if (newKey.trim()) {
-      onChange([...value, { key: newKey.trim(), value: newValue.trim() }]);
-      setNewKey('');
-      setNewValue('');
+  // Stable IDs for @dnd-kit
+  const idCounter = useRef(0);
+  const genId = () => `kv-${idCounter.current++}`;
+  const idsRef = useRef<string[]>(value.map(() => genId()));
+
+  if (idsRef.current.length !== value.length) {
+    idsRef.current = value.map(() => genId());
+  }
+
+  const items = value.map((pair, i) => ({ id: idsRef.current[i], pair }));
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = items.findIndex((item) => item.id === active.id);
+      const newIndex = items.findIndex((item) => item.id === over.id);
+      idsRef.current = arrayMove(idsRef.current, oldIndex, newIndex);
+      onChange(arrayMove(value, oldIndex, newIndex));
     }
   };
 
+  const handleAdd = () => {
+    idsRef.current = [...idsRef.current, genId()];
+    onChange([...value, { key: newKey, value: newValue }]);
+    setNewKey('');
+    setNewValue('');
+  };
+
+  const handleUpdate = (index: number, pair: KeyValuePair) => {
+    const updated = [...value];
+    updated[index] = pair;
+    onChange(updated);
+  };
+
   const handleDelete = (index: number) => {
+    idsRef.current = idsRef.current.filter((_, i) => i !== index);
     onChange(value.filter((_, i) => i !== index));
   };
 
@@ -40,32 +150,40 @@ export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
     <div>
       <FieldLabel fieldKey={field.key} inputType="key-value" />
       <div className="rounded-lg overflow-hidden border border-border-default">
-        {/* Existing pairs */}
-        {value.map((pair, index) => (
-          <div key={index}>
-            {index > 0 && <div className="border-t border-border-light" />}
-            <div className="flex items-center gap-2 px-2 py-1.5">
-              <span className="text-sm font-semibold px-2 py-0.5 rounded flex-shrink-0 bg-bg-page text-ink-primary">
-                {pair.key}
-              </span>
-              <span className="text-sm flex-1 text-ink-primary">
-                {pair.value}
-              </span>
-              <button
-                type="button"
-                onClick={() => handleDelete(index)}
-                className="flex-shrink-0 text-sm transition-colors text-ink-hint hover:text-status-danger"
-                aria-label="删除键值对"
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-        ))}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={items.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {items.map((item, index) => (
+              <div key={item.id}>
+                {index > 0 && <div className="border-t border-border-light" />}
+                <SortablePair
+                  id={item.id}
+                  index={index}
+                  pair={item.pair}
+                  onUpdate={handleUpdate}
+                  onDelete={handleDelete}
+                />
+              </div>
+            ))}
+          </SortableContext>
+        </DndContext>
         {/* Add pair row */}
         {value.length > 0 && <div className="border-t border-border-light" />}
         <div className="flex items-center gap-2 px-2 py-1.5">
-          <span className="text-sm flex-shrink-0 text-ink-hint">+</span>
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="text-sm flex-shrink-0 text-accent-primary font-bold hover:scale-110 transition-transform"
+            aria-label="添加键值对"
+          >
+            +
+          </button>
           <input
             type="text"
             value={newKey}

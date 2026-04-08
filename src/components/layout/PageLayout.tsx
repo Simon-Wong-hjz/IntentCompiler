@@ -13,6 +13,9 @@ interface PageLayoutProps {
   compiledOutput: string;
   hasContent: boolean;
   canCopy: boolean;
+  addedFields: FieldDefinition[];
+  onAddField: (field: FieldDefinition) => void;
+  onRemoveField: (fieldKey: string) => void;
 }
 
 export function PageLayout({
@@ -24,6 +27,9 @@ export function PageLayout({
   compiledOutput,
   hasContent,
   canCopy,
+  addedFields,
+  onAddField,
+  onRemoveField,
 }: PageLayoutProps) {
   return (
     <div className="h-screen flex flex-col bg-bg-page" style={{ minWidth: '1024px' }}>
@@ -43,6 +49,9 @@ export function PageLayout({
             fieldValues={fieldValues}
             onFieldChange={onFieldChange}
             selectedType={selectedType}
+            addedFields={addedFields}
+            onAddField={onAddField}
+            onRemoveField={onRemoveField}
           />
         </div>
 

@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { keyToLabelZh } from '@/lib/format';
 import type { FieldDefinition } from '@/registry/types';
+
+/** Animation duration for the row slide-up removal (ms). */
+const ROW_REMOVE_DURATION = 200;
 
 /** Chinese descriptions for each optional field, shown in the add panel. */
 const FIELD_DESCRIPTIONS: Record<string, string> = {
@@ -46,38 +49,45 @@ interface AddFieldPanelProps {
 function FieldRow({
   field,
   onAdd,
+  isRemoving,
 }: {
   field: FieldDefinition;
   onAdd: () => void;
+  isRemoving: boolean;
 }) {
   const displayName = keyToLabelZh(field.key);
   const description = FIELD_DESCRIPTIONS[field.key] ?? '';
 
   return (
-    <div className="flex items-center justify-between px-3 py-2">
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1">
-          <span className="text-sm font-medium text-ink-primary">
-            {displayName}
-          </span>
-          <span className="inline-flex items-center justify-center w-4 h-4 rounded-full text-[10px] flex-shrink-0 bg-bg-page text-ink-muted">
-            ?
-          </span>
+    <div
+      style={isRemoving ? { animation: `row-slide-up ${ROW_REMOVE_DURATION}ms ease-in forwards` } : undefined}
+    >
+      <div className="flex items-center justify-between px-3 py-2">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1">
+            <span className="text-sm font-medium text-ink-primary">
+              {displayName}
+            </span>
+            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full text-[9px] font-bold flex-shrink-0 border border-ink-hint text-ink-muted -translate-y-1 cursor-help">
+              ?
+            </span>
+          </div>
+          {description && (
+            <p className="text-xs mt-0.5 text-ink-muted">
+              {description}
+            </p>
+          )}
         </div>
-        {description && (
-          <p className="text-xs mt-0.5 text-ink-muted">
-            {description}
-          </p>
-        )}
+        <button
+          type="button"
+          onClick={onAdd}
+          disabled={isRemoving}
+          className="flex-shrink-0 ml-3 text-lg font-bold leading-none text-accent-primary hover:scale-110 transition-transform"
+          aria-label={`添加字段 ${displayName}`}
+        >
+          +
+        </button>
       </div>
-      <button
-        type="button"
-        onClick={onAdd}
-        className="flex-shrink-0 ml-3 text-lg font-bold leading-none text-accent-primary"
-        aria-label={`添加字段 ${displayName}`}
-      >
-        +
-      </button>
     </div>
   );
 }
@@ -88,6 +98,9 @@ export function AddFieldPanel({
   onAddField,
 }: AddFieldPanelProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [removingFieldKey, setRemovingFieldKey] = useState<string | null>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Filter out custom_fields from universal optional — it gets its own section
   const universalWithoutCustom = universalOptionalFields.filter(
@@ -97,11 +110,37 @@ export function AddFieldPanel({
     (f) => f.key === 'custom_fields'
   );
 
+  const handleExpand = () => {
+    setIsExpanded(true);
+    setIsClosing(false);
+    // Scroll into view after the panel renders
+    setTimeout(() => {
+      panelRef.current?.scrollIntoView?.({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  };
+
+  const handleCollapse = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsExpanded(false);
+      setIsClosing(false);
+    }, 200);
+  };
+
+  const handleFieldClick = (field: FieldDefinition) => {
+    setRemovingFieldKey(field.key);
+    // After the slide-up animation completes, actually add the field
+    setTimeout(() => {
+      onAddField(field);
+      setRemovingFieldKey(null);
+    }, ROW_REMOVE_DURATION);
+  };
+
   if (!isExpanded) {
     return (
       <button
         type="button"
-        onClick={() => setIsExpanded(true)}
+        onClick={handleExpand}
         className="w-full py-3 text-sm font-semibold rounded-lg transition-colors bg-bg-surface border-[1.5px] border-dashed border-border-default text-ink-primary hover:border-accent-primary"
       >
         + 添加字段
@@ -110,7 +149,15 @@ export function AddFieldPanel({
   }
 
   return (
-    <div className="rounded-lg overflow-hidden border border-border-default">
+    <div
+      ref={panelRef}
+      className="rounded-lg overflow-hidden border border-border-default"
+      style={{
+        animation: isClosing
+          ? 'slide-collapse 200ms ease-in forwards'
+          : 'slide-expand 250ms ease-out',
+      }}
+    >
       {/* Recommended section (task-scoped optional fields) */}
       {taskOptionalFields.length > 0 && (
         <>
@@ -120,7 +167,11 @@ export function AddFieldPanel({
           {taskOptionalFields.map((field, index) => (
             <div key={field.key}>
               {index > 0 && <div className="border-t border-border-light" />}
-              <FieldRow field={field} onAdd={() => onAddField(field)} />
+              <FieldRow
+                field={field}
+                isRemoving={removingFieldKey === field.key}
+                onAdd={() => handleFieldClick(field)}
+              />
             </div>
           ))}
         </>
@@ -129,13 +180,20 @@ export function AddFieldPanel({
       {/* Others section (universal optional fields, excluding custom_fields) */}
       {universalWithoutCustom.length > 0 && (
         <>
-          <div className="px-3 py-1.5 text-xs font-bold bg-bg-page text-ink-muted">
+          <div
+            className="px-3 py-1.5 text-xs font-bold text-ink-primary"
+            style={{ backgroundColor: 'var(--color-bg-accent-light)', borderTop: '1px solid var(--color-border-light)' }}
+          >
             其他
           </div>
           {universalWithoutCustom.map((field, index) => (
             <div key={field.key}>
               {index > 0 && <div className="border-t border-border-light" />}
-              <FieldRow field={field} onAdd={() => onAddField(field)} />
+              <FieldRow
+                field={field}
+                isRemoving={removingFieldKey === field.key}
+                onAdd={() => handleFieldClick(field)}
+              />
             </div>
           ))}
         </>
@@ -152,7 +210,8 @@ export function AddFieldPanel({
           </div>
           <FieldRow
             field={customFieldDef}
-            onAdd={() => onAddField(customFieldDef)}
+            isRemoving={removingFieldKey === customFieldDef.key}
+            onAdd={() => handleFieldClick(customFieldDef)}
           />
         </>
       )}
@@ -161,7 +220,7 @@ export function AddFieldPanel({
       <div className="border-t border-border-light">
         <button
           type="button"
-          onClick={() => setIsExpanded(false)}
+          onClick={handleCollapse}
           className="w-full py-2 text-xs font-medium transition-colors text-ink-muted hover:text-ink-primary"
         >
           − 收起

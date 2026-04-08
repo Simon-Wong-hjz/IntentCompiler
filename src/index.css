@@ -26,6 +26,58 @@
   --radius-xl: 12px;
 }
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+@keyframes slide-expand {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-collapse {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes row-slide-up {
+  from {
+    max-height: 60px;
+    opacity: 1;
+    overflow: hidden;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@keyframes field-collapse {
+  from {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  to {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
 body {
   font-family: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei',
     'Noto Sans SC', system-ui, -apple-system, sans-serif;

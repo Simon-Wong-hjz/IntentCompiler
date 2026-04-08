@@ -62,7 +62,7 @@ describe('Template Registry', () => {
     expect(fieldMap.get('requirements')!.inputType).toBe('list');
     expect(fieldMap.get('constraints')!.inputType).toBe('list');
     expect(fieldMap.get('output_format')!.inputType).toBe('combo');
-    expect(fieldMap.get('question_type')!.inputType).toBe('select');
+    expect(fieldMap.get('question_type')!.inputType).toBe('combo');
     expect(fieldMap.get('audience')!.inputType).toBe('text');
   });
 

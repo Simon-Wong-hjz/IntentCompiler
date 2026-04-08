@@ -4,7 +4,6 @@ import { keyToLabelZh } from '@/lib/format';
 const OPERATION_HINTS: Record<InputType, string> = {
   textarea: '自由输入文本',
   text: '自由输入文本',
-  select: '点击选择一项',
   combo: '选择或自定义输入',
   list: '添加列表项',
   toggle: '开关切换',
@@ -22,12 +21,12 @@ export function FieldLabel({ fieldKey, inputType }: FieldLabelProps) {
   const displayName = keyToLabelZh(fieldKey);
 
   return (
-    <div className="flex items-center gap-1 mb-1.5">
-      <span className="text-xs uppercase font-semibold tracking-wide text-ink-muted">
+    <div className="flex items-center gap-1 mb-2">
+      <span className="text-sm font-bold text-ink-primary">
         {displayName}
       </span>
       <span
-        className="inline-flex items-center justify-center w-4 h-4 rounded-full text-[10px] font-medium flex-shrink-0 bg-bg-page text-ink-muted"
+        className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full text-[9px] font-bold flex-shrink-0 border border-ink-hint text-ink-muted -translate-y-1 hover:border-accent-primary hover:text-accent-primary transition-colors cursor-help"
         aria-label={`${displayName}帮助`}
       >
         ?

@@ -7,14 +7,27 @@ import type { TaskType, FieldDefinition } from '@/registry/types';
 function App() {
   const [selectedType, setSelectedType] = useState<TaskType | null>(null);
   const [fieldValues, setFieldValues] = useState<Record<string, unknown>>({});
+  const [addedFields, setAddedFields] = useState<FieldDefinition[]>([]);
 
   // Get the current template's field definitions
   const template = selectedType ? getTemplate(selectedType) : undefined;
   const fields: FieldDefinition[] = template?.fields ?? [];
 
-  // Compile fields into preview output
+  // Build display-order fields: intent → defaults → added optionals
+  // This ensures compiled output matches the editor's visual order
+  const intentField = fields.find((f) => f.key === 'intent');
+  const defaultFields = fields.filter(
+    (f) => f.key !== 'intent' && f.visibility === 'default',
+  );
+  const displayOrderFields: FieldDefinition[] = [
+    ...(intentField ? [intentField] : []),
+    ...defaultFields,
+    ...addedFields,
+  ];
+
+  // Compile fields into preview output (using display order)
   const { compiledOutput, hasContent } = useCompiler(
-    fields,
+    displayOrderFields,
     fieldValues,
     'markdown',
   );
@@ -51,12 +64,26 @@ function App() {
       const intentValue = (fieldValues['intent'] as string) ?? '';
       setSelectedType(type);
       setFieldValues(intentValue ? { intent: intentValue } : {});
+      setAddedFields([]);
     },
     [selectedType, fieldValues],
   );
 
   const handleFieldChange = useCallback((key: string, value: unknown) => {
     setFieldValues((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const handleAddField = useCallback((field: FieldDefinition) => {
+    setAddedFields((prev) => [...prev, field]);
+  }, []);
+
+  const handleRemoveField = useCallback((fieldKey: string) => {
+    setAddedFields((prev) => prev.filter((f) => f.key !== fieldKey));
+    setFieldValues((prev) => {
+      const next = { ...prev };
+      delete next[fieldKey];
+      return next;
+    });
   }, []);
 
   return (
@@ -69,6 +96,9 @@ function App() {
       compiledOutput={compiledOutput}
       hasContent={hasContent}
       canCopy={canCopy}
+      addedFields={addedFields}
+      onAddField={handleAddField}
+      onRemoveField={handleRemoveField}
     />
   );
 }

@@ -5,7 +5,7 @@ The Template Registry is the **single source of truth** for all task type defini
 ## Key Types (`types.ts`)
 
 - **`TaskType`**: Union of 6 task identifiers — `'ask' | 'create' | 'transform' | 'analyze' | 'ideate' | 'execute'`
-- **`InputType`**: How a field renders — `'textarea' | 'text' | 'select' | 'combo' | 'list' | 'toggle' | 'number' | 'key-value'`
+- **`InputType`**: How a field renders — `'textarea' | 'text' | 'combo' | 'list' | 'toggle' | 'number' | 'key-value'`
 - **`FieldDefinition`**: Describes one field — `key`, `inputType`, `scope` (universal/task), `visibility` (default/optional), optional `options[]`, optional `required`
 - **`TaskTemplate`**: Combines a `TaskType` with bilingual `verb`/`mentalModel` labels and a `fields[]` array
 

@@ -1,7 +1,6 @@
 export type InputType =
   | 'textarea'
   | 'text'
-  | 'select'
   | 'combo'
   | 'list'
   | 'toggle'

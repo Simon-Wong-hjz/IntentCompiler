@@ -12,8 +12,8 @@ App (state owner)
         ├── EditorArea            # Left: dynamic form
         │   ├── IntentField       # Always first, elevated styling
         │   ├── FieldRenderer × N # One per field definition
-        │   │   └── TextField / TextareaField / SelectField / ComboField
-        │   │       / ListField / ToggleField / NumberField / KeyValueField
+        │   │   └── TextField / TextareaField / ComboField / ListField
+        │   │       / ToggleField / NumberField / KeyValueField
         │   └── AddFieldPanel     # Progressive disclosure for optional fields
         └── PreviewArea           # Right: live compiled output
             └── CopyButton        # Copy-to-clipboard
@@ -38,7 +38,7 @@ components/
 │   └── fields/
 │       ├── TextField.tsx       # Single-line input
 │       ├── TextareaField.tsx   # Multi-line auto-expanding input
-│       ├── SelectField.tsx     # Pill button single-select
+│       ├── (SelectField removed — merged into ComboField)
 │       ├── ComboField.tsx      # Pill buttons + custom text input
 │       ├── ListField.tsx       # Ordered list with @dnd-kit drag-reorder
 │       ├── ToggleField.tsx     # Custom toggle switch (是/否)
@@ -58,8 +58,7 @@ components/
 `FieldRenderer` maps `inputType` to the right component:
 - `'textarea'` → `TextareaField`
 - `'text'` → `TextField`
-- `'select'` → `SelectField` (pill buttons, single-select with deselect)
-- `'combo'` → `ComboField` (pills + text input, selecting a pill clears text and vice versa)
+- `'combo'` → `ComboField` (pills + text input; selecting a pill clears text and vice versa. Replaces former SelectField)
 - `'list'` → `ListField` (ordered items with add/edit/delete/drag-reorder via @dnd-kit)
 - `'toggle'` → `ToggleField` (custom switch, 是/否 label)
 - `'number'` → `NumberField` (stepper with direct input)
