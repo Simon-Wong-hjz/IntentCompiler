@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -89,20 +89,22 @@ function SortablePair({ id, index, pair, onUpdate, onDelete }: SortablePairProps
   );
 }
 
+let kvNextId = 0;
+
 export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
   const [newKey, setNewKey] = useState('');
   const [newValue, setNewValue] = useState('');
 
-  // Stable IDs for @dnd-kit
-  const idCounter = useRef(0);
-  const genId = () => `kv-${idCounter.current++}`;
-  const idsRef = useRef<string[]>(value.map(() => genId()));
+  // Stable IDs for @dnd-kit — state (not refs) so they're safe to read during render
+  const [ids, setIds] = useState<string[]>(() =>
+    value.map(() => `kv-${kvNextId++}`)
+  );
 
-  if (idsRef.current.length !== value.length) {
-    idsRef.current = value.map(() => genId());
+  if (ids.length !== value.length) {
+    setIds(value.map(() => `kv-${kvNextId++}`));
   }
 
-  const items = value.map((pair, i) => ({ id: idsRef.current[i], pair }));
+  const items = value.map((pair, i) => ({ id: ids[i], pair }));
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -116,13 +118,13 @@ export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
     if (over && active.id !== over.id) {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
-      idsRef.current = arrayMove(idsRef.current, oldIndex, newIndex);
+      setIds(arrayMove(ids, oldIndex, newIndex));
       onChange(arrayMove(value, oldIndex, newIndex));
     }
   };
 
   const handleAdd = () => {
-    idsRef.current = [...idsRef.current, genId()];
+    setIds([...ids, `kv-${kvNextId++}`]);
     onChange([...value, { key: newKey, value: newValue }]);
     setNewKey('');
     setNewValue('');
@@ -135,7 +137,7 @@ export function KeyValueField({ field, value, onChange }: KeyValueFieldProps) {
   };
 
   const handleDelete = (index: number) => {
-    idsRef.current = idsRef.current.filter((_, i) => i !== index);
+    setIds(ids.filter((_, i) => i !== index));
     onChange(value.filter((_, i) => i !== index));
   };
 

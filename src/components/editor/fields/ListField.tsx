@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -79,20 +79,22 @@ function SortableItem({ id, index, text, onUpdate, onDelete }: SortableItemProps
   );
 }
 
+let listNextId = 0;
+
 export function ListField({ field, value, onChange }: ListFieldProps) {
   const [newItem, setNewItem] = useState('');
 
-  // Stable IDs for @dnd-kit — index-based IDs cause snap-back animation
-  const idCounter = useRef(0);
-  const genId = () => `list-${idCounter.current++}`;
-  const idsRef = useRef<string[]>(value.map(() => genId()));
+  // Stable IDs for @dnd-kit — state (not refs) so they're safe to read during render
+  const [ids, setIds] = useState<string[]>(() =>
+    value.map(() => `list-${listNextId++}`)
+  );
 
   // Sync IDs when value length changes externally (e.g., task type switch)
-  if (idsRef.current.length !== value.length) {
-    idsRef.current = value.map(() => genId());
+  if (ids.length !== value.length) {
+    setIds(value.map(() => `list-${listNextId++}`));
   }
 
-  const items = value.map((text, i) => ({ id: idsRef.current[i], text }));
+  const items = value.map((text, i) => ({ id: ids[i], text }));
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -106,13 +108,13 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
     if (over && active.id !== over.id) {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
-      idsRef.current = arrayMove(idsRef.current, oldIndex, newIndex);
+      setIds(arrayMove(ids, oldIndex, newIndex));
       onChange(arrayMove(value, oldIndex, newIndex));
     }
   };
 
   const handleAdd = () => {
-    idsRef.current = [...idsRef.current, genId()];
+    setIds([...ids, `list-${listNextId++}`]);
     onChange([...value, newItem]);
     setNewItem('');
   };
@@ -124,7 +126,7 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
   };
 
   const handleDelete = (index: number) => {
-    idsRef.current = idsRef.current.filter((_, i) => i !== index);
+    setIds(ids.filter((_, i) => i !== index));
     onChange(value.filter((_, i) => i !== index));
   };
 

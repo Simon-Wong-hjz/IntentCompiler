@@ -8,7 +8,7 @@
 Durable decisions that apply across all phases:
 
 - **Architecture**: Pure frontend SPA. No backend server in default mode. AI mode calls provider APIs directly from the browser. Deployed as a static build via Nginx on Alibaba Cloud.
-- **Tech stack**: React + TypeScript, Vite, Tailwind CSS + shadcn/ui, react-i18next, Dexie.js, js-yaml, fast-xml-parser.
+- **Tech stack**: React 19 + TypeScript 6, Vite 8, Tailwind CSS v4 + shadcn/ui, react-i18next, Dexie.js, js-yaml, fast-xml-parser.
 - **Page layout**: Fixed top bar → scrolling task type selector → 50/50 editor + preview split. Minimum viewport width 1024px. Both panels scroll independently.
 - **Brand identity**: Sunflower + Ink — `#f5c518` accent on `#fffdf5` page background, `#1a1a1a` ink. Plus Jakarta Sans for Latin text, system fonts for Chinese.
 - **Task types**: Ask, Create, Transform, Analyze, Ideate, Execute — each mapped to a verb and mental model. This is a core identity element used throughout navigation and UI.
@@ -39,17 +39,17 @@ Build the Compiler engine that receives field data and produces ordered output. 
 
 ### Acceptance criteria
 
-- [ ] Project scaffolds and runs via `npm run dev` with Vite + React + TypeScript + Tailwind + shadcn/ui
-- [ ] Page layout matches design spec: fixed top bar, task selector, 50/50 editor+preview split
-- [ ] All 6 task type cards display with verb + mental model, correct styling for default/selected/hover states
-- [ ] Selecting Ask populates the editor with Intent (elevated styling) + default fields
-- [ ] Selecting any other task type shows a "coming soon" or empty state (graceful degradation)
-- [ ] Textarea and text input types render correctly with design spec styling
-- [ ] Live preview shows compiled Markdown output, updating in real-time as fields change
-- [ ] Compiled output orders fields by importance (intent first, then core fields)
-- [ ] Empty optional fields are omitted from compiled output
-- [ ] "Copy to Clipboard" button copies preview content, shows success/error feedback
-- [ ] Copy button is disabled when preview has no meaningful content
+- [x] Project scaffolds and runs via `npm run dev` with Vite + React + TypeScript + Tailwind + shadcn/ui
+- [x] Page layout matches design spec: fixed top bar, task selector, 50/50 editor+preview split
+- [x] All 6 task type cards display with verb + mental model, correct styling for default/selected/hover states
+- [x] Selecting Ask populates the editor with Intent (elevated styling) + default fields
+- [x] Selecting any other task type shows a "coming soon" or empty state (graceful degradation)
+- [x] Textarea and text input types render correctly with design spec styling
+- [x] Live preview shows compiled Markdown output, updating in real-time as fields change
+- [x] Compiled output orders fields by importance (intent first, then core fields)
+- [x] Empty optional fields are omitted from compiled output
+- [x] "Copy to Clipboard" button copies preview content, shows success/error feedback
+- [x] Copy button is disabled when preview has no meaningful content
 
 ---
 
@@ -77,18 +77,18 @@ Wire the field label pattern for every field: FIELD_NAME + [?] help icon (visual
 
 ### Acceptance criteria
 
-- [ ] All 6 task types populate the editor with their correct default fields when selected
-- [ ] Switching task type resets the editor and repopulates with the new type's defaults
-- [ ] All 8 input type renderers work correctly: textarea, text, select, combo, list, toggle, number, key-value
-- [ ] Select renders as horizontal pills with correct selected/unselected styling
-- [ ] Combo renders pills + text input in a single bordered container
-- [ ] List supports add, delete, and drag-to-reorder
-- [ ] "Add Field" button expands to a panel with "Recommended" and "Others" sections
-- [ ] Optional field grouping matches PRD: task-scoped optional fields first, universal optional fields second
-- [ ] Adding a field from the panel places it in the editor at the correct position (after defaults, before custom fields)
-- [ ] Custom fields (key-value) are available at the bottom of the add panel and always render last in the editor
-- [ ] Field labels show field name + [?] icon (non-functional placeholder) + operation hint
-- [ ] Compiled output (Markdown) includes all filled fields in correct importance order across all task types
+- [x] All 6 task types populate the editor with their correct default fields when selected
+- [x] Switching task type resets the editor and repopulates with the new type's defaults
+- [x] All 8 input type renderers work correctly: textarea, text, select, combo, list, toggle, number, key-value
+- [x] Select renders as horizontal pills with correct selected/unselected styling
+- [x] Combo renders pills + text input in a single bordered container
+- [x] List supports add, delete, and drag-to-reorder
+- [x] "Add Field" button expands to a panel with "Recommended" and "Others" sections
+- [x] Optional field grouping matches PRD: task-scoped optional fields first, universal optional fields second
+- [x] Adding a field from the panel places it in the editor at the correct position (after defaults, before custom fields)
+- [x] Custom fields (key-value) are available at the bottom of the add panel and always render last in the editor
+- [x] Field labels show field name + [?] icon (non-functional placeholder) + operation hint
+- [x] Compiled output (Markdown) includes all filled fields in correct importance order across all task types
 
 ---
 

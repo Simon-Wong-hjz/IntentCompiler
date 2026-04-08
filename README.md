@@ -8,25 +8,30 @@ Intent Compiler helps you "compile" your intent into well-structured prompts. Se
 
 - **6 Task Types** — Ask, Create, Transform, Analyze, Ideate, Execute — each with tailored field templates
 - **Progressive Disclosure** — Only essential fields shown by default; add optional fields as needed
-- **4 Output Formats** — Markdown, JSON, YAML, XML — all first-class citizens
 - **Live Preview** — See your compiled prompt update in real-time as you edit
-- **Bilingual** — Full English and Chinese support for both UI and output
-- **AI-Enhanced Mode** — Optional field filling via OpenAI or Anthropic APIs
-- **Local Persistence** — Settings and compilation history stored in IndexedDB
-- **Privacy-First** — Pure client-side SPA; API keys never leave your browser except to the AI provider
+- **Markdown Output** — Compiled prompts in Markdown format (JSON, YAML, XML planned for Phase 3)
+- **Privacy-First** — Pure client-side SPA; no backend server required
+- **Bilingual** — Full English and Chinese support *(planned — Phase 3)*
+- **AI-Enhanced Mode** — Optional field filling via OpenAI or Anthropic APIs *(planned — Phase 5)*
+- **Local Persistence** — Settings and compilation history stored in IndexedDB *(planned — Phase 4)*
 
 ## Tech Stack
 
-- **React 18** + **TypeScript** + **Vite**
-- **Tailwind CSS v3** + **shadcn/ui**
-- **react-i18next** for bilingual support
-- **Dexie.js** for IndexedDB storage
+- **React 19** + **TypeScript 6** + **Vite 8**
+- **Tailwind CSS v4** + **shadcn/ui**
+- **react-i18next** for bilingual support (Phase 3)
+- **Dexie.js** for IndexedDB storage (Phase 4)
 - **Vitest** + **React Testing Library** for testing
 
 ## Getting Started
 
-> [!NOTE]
-> This project is under active development. Setup instructions will be added once the initial scaffolding is complete.
+```bash
+npm install          # Install dependencies
+npm run dev          # Start dev server (Vite)
+npm run build        # Production build
+npm run test         # Run tests (Vitest)
+npm run lint         # ESLint check
+```
 
 ## Documentation
 

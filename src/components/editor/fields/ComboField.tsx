@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { FieldLabel } from '@/components/editor/FieldLabel';
 import type { FieldDefinition } from '@/registry/types';
 
@@ -11,22 +10,13 @@ interface ComboFieldProps {
 export function ComboField({ field, value, onChange }: ComboFieldProps) {
   const options = field.options ?? [];
   const isOptionSelected = options.includes(value);
-  const [customText, setCustomText] = useState(isOptionSelected ? '' : value);
-
-  useEffect(() => {
-    if (options.includes(value)) {
-      setCustomText('');
-    } else {
-      setCustomText(value);
-    }
-  }, [value, options]);
+  const customText = isOptionSelected ? '' : value;
 
   const handlePillClick = (option: string) => {
     onChange(value === option ? '' : option);
   };
 
   const handleTextChange = (text: string) => {
-    setCustomText(text);
     onChange(text);
   };
 

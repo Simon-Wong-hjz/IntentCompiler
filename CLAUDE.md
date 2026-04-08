@@ -4,8 +4,8 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 
 ## Project Status
 
-**Current Phase**: Phase 1 complete (Ask task type + Markdown compile loop working)
-**Next**: Phase 2 — all 6 task types + all input type renderers + progressive disclosure
+**Current Phase**: Phase 2 complete (all 6 task types + all input renderers + progressive disclosure)
+**Next**: Phase 3 — JSON/YAML/XML formatters + react-i18next bilingual support
 
 ### Key Specs
 
@@ -77,7 +77,7 @@ npm run lint         # ESLint check
 ## Implementation Phases
 
 1. **Phase 1** ✅: Project setup + Ask task type + Markdown compile loop
-2. **Phase 2**: All 6 task types + all input type renderers + progressive disclosure
+2. **Phase 2** ✅: All 6 task types + all input type renderers + progressive disclosure
 3. **Phase 3**: JSON/YAML/XML formatters + react-i18next bilingual support
 4. **Phase 4**: Dexie.js persistence — settings modal + history modal
 5. **Phase 5**: AI-enhanced mode — OpenAI + Anthropic field filling

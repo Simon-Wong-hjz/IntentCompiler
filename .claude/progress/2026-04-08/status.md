@@ -20,8 +20,7 @@
   - `src/lib/format.ts` utility: `keyToLabel()` (English output) + `keyToLabelZh()` (Chinese UI)
   - New dependency: `@dnd-kit/sortable` for ListField drag-reorder
   - 4 new test files: `AddFieldPanel.test.tsx`, `ListField.test.tsx`, `SelectField.test.tsx`, `all-task-types.test.ts`
-- 72 unit tests pass across 7 test files, build clean (298KB JS + 29KB CSS), zero lint errors
-- **UI polish: 9 fixes** across field components, AddFieldPanel, and global interactions (uncommitted):
+- **UI polish** — editable fields, removable optionals, visual hierarchy, and compiler ordering (ea36beb):
   - Help badge restyled: superscript circled `?` with visible border ring + `cursor-help`
   - ListField: "+" button fixed (`<span>→<button>`); drag snap-back fixed via stable `useRef` IDs
   - KeyValueField: "+" button fixed + full @dnd-kit drag-reorder support added
@@ -30,11 +29,14 @@
   - AddFieldPanel: smooth expand/collapse animation + `scrollIntoView` + add-field ✓ feedback
   - "其他" header restyled to gold `bg-accent-light` matching "自定义字段"
   - Global `button:not(:disabled) { cursor: pointer }` rule
-- 74 unit tests pass across 7 test files, build clean (300KB JS + 30KB CSS), zero lint errors
+- 74 unit tests pass across 7 test files, build clean (302KB JS + 30KB CSS), zero lint errors at commit time
+- Fixed all 11 ESLint errors introduced by Phase 2: refactored ComboField to derived state (removed `useState`+`useEffect`), converted KeyValueField/ListField stable IDs from `useRef` to `useState` — lint now 0 errors, 1 warning
+- Resolved all doc-debt items: CLAUDE.md updated to Phase 2 complete, README.md updated (React 19, TS 6, Vite 8, features with planned markers, setup instructions), roadmap updated with versions and acceptance criteria checkoffs
+- Created `resolve-failures` skill for sim-workflow plugin — triages FAIL items from verification.md (fix / accept as Known Issues / reassess), then invokes `/verify-progress` for re-check
 
 ## In Progress
 
-- All UI polish changes are uncommitted — ready for commit
+- Uncommitted changes: 3 field component ESLint fixes + 3 doc updates + progress files — pending commit
 
 ## Next
 
@@ -45,13 +47,13 @@
   - Install `js-yaml` and `fast-xml-parser` dependencies
   - Add UI language toggle to TopBar, output language toggle to PreviewHeader
   - Update compiler to accept `outputLanguage` parameter
-- Update CLAUDE.md "Project Status" to reflect Phase 2 completion
-- Address README.md doc-debt (stale tech stack versions, placeholder setup instructions)
 
 ## Notes
 
 - Phase 2 was a single large commit (e828199): 55 files changed, +2135/−341 lines
-- Bundle size grew ~70KB (228→298KB JS) which is expected for 5 task modules + 8 field components
-- Test count jumped 15→72 — good Phase 2 coverage
+- UI polish committed as ea36beb: includes field editability, removable optionals, visual hierarchy fixes
+- Bundle size grew ~70KB total (228→302KB JS) which is expected for 5 task modules + 8 field components
+- Test count jumped 15→74 — good Phase 2 coverage
 - `src/components/CLAUDE.md` was updated as part of Phase 2 and accurately reflects all new components
 - Phase 3 plan is at `docs/superpowers/plans/2026-04-07-intent-compiler-phase3-formats-i18n.md`
+- ESLint fix approach: module-level counters + `useState` for dnd-kit IDs is React 19 idiomatic — avoids ref access during render while keeping IDs stable across drag operations
