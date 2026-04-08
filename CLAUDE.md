@@ -4,8 +4,8 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 
 ## Project Status
 
-**Current Phase**: Phase 3 complete (JSON/YAML/XML formatters + react-i18next bilingual support)
-**Next**: Phase 4 — Dexie.js persistence (settings modal + history modal)
+**Current Phase**: Phase 4 complete (Dexie.js persistence — settings modal + history modal)
+**Next**: Phase 5 — AI-enhanced mode (OpenAI + Anthropic field filling)
 
 ### Key Specs
 
@@ -28,7 +28,7 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 | Build | Vite 8 |
 | UI | Tailwind CSS v4 + shadcn/ui |
 | i18n | react-i18next |
-| Storage | IndexedDB via Dexie.js (Phase 4) |
+| Storage | IndexedDB via Dexie.js |
 | Serialization | js-yaml, fast-xml-parser |
 | Testing | Vitest + React Testing Library + jsdom |
 | Deployment | Static build → Nginx (Alibaba Cloud) |
@@ -47,9 +47,12 @@ src/
 │   ├── task-selector/       # TaskSelector, TaskCard — type picker
 │   ├── editor/              # EditorArea, FieldRenderer, field components
 │   ├── preview/             # PreviewArea, PreviewHeader, CopyButton — live output
+│   ├── modals/              # SettingsModal, HistoryModal — dialog windows
 │   └── ui/                  # shadcn/ui primitives (button, etc.)
 ├── i18n/                    # i18n config + locale files (en.json, zh.json)
-├── hooks/                   # useCompiler, useClipboard
+├── hooks/                   # useCompiler, useClipboard, useStorage (usePreferences + useHistory)
+├── storage/                 # Dexie.js DB schema, preferences CRUD, history CRUD
+├── utils/                   # relativeTime utility
 ├── lib/                     # Utilities — format.ts, utils.ts
 └── types/                   # Re-exports from registry + compiler types
 ```
@@ -80,7 +83,7 @@ npm run lint         # ESLint check
 1. **Phase 1** ✅: Project setup + Ask task type + Markdown compile loop
 2. **Phase 2** ✅: All 6 task types + all input type renderers + progressive disclosure
 3. **Phase 3** ✅: JSON/YAML/XML formatters + react-i18next bilingual support
-4. **Phase 4**: Dexie.js persistence — settings modal + history modal
+4. **Phase 4** ✅: Dexie.js persistence — settings modal + history modal
 5. **Phase 5**: AI-enhanced mode — OpenAI + Anthropic field filling
 6. **Phase 6**: Help system + edge states + visual polish
 

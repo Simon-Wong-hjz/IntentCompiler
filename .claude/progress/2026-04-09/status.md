@@ -6,15 +6,10 @@
 
 ## Next
 
-- Begin Phase 4 implementation: Dexie.js persistence — settings modal + history modal
-  - Install Dexie.js and set up IndexedDB schema
-  - Create settings modal (UI language preference, default output format, etc.)
-  - Create history modal (save/load/delete compiled prompts)
-  - Persist user preferences across sessions
+- Begin Phase 5 planning: AI-enhanced mode (OpenAI + Anthropic field filling)
 
 ## Notes
 
-- Phase 3 fully complete — all 18 tasks done, all acceptance issues resolved
-- Build: 362ms, 10 test files / 104 tests pass, lint clean
-- Chinese default UI language (`'zh'`), persisted via `localStorage` key `intent-compiler-ui-lang`
-- UI language and output language are independent
+- Build baseline: 514KB JS + 31KB CSS (Dexie.js adds ~100KB over Phase 3)
+- 13 test files / 123 tests pass, lint clean (only pre-existing shadcn warning)
+- localStorage key `intent-compiler-ui-lang` is migrated to Dexie on first load; Phase 3's i18n config still reads from localStorage as a fallback until the migration runs

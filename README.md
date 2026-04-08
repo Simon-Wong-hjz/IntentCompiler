@@ -9,18 +9,18 @@ Intent Compiler helps you "compile" your intent into well-structured prompts. Se
 - **6 Task Types** — Ask, Create, Transform, Analyze, Ideate, Execute — each with tailored field templates
 - **Progressive Disclosure** — Only essential fields shown by default; add optional fields as needed
 - **Live Preview** — See your compiled prompt update in real-time as you edit
-- **Markdown Output** — Compiled prompts in Markdown format (JSON, YAML, XML planned for Phase 3)
+- **4 Output Formats** — Compiled prompts in Markdown, JSON, YAML, or XML
 - **Privacy-First** — Pure client-side SPA; no backend server required
-- **Bilingual** — Full English and Chinese support *(planned — Phase 3)*
+- **Bilingual** — Full English and Chinese support
 - **AI-Enhanced Mode** — Optional field filling via OpenAI or Anthropic APIs *(planned — Phase 5)*
-- **Local Persistence** — Settings and compilation history stored in IndexedDB *(planned — Phase 4)*
+- **Local Persistence** — Settings and compilation history stored in IndexedDB
 
 ## Tech Stack
 
 - **React 19** + **TypeScript 6** + **Vite 8**
 - **Tailwind CSS v4** + **shadcn/ui**
-- **react-i18next** for bilingual support (Phase 3)
-- **Dexie.js** for IndexedDB storage (Phase 4)
+- **react-i18next** for bilingual support
+- **Dexie.js** for IndexedDB storage
 - **Vitest** + **React Testing Library** for testing
 
 ## Getting Started
@@ -41,4 +41,4 @@ npm run lint         # ESLint check
 
 ## License
 
-[Apache License 2.0](LICENSE) — Copyright 2026 Simon Huang
+[Apache License 2.0](LICENSE) — Copyright 2026 Simon Wong

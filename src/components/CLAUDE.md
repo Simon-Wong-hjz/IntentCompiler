@@ -44,6 +44,9 @@ components/
 │       ├── ToggleField.tsx     # Custom toggle switch (是/否)
 │       ├── NumberField.tsx     # Stepper with +/− buttons
 │       └── KeyValueField.tsx   # Key-value pair manager
+├── modals/
+│   ├── SettingsModal.tsx  # Output defaults + AI configuration (API type, key, endpoint, model)
+│   └── HistoryModal.tsx   # Sorted history records with load/delete/clear confirmations
 ├── preview/
 │   ├── PreviewArea.tsx    # Right pane — displays compiledOutput
 │   └── CopyButton.tsx     # Copies output to clipboard (useClipboard hook)
@@ -69,15 +72,28 @@ components/
 
 All field components use `FieldLabel` which renders: **Chinese label** (via `keyToLabelZh()`) + **[?] badge** + **Chinese operation hint** (e.g., "自由输入文本", "点击选择一项").
 
+### Modal Patterns
+
+Both `SettingsModal` and `HistoryModal` follow the same interaction pattern:
+- **Backdrop click**: Clicking the backdrop overlay (`ref={backdropRef}`) closes the modal
+- **Escape key**: A `useEffect` listener on `keydown` calls `onClose()` on Escape. In `HistoryModal`, Escape first dismisses any active confirmation prompt before closing the modal itself
+- **Props**: `open: boolean` + `onClose: () => void` — parent controls visibility
+- **Conditional render**: Early-return `null` when `!open`, so internal state resets on each open
+
+`HistoryModal` also manages inline confirmation state (`confirmLoadId`, `confirmDeleteId`, `confirmClearAll`) for destructive actions.
+
 ### State Flow
 
 All state lives in `App.tsx`:
 - `selectedType: TaskType | null` — which task type is active
 - `fieldValues: Record<string, unknown>` — user input keyed by field key (supports string, string[], boolean, number, KeyValuePair[])
+- Modal open/close: `settingsOpen` and `historyOpen` boolean state in App.tsx
 
 `EditorArea` manages local `addedFields: FieldDefinition[]` state for progressive disclosure.
 
-State flows down via props: `App → PageLayout → EditorArea/PreviewArea`. No context providers yet.
+Storage hooks (`usePreferences` and `useHistory` from `hooks/useStorage.ts`) provide persistence state and actions to `App.tsx`, which passes them to modals via props.
+
+State flows down via props: `App → PageLayout → EditorArea/PreviewArea`, `App → SettingsModal/HistoryModal`.
 
 ### Progressive Disclosure
 
