@@ -29,7 +29,7 @@ const FIELD_LABELS_ZH: Record<string, string> = {
   examples: '示例',
   anti_examples: '反面示例',
   references: '参考资料',
-  custom_fields: '自定义字段',
+  custom_fields: '自定义项目',
   // Ask fields
   question_type: '问题类型',
   knowledge_level: '已有知识水平',

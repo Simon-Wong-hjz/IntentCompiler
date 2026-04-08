@@ -19,31 +19,31 @@ describe('ComboField (merged select + combo)', () => {
     onChange: vi.fn(),
   };
 
-  it('renders all options as pill buttons', () => {
+  it('renders all options as pill buttons (i18n translated)', () => {
     render(<ComboField {...defaultProps} />);
-    expect(screen.getByText('factual')).toBeInTheDocument();
-    expect(screen.getByText('conceptual')).toBeInTheDocument();
-    expect(screen.getByText('how-to')).toBeInTheDocument();
-    expect(screen.getByText('opinion')).toBeInTheDocument();
+    expect(screen.getByText('事实性')).toBeInTheDocument();
+    expect(screen.getByText('概念性')).toBeInTheDocument();
+    expect(screen.getByText('方法类')).toBeInTheDocument();
+    expect(screen.getByText('观点类')).toBeInTheDocument();
   });
 
-  it('calls onChange when an option is clicked', () => {
+  it('calls onChange with raw option value when clicked', () => {
     const onChange = vi.fn();
     render(<ComboField {...defaultProps} onChange={onChange} />);
-    fireEvent.click(screen.getByText('conceptual'));
+    fireEvent.click(screen.getByText('概念性'));
     expect(onChange).toHaveBeenCalledWith('conceptual');
   });
 
   it('highlights the selected option', () => {
     render(<ComboField {...defaultProps} value="how-to" />);
-    const selected = screen.getByText('how-to');
+    const selected = screen.getByText('方法类');
     expect(selected.closest('button')).toHaveClass('font-semibold');
   });
 
   it('deselects when clicking the already-selected option', () => {
     const onChange = vi.fn();
     render(<ComboField {...defaultProps} value="factual" onChange={onChange} />);
-    fireEvent.click(screen.getByText('factual'));
+    fireEvent.click(screen.getByText('事实性'));
     expect(onChange).toHaveBeenCalledWith('');
   });
 

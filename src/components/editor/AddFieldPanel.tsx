@@ -2,14 +2,14 @@ import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { FieldDefinition } from '@/registry/types';
 
-/** Animation duration for the row slide-up removal (ms). */
-const ROW_REMOVE_DURATION = 200;
-
 interface AddFieldPanelProps {
   taskOptionalFields: FieldDefinition[];
   universalOptionalFields: FieldDefinition[];
   onAddField: (field: FieldDefinition) => void;
 }
+
+/** Animation duration for the row slide-up removal (ms). */
+const ROW_REMOVE_DURATION = 200;
 
 function FieldRow({
   field,

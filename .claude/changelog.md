@@ -1,5 +1,14 @@
 # Changelog
 
+## [2026-04-09] - Manual acceptance fixes: 6 issues across list fields, i18n, formatters, and UX
+- **List field only renders non-empty items**: Added `newItem.trim()` guard in `handleAdd`; compiler filters empty strings from arrays before passing to formatters; add-item row moved outside bordered container with dashed border for visual separation
+- **Enum option values i18n**: Added 33 option translations to both locale files (`options` section); compiler translates combo field values via `getOptionLabel()` based on output language; ComboField pills display translated text via `t('options.${option}')`
+- **Removed invisible add-field animation**: Stripped `row-slide-up` keyframe, `removingFieldKey` state, `isRemoving` prop, and `setTimeout` from AddFieldPanel; `onAddField` now fires immediately
+- **Renamed "字段" to "项目"**: Updated 5 Chinese strings, 5 English strings (Field→Item), and `format.ts` hardcoded fallback; more intuitive for non-technical users
+- **Key-value pairs output as top-level entries**: JSON, YAML, XML formatters now expand KV pairs into individual entries (key as heading, value as content) instead of nesting under "自定义项目"; matches existing Markdown formatter behavior
+- **XML Chinese tag support fixed**: `sanitizeTagName` regex updated from ASCII-only to Unicode-aware (`\p{L}\p{N}` with `u` flag); CJK characters now preserved in XML tag names per XML 1.0 spec
+- Updated AddFieldPanel + ComboField tests to match new i18n text; 104 tests pass, build clean (400KB JS + 30KB CSS)
+
 ## [2026-04-08] - Removable optional fields with collapse animation
 - **Added optional fields are now removable**: Each field added from AddFieldPanel shows a "✕" button on hover (top-right, `group-hover:opacity-100`); clicking triggers a `field-collapse` CSS animation before removal
 - **`field-collapse` keyframe**: Uses `grid-template-rows: 1fr → 0fr` trick to animate any content height smoothly without hardcoded max-height; 200ms ease-in matches AddFieldPanel's row-slide-up timing

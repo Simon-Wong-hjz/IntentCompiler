@@ -20,18 +20,16 @@ describe('ListField', () => {
     expect(screen.getByDisplayValue('item two')).toBeInTheDocument();
   });
 
-  it('renders the add item row', () => {
+  it('renders the add button below items', () => {
     render(<ListField {...defaultProps} />);
-    expect(screen.getByPlaceholderText('添加项...')).toBeInTheDocument();
+    expect(screen.getByLabelText('add item')).toBeInTheDocument();
   });
 
-  it('adds an item when typing in the add row and pressing Enter', () => {
+  it('adds an empty item when add button is clicked', () => {
     const onChange = vi.fn();
     render(<ListField {...defaultProps} onChange={onChange} />);
-    const addInput = screen.getByPlaceholderText('添加项...');
-    fireEvent.change(addInput, { target: { value: 'new item' } });
-    fireEvent.keyDown(addInput, { key: 'Enter' });
-    expect(onChange).toHaveBeenCalledWith(['item one', 'item two', 'new item']);
+    fireEvent.click(screen.getByLabelText('add item'));
+    expect(onChange).toHaveBeenCalledWith(['item one', 'item two', '']);
   });
 
   it('removes an item when delete button is clicked', () => {

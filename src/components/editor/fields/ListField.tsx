@@ -84,19 +84,22 @@ let listNextId = 0;
 
 export function ListField({ field, value, onChange }: ListFieldProps) {
   const { t } = useTranslation();
-  const [newItem, setNewItem] = useState('');
 
-  // Stable IDs for @dnd-kit — state (not refs) so they're safe to read during render
+  // Always show at least one editable row — items live directly in `value`,
+  // so typing in any row immediately updates the compiled output
+  const displayValue = value.length > 0 ? value : [''];
+
+  // Stable IDs for @dnd-kit — synced to displayValue length
   const [ids, setIds] = useState<string[]>(() =>
-    value.map(() => `list-${listNextId++}`)
+    displayValue.map(() => `list-${listNextId++}`)
   );
 
-  // Sync IDs when value length changes externally (e.g., task type switch)
-  if (ids.length !== value.length) {
-    setIds(value.map(() => `list-${listNextId++}`));
+  // Re-sync IDs when length changes externally (e.g., task type switch)
+  if (ids.length !== displayValue.length) {
+    setIds(displayValue.map(() => `list-${listNextId++}`));
   }
 
-  const items = value.map((text, i) => ({ id: ids[i], text }));
+  const items = displayValue.map((text, i) => ({ id: ids[i], text }));
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -111,32 +114,24 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
       setIds(arrayMove(ids, oldIndex, newIndex));
-      onChange(arrayMove(value, oldIndex, newIndex));
+      onChange(arrayMove(displayValue, oldIndex, newIndex));
     }
   };
 
   const handleAdd = () => {
     setIds([...ids, `list-${listNextId++}`]);
-    onChange([...value, newItem]);
-    setNewItem('');
+    onChange([...displayValue, '']);
   };
 
   const handleUpdate = (index: number, text: string) => {
-    const updated = [...value];
+    const updated = [...displayValue];
     updated[index] = text;
     onChange(updated);
   };
 
   const handleDelete = (index: number) => {
     setIds(ids.filter((_, i) => i !== index));
-    onChange(value.filter((_, i) => i !== index));
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleAdd();
-    }
+    onChange(displayValue.filter((_, i) => i !== index));
   };
 
   return (
@@ -166,27 +161,16 @@ export function ListField({ field, value, onChange }: ListFieldProps) {
             ))}
           </SortableContext>
         </DndContext>
-        {/* Add item row */}
-        {items.length > 0 && <div className="border-t border-border-light" />}
-        <div className="flex items-center gap-2 px-2 py-1.5">
-          <button
-            type="button"
-            onClick={handleAdd}
-            className="text-sm flex-shrink-0 text-accent-primary font-bold hover:scale-110 transition-transform"
-            aria-label="add item"
-          >
-            +
-          </button>
-          <input
-            type="text"
-            value={newItem}
-            onChange={(e) => setNewItem(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={t('editor.addItem')}
-            className="flex-1 text-sm outline-none bg-transparent text-ink-primary placeholder:text-ink-hint"
-          />
-        </div>
       </div>
+      {/* Add button — below items, left-aligned */}
+      <button
+        type="button"
+        onClick={handleAdd}
+        className="mt-1.5 px-1 py-1 text-sm font-semibold text-accent-primary hover:scale-105 transition-transform"
+        aria-label="add item"
+      >
+        + {t('editor.addItem')}
+      </button>
     </div>
   );
 }

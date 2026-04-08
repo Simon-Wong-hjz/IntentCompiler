@@ -96,6 +96,7 @@ npm run lint         # ESLint check
 - All UI text defaults to Chinese; English translations will be added via react-i18next in Phase 3
 - When adding new user-facing strings, always write Chinese first
 - The compiled prompt output follows the UI language
+- **UI terminology**: Frontend uses "项目" (items) instead of "字段" (fields) to be friendlier to non-technical users. Code internals still use "field".
 
 ## Key Decisions
 

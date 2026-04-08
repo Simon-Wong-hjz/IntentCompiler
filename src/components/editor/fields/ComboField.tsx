@@ -41,7 +41,7 @@ export function ComboField({ field, value, onChange }: ComboFieldProps) {
                     : 'bg-bg-surface text-ink-muted border border-border-default'
                 }`}
               >
-                {option}
+                {t(`options.${option}`, { defaultValue: option })}
               </button>
             );
           })}

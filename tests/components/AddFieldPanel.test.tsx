@@ -29,44 +29,44 @@ describe('AddFieldPanel', () => {
     vi.useRealTimers();
   });
 
-  it('renders collapsed state with "+ 添加字段" button', () => {
+  it('renders collapsed state with "+ 添加项目" button', () => {
     render(<AddFieldPanel {...defaultProps} />);
-    expect(screen.getByText('+ 添加字段')).toBeInTheDocument();
+    expect(screen.getByText('+ 添加项目')).toBeInTheDocument();
   });
 
   it('expands when button is clicked', () => {
     render(<AddFieldPanel {...defaultProps} />);
-    fireEvent.click(screen.getByText('+ 添加字段'));
+    fireEvent.click(screen.getByText('+ 添加项目'));
     expect(screen.getByText('★ 推荐')).toBeInTheDocument();
     expect(screen.getByText('其他')).toBeInTheDocument();
   });
 
   it('shows task optional fields under Recommended section', () => {
     render(<AddFieldPanel {...defaultProps} />);
-    fireEvent.click(screen.getByText('+ 添加字段'));
+    fireEvent.click(screen.getByText('+ 添加项目'));
     expect(screen.getByText('技术栈')).toBeInTheDocument();
     expect(screen.getByText('目标长度')).toBeInTheDocument();
   });
 
   it('shows universal optional fields under Others section', () => {
     render(<AddFieldPanel {...defaultProps} />);
-    fireEvent.click(screen.getByText('+ 添加字段'));
+    fireEvent.click(screen.getByText('+ 添加项目'));
     expect(screen.getByText('目标')).toBeInTheDocument();
     expect(screen.getByText('角色')).toBeInTheDocument();
   });
 
   it('shows custom_fields section at the bottom', () => {
     render(<AddFieldPanel {...defaultProps} />);
-    fireEvent.click(screen.getByText('+ 添加字段'));
-    // Section header + field row name both show "自定义字段"
-    const matches = screen.getAllByText('自定义字段');
+    fireEvent.click(screen.getByText('+ 添加项目'));
+    // Section header + field row name both show "自定义项目"
+    const matches = screen.getAllByText('自定义项目');
     expect(matches.length).toBeGreaterThanOrEqual(1);
   });
 
   it('calls onAddField after slide-up animation completes', () => {
     const onAddField = vi.fn();
     render(<AddFieldPanel {...defaultProps} onAddField={onAddField} />);
-    fireEvent.click(screen.getByText('+ 添加字段'));
+    fireEvent.click(screen.getByText('+ 添加项目'));
     const addButtons = screen.getAllByLabelText(/技术栈|目标长度/);
     fireEvent.click(addButtons[0]);
     // onAddField is deferred until the 200ms row-slide-up animation completes
@@ -77,11 +77,11 @@ describe('AddFieldPanel', () => {
 
   it('collapses when clicking the collapse button (after animation delay)', () => {
     render(<AddFieldPanel {...defaultProps} />);
-    fireEvent.click(screen.getByText('+ 添加字段'));
+    fireEvent.click(screen.getByText('+ 添加项目'));
     expect(screen.getByText('★ 推荐')).toBeInTheDocument();
     fireEvent.click(screen.getByText('− 收起'));
     // Collapse has a 200ms exit animation delay
     act(() => { vi.advanceTimersByTime(200); });
-    expect(screen.getByText('+ 添加字段')).toBeInTheDocument();
+    expect(screen.getByText('+ 添加项目')).toBeInTheDocument();
   });
 });
