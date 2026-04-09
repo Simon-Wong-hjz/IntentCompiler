@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Demo](https://img.shields.io/badge/在线体验-Intent_Compiler-f5c518)](https://www.simon-wong.cn/intent-compiler)
-<!-- [![Build](https://img.shields.io/github/actions/workflow/status/YOUR_USER/intent-compiler/ci.yml?branch=main)](https://github.com/YOUR_USER/intent-compiler/actions) -->
+[![Build](https://img.shields.io/github/actions/workflow/status/Simon-Wong-hjz/IntentCompiler/ci-deploy.yml?branch=main)](https://github.com/Simon-Wong-hjz/IntentCompiler/actions)
 
 > 厌倦了每次从头手搓提示词？Intent Compiler 把常见任务拆成结构化字段，帮你快速"编译"出高质量提示词。
 

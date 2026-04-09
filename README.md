@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Demo](https://img.shields.io/badge/Live_Demo-Intent_Compiler-f5c518)](https://www.simon-wong.cn/intent-compiler)
-<!-- [![Build](https://img.shields.io/github/actions/workflow/status/Simon-Wong-hjz/intent-compiler/ci.yml?branch=main)](https://github.com/Simon-Wong-hjz/intent-compiler/actions) -->
+[![Build](https://img.shields.io/github/actions/workflow/status/Simon-Wong-hjz/IntentCompiler/ci-deploy.yml?branch=main)](https://github.com/Simon-Wong-hjz/IntentCompiler/actions)
 
 > Tired of writing AI prompts from scratch every time? Intent Compiler breaks common tasks into structured fields, helping you quickly "compile" high-quality prompts.
 

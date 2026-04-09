@@ -1,5 +1,8 @@
 # Changelog
 
+## [2026-04-10] - Uncomment CI build badges in READMEs
+- Updated `README.md` and `README.zh.md` — uncommented the GitHub Actions build badge, fixed workflow filename from `ci.yml` to `ci-deploy.yml`, replaced `YOUR_USER` placeholder with `Simon-Wong-hjz` in the Chinese README
+
 ## [2026-04-09] - Announcement & Tutorial System
 - Created `src/data/announcements/index.ts` — announcement data loader: YAML frontmatter parser, `<!-- en -->` bilingual split, `marked` Markdown→HTML rendering, Vite glob import
 - Created `src/data/announcements/v0.6.0.md` — first announcement file with bilingual release notes for Phase 6
