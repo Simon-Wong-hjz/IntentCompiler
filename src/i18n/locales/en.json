@@ -223,6 +223,18 @@
     "record": "record",
     "records": "records"
   },
+  "ai": {
+    "fillButton": "AI Fill",
+    "fillButtonLoading": "Filling...",
+    "fillButtonLock": "AI Fill",
+    "filledCount": "Filled {{count}} field",
+    "filledCount_plural": "Filled {{count}} fields",
+    "fillFailed": "Fill failed:",
+    "allowAddFields": "Allow AI to add fields",
+    "allowAddFieldsHelp": "When checked, AI can discover and add relevant optional fields beyond what's currently in the editor.",
+    "noApiKey": "No API key configured. Open Settings to add your API key.",
+    "configureProvider": "Configure AI provider in Settings"
+  },
   "common": {
     "en": "EN",
     "zh": "\u4e2d",

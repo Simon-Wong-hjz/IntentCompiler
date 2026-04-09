@@ -223,6 +223,17 @@
     "record": "条记录",
     "records": "条记录"
   },
+  "ai": {
+    "fillButton": "AI 填充",
+    "fillButtonLoading": "填充中...",
+    "fillButtonLock": "AI 填充",
+    "filledCount": "已填充 {{count}} 个字段",
+    "fillFailed": "填充失败：",
+    "allowAddFields": "允许 AI 添加字段",
+    "allowAddFieldsHelp": "勾选后，AI 可以发现并添加编辑器中尚未显示的相关可选字段。",
+    "noApiKey": "未配置 API 密钥。请在设置中添加。",
+    "configureProvider": "在设置中配置 AI 提供者"
+  },
   "common": {
     "en": "EN",
     "zh": "中",
