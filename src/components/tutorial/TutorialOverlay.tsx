@@ -34,7 +34,7 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
     const el = document.querySelector(currentStepDef.targetSelector);
     if (!el) {
       // Safety: skip if target somehow missing
-      if (step < tutorialSteps.length - 1) setStep((s) => s + 1);
+      if (step < tutorialSteps.length - 1) setStep((s) => s + 1); // eslint-disable-line react-hooks/set-state-in-effect -- skip missing DOM target
       else onComplete();
       return;
     }

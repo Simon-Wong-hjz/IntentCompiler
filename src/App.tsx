@@ -80,7 +80,7 @@ function App() {
     if (needsTutorial) {
       // Auto-select a task type so all tutorial targets exist in the DOM
       if (!selectedType) {
-        setSelectedType('ask');
+        setSelectedType('ask'); // eslint-disable-line react-hooks/set-state-in-effect -- intentional: auto-select task type for tutorial
       }
       setTutorialActive(true);
     } else if (needsAnnouncement) {
