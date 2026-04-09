@@ -25,6 +25,8 @@ interface PageLayoutProps {
   onOutputLanguageChange: (language: Language) => void;
   onOpenHistory: () => void;
   onOpenSettings: () => void;
+  onOpenAnnouncement: () => void;
+  onStartTutorial: () => void;
   onAfterCopy?: () => void;
   // AI props
   aiFilledFields: Set<string>;
@@ -59,6 +61,8 @@ export function PageLayout({
   onOutputLanguageChange,
   onOpenHistory,
   onOpenSettings,
+  onOpenAnnouncement,
+  onStartTutorial,
   onAfterCopy,
   aiFilledFields,
   aiFillStatus,
@@ -74,7 +78,12 @@ export function PageLayout({
 }: PageLayoutProps) {
   return (
     <div className="h-screen flex flex-col bg-bg-page" style={{ minWidth: '1024px' }}>
-      <TopBar onOpenHistory={onOpenHistory} onOpenSettings={onOpenSettings} />
+      <TopBar
+        onOpenHistory={onOpenHistory}
+        onOpenSettings={onOpenSettings}
+        onOpenAnnouncement={onOpenAnnouncement}
+        onStartTutorial={onStartTutorial}
+      />
 
       {/* Spacer for fixed top bar */}
       <div className="flex-shrink-0 h-12" />
