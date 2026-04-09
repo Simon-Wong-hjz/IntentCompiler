@@ -1,5 +1,24 @@
 # Changelog
 
+## [2026-04-09] - Phase 5: AI-Enhanced Mode
+- Created `src/ai/types.ts` — AiProvider interface, AiFillRequest/Response/VerifyResult types
+- Created `src/ai/prompt-builder.ts` — System prompt and user message construction for AI field filling
+- Created `src/ai/providers/openai.ts` — OpenAI provider using fetch() to chat completions API (GPT-4o)
+- Created `src/ai/providers/anthropic.ts` — Anthropic provider using fetch() to messages API (Claude Sonnet), with CORS limitation handling
+- Created `src/ai/connector.ts` — AI connector orchestrator: provider factory, prompt building, response validation
+- Created `src/components/editor/AiFillButton.tsx` — Four-state button (idle/disabled/loading/result) with animated progress bar
+- Created `src/hooks/useAiFill.ts` — Hook orchestrating AI fill flow: prerequisite validation, provider call, status management
+- Modified `src/components/editor/IntentField.tsx` — Added AiFillButton in label row + "Allow AI to add fields" checkbox
+- Modified `src/components/editor/EditorArea.tsx` — Pass AI-filled state for bg-accent-light tinting
+- Modified `src/components/editor/FieldRenderer.tsx` — Apply yellow tint to AI-filled field containers
+- Modified `src/components/layout/PageLayout.tsx` — Thread AI props from App to EditorArea
+- Modified `src/components/modals/SettingsModal.tsx` — Replaced Phase 4 mock verifier with real provider.verifyKey() calls
+- Modified `src/App.tsx` — Added AI state management, wired useAiFill hook, field value updates from AI responses
+- Created tests: `tests/ai/prompt-builder.test.ts`, `tests/ai/providers/openai.test.ts`, `tests/ai/providers/anthropic.test.ts`, `tests/ai/connector.test.ts`
+- Added i18n translations for all AI UI text (English + Chinese)
+- Added CSS keyframe animations for AI fill progress bar and fade-in effect
+- **Totals**: 17 test files / 154 tests pass; lint clean; tsc clean
+
 ## [2026-04-09] - Phase 4: Persistence — Settings + History
 - Created Dexie.js database schema (v1) with preferences, history, templates stores (`src/storage/db.ts`)
 - Added preferences CRUD helpers with typed `PreferenceKey` union (`src/storage/preferences.ts`)
