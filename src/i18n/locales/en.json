@@ -1,6 +1,8 @@
 {
   "topBar": {
     "appName": "Intent Compiler",
+    "announcement": "What's New",
+    "tutorial": "Tutorial",
     "history": "History",
     "settings": "Settings"
   },
@@ -254,6 +256,18 @@
     "noApiKey": "No API key configured. Open Settings to add your API key.",
     "configureProvider": "Configure AI provider in Settings",
     "enterIntentFirst": "Enter your intent first"
+  },
+  "announcement": {
+    "title": "What's New",
+    "version": "v{{version}}",
+    "noAnnouncements": "No announcements"
+  },
+  "tutorial": {
+    "next": "Next",
+    "prev": "Back",
+    "skip": "Skip tutorial",
+    "finish": "Finish",
+    "step": "{{current}} / {{total}}"
   },
   "common": {
     "en": "EN",

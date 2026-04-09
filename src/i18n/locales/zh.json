@@ -1,6 +1,8 @@
 {
   "topBar": {
     "appName": "Intent Compiler",
+    "announcement": "公告",
+    "tutorial": "教程",
     "history": "历史记录",
     "settings": "设置"
   },
@@ -253,6 +255,18 @@
     "noApiKey": "未配置 API 密钥。请在设置中添加。",
     "configureProvider": "在设置中配置 AI 提供者",
     "enterIntentFirst": "请先输入意图"
+  },
+  "announcement": {
+    "title": "更新公告",
+    "version": "v{{version}}",
+    "noAnnouncements": "暂无公告"
+  },
+  "tutorial": {
+    "next": "下一步",
+    "prev": "上一步",
+    "skip": "跳过教程",
+    "finish": "完成",
+    "step": "{{current}} / {{total}}"
   },
   "common": {
     "en": "EN",
