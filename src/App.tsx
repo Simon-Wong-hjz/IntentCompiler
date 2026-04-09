@@ -8,6 +8,9 @@ import { usePreferences, useHistory } from '@/hooks/useStorage';
 import { useAiFill } from '@/hooks/useAiFill';
 import SettingsModal from '@/components/modals/SettingsModal';
 import HistoryModal from '@/components/modals/HistoryModal';
+import AnnouncementModal from '@/components/modals/AnnouncementModal';
+import { TutorialOverlay } from '@/components/tutorial/TutorialOverlay';
+import { announcements, latestVersion } from '@/data/announcements';
 import type { HistoryRecord } from '@/storage/db';
 import type { TaskType, FieldDefinition } from '@/registry/types';
 import type { OutputFormat, Language } from '@/compiler/types';
@@ -39,6 +42,8 @@ function App() {
   // Modal open/close state
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [announcementOpen, setAnnouncementOpen] = useState(false);
+  const [tutorialActive, setTutorialActive] = useState(false);
 
   // Initialize output defaults from Dexie (render-time state adjustment)
   const [prefsApplied, setPrefsApplied] = useState(false);
@@ -60,6 +65,22 @@ function App() {
         updatePreference('uiLanguage', legacyLang);
         localStorage.removeItem('intent-compiler-ui-lang');
       }
+    }
+  }, [prefsApplied]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-trigger tutorial and announcement on first visit / new version
+  useEffect(() => {
+    if (!prefsApplied) return;
+
+    const needsTutorial = preferences.tutorialCompleted !== 'true';
+    const needsAnnouncement =
+      latestVersion !== '' &&
+      preferences.lastSeenAnnouncementVersion !== latestVersion;
+
+    if (needsTutorial) {
+      setTutorialActive(true);
+    } else if (needsAnnouncement) {
+      setAnnouncementOpen(true);
     }
   }, [prefsApplied]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -256,6 +277,26 @@ function App() {
     });
   }, [selectedType, fieldValues, outputLanguage, outputFormat, addHistoryRecord]);
 
+  const handleTutorialComplete = useCallback(async () => {
+    setTutorialActive(false);
+    await updatePreference('tutorialCompleted', 'true');
+
+    // After tutorial, check if announcement needs showing
+    if (
+      latestVersion !== '' &&
+      preferences.lastSeenAnnouncementVersion !== latestVersion
+    ) {
+      setAnnouncementOpen(true);
+    }
+  }, [preferences.lastSeenAnnouncementVersion, updatePreference]);
+
+  const handleAnnouncementClose = useCallback(async () => {
+    setAnnouncementOpen(false);
+    if (latestVersion) {
+      await updatePreference('lastSeenAnnouncementVersion', latestVersion);
+    }
+  }, [updatePreference]);
+
   // Load a history record into the editor
   const handleLoadRecord = useCallback((record: HistoryRecord) => {
     setSelectedType(record.taskType as TaskType);
@@ -299,6 +340,8 @@ function App() {
       onOutputLanguageChange={setOutputLanguage}
       onOpenHistory={() => { refreshHistory(); setHistoryOpen(true); }}
       onOpenSettings={() => setSettingsOpen(true)}
+      onOpenAnnouncement={() => setAnnouncementOpen(true)}
+      onStartTutorial={() => setTutorialActive(true)}
       onAfterCopy={handleAfterCopy}
       aiFilledFields={aiFilledFields}
       aiFillStatus={aiFillStatus}
@@ -328,6 +371,15 @@ function App() {
       onClearAll={clearHistory}
       hasEditorContent={hasEditorContent}
       uiLanguage={preferences.uiLanguage || 'zh'}
+    />
+    <AnnouncementModal
+      open={announcementOpen}
+      onClose={handleAnnouncementClose}
+      announcements={announcements}
+    />
+    <TutorialOverlay
+      active={tutorialActive}
+      onComplete={handleTutorialComplete}
     />
   </>
   );
