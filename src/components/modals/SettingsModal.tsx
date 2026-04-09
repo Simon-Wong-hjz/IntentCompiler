@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { createProvider } from '@/ai/connector';
+import type { VerifyResult, AiProviderName } from '@/ai/types';
 import type { PreferencesState } from '../../hooks/useStorage';
 import type { PreferenceKey } from '../../storage/preferences';
-import { verifyApiKey, type VerifyResult } from '../../storage/apiKeyVerifier';
 
 interface SettingsModalProps {
   open: boolean;
@@ -97,6 +98,29 @@ export default function SettingsModal({
     return () => document.removeEventListener('keydown', handleEsc);
   }, [open, onClose]);
 
+  // Real API key verification using the provider's verifyKey()
+  const verifyApiKey = useCallback(async (key: string, provider: string) => {
+    if (!key || key.trim() === '') {
+      setVerifyStatus('idle');
+      setVerifyResult(null);
+      return;
+    }
+
+    setVerifyStatus('verifying');
+    setVerifyResult(null);
+
+    try {
+      const aiProvider = createProvider(provider as AiProviderName);
+      const result = await aiProvider.verifyKey(key);
+
+      setVerifyResult(result);
+      setVerifyStatus(result.valid ? 'success' : 'error');
+    } catch {
+      setVerifyResult({ valid: false, error: 'Verification failed unexpectedly.' });
+      setVerifyStatus('error');
+    }
+  }, []);
+
   if (!open) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -123,23 +147,15 @@ export default function SettingsModal({
     onUpdatePreference(key, value);
   };
 
-  const handleVerifyKey = async () => {
-    if (!currentApiKey || currentApiKey.trim() === '') return;
-    setVerifyStatus('verifying');
-    const result = await verifyApiKey(currentApiType, currentApiKey);
-    setVerifyStatus(result.success ? 'success' : 'error');
-    setVerifyResult(result);
-  };
-
   const handleApiKeyBlur = () => {
     if (currentApiKey && currentApiKey.trim() !== '') {
-      handleVerifyKey();
+      verifyApiKey(currentApiKey, currentApiType);
     }
   };
 
   const handleApiKeyKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleVerifyKey();
+      verifyApiKey(currentApiKey, currentApiType);
     }
   };
 
@@ -327,9 +343,9 @@ export default function SettingsModal({
                   {t('settings.verifying', '验证中...')}
                 </p>
               )}
-              {verifyStatus === 'success' && verifyResult && (
+              {verifyStatus === 'success' && verifyResult?.valid && (
                 <p className="text-xs text-status-success mt-2 font-medium">
-                  ✓ {t('settings.keyVerified', '密钥已验证')} — {verifyResult.apiType}{' '}
+                  ✓ {t('settings.keyVerified', '密钥已验证')} — {currentApiType === 'openai' ? 'OpenAI' : 'Anthropic'}{' '}
                   {verifyResult.model}
                 </p>
               )}
