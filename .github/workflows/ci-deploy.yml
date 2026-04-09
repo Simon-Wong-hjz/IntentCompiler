@@ -41,7 +41,7 @@ jobs:
           name: dist
           path: dist/
 
-      - name: Deploy to ECS via rsync
+      - name: Deploy to ECS
         env:
           ECS_HOST: ${{ secrets.ECS_HOST }}
           ECS_SSH_KEY: ${{ secrets.ECS_SSH_KEY }}
@@ -51,6 +51,10 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "$ECS_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
-          rsync -avz --delete \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            dist/ root@"$ECS_HOST":/var/www/html/intent-compiler/
+          SSH_OPT="-i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          REMOTE_DIR="/var/www/html/intent-compiler"
+
+          tar czf /tmp/deploy.tar.gz -C dist/ .
+          ssh $SSH_OPT root@"$ECS_HOST" "rm -rf $REMOTE_DIR && mkdir -p $REMOTE_DIR"
+          scp $SSH_OPT /tmp/deploy.tar.gz root@"$ECS_HOST":/tmp/deploy.tar.gz
+          ssh $SSH_OPT root@"$ECS_HOST" "tar xzf /tmp/deploy.tar.gz -C $REMOTE_DIR && rm -f /tmp/deploy.tar.gz"
