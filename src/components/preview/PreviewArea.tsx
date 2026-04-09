@@ -7,6 +7,7 @@ interface PreviewAreaProps {
   compiledOutput: string;
   hasContent: boolean;
   canCopy: boolean;
+  skeletonOutput: string;
   outputFormat: OutputFormat;
   outputLanguage: Language;
   onFormatChange: (format: OutputFormat) => void;
@@ -18,6 +19,7 @@ export function PreviewArea({
   compiledOutput,
   hasContent,
   canCopy,
+  skeletonOutput,
   outputFormat,
   outputLanguage,
   onFormatChange,
@@ -25,6 +27,7 @@ export function PreviewArea({
   onAfterCopy,
 }: PreviewAreaProps) {
   const { t } = useTranslation();
+  const hasSkeleton = skeletonOutput.trim().length > 0;
 
   return (
     <div className="flex flex-col h-full">
@@ -47,6 +50,10 @@ export function PreviewArea({
         {hasContent ? (
           <pre className="text-ink-secondary whitespace-pre-wrap m-0 font-[inherit]">
             {compiledOutput}
+          </pre>
+        ) : hasSkeleton ? (
+          <pre className="text-ink-hint whitespace-pre-wrap m-0 font-[inherit]">
+            {skeletonOutput}
           </pre>
         ) : (
           <div className="flex items-center justify-center h-full text-ink-muted text-sm">

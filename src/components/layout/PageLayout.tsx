@@ -15,6 +15,7 @@ interface PageLayoutProps {
   compiledOutput: string;
   hasContent: boolean;
   canCopy: boolean;
+  skeletonOutput: string;
   addedFields: FieldDefinition[];
   onAddField: (field: FieldDefinition) => void;
   onRemoveField: (fieldKey: string) => void;
@@ -47,6 +48,7 @@ export function PageLayout({
   compiledOutput,
   hasContent,
   canCopy,
+  skeletonOutput,
   addedFields,
   onAddField,
   onRemoveField,
@@ -112,6 +114,7 @@ export function PageLayout({
             compiledOutput={compiledOutput}
             hasContent={hasContent}
             canCopy={canCopy}
+            skeletonOutput={skeletonOutput}
             outputFormat={outputFormat}
             outputLanguage={outputLanguage}
             onFormatChange={onFormatChange}

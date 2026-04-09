@@ -29,6 +29,24 @@ function hasValue(value: unknown): boolean {
   return true;
 }
 
+/**
+ * Builds skeleton OrderedFields with placeholder values for all field definitions.
+ * Used to show a template preview when a task is selected but no fields are filled.
+ */
+export function buildSkeleton(
+  fieldDefinitions: FieldDefinition[],
+  outputLanguage: Language = 'zh',
+): OrderedField[] {
+  return fieldDefinitions.map((def) => ({
+    key: def.key,
+    label: getFieldLabel(def.key, outputLanguage),
+    value:
+      outputLanguage === 'en'
+        ? `[Enter your ${def.key.replace(/_/g, ' ')}...]`
+        : `[\u8F93\u5165${getFieldLabel(def.key, 'zh')}...]`,
+  }));
+}
+
 export function compileFields(
   fieldDefinitions: FieldDefinition[],
   fieldValues: Record<string, unknown>,

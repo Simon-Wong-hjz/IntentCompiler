@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { FieldDefinition } from '@/registry/types';
-import { compileFields } from '@/compiler/compiler';
+import { compileFields, buildSkeleton } from '@/compiler/compiler';
 import { getFormatter } from '@/formatters';
 import type { OutputFormat, Language } from '@/compiler/types';
 
@@ -19,5 +19,13 @@ export function useCompiler(
 
   const hasContent = compiledOutput.trim().length > 0;
 
-  return { compiledOutput, hasContent };
+  // Generate skeleton preview when field definitions exist but no content
+  const skeletonOutput = useMemo(() => {
+    if (hasContent || fieldDefinitions.length === 0) return '';
+    const skeletonFields = buildSkeleton(fieldDefinitions, outputLanguage);
+    const formatter = getFormatter(format);
+    return formatter.format(skeletonFields);
+  }, [hasContent, fieldDefinitions, format, outputLanguage]);
+
+  return { compiledOutput, hasContent, skeletonOutput };
 }

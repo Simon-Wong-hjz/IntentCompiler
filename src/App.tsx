@@ -85,7 +85,7 @@ function App() {
   }, [fields, addedFields]);
 
   // Compile fields into preview output (using display order)
-  const { compiledOutput, hasContent } = useCompiler(
+  const { compiledOutput, hasContent, skeletonOutput } = useCompiler(
     displayOrderFields,
     fieldValues,
     outputFormat,
@@ -288,6 +288,7 @@ function App() {
       compiledOutput={compiledOutput}
       hasContent={hasContent}
       canCopy={canCopy}
+      skeletonOutput={skeletonOutput}
       addedFields={addedFields}
       onAddField={handleAddField}
       onRemoveField={handleRemoveField}
