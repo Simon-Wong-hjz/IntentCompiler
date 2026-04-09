@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import '@/i18n/config';
+import { detectBrowserLanguage } from '@/i18n/config';
 import { useTranslation } from 'react-i18next';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { getTemplate } from '@/registry/template-registry';
@@ -21,7 +21,7 @@ function App() {
   const [fieldValues, setFieldValues] = useState<Record<string, unknown>>({});
   const [addedFields, setAddedFields] = useState<FieldDefinition[]>([]);
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('markdown');
-  const [outputLanguage, setOutputLanguage] = useState<Language>('zh');
+  const [outputLanguage, setOutputLanguage] = useState<Language>(detectBrowserLanguage);
   const { t } = useTranslation();
 
   // AI state

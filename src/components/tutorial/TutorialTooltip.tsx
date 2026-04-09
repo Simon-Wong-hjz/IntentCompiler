@@ -5,8 +5,8 @@ interface TutorialTooltipProps {
   description: { zh: string; en: string };
   current: number;
   total: number;
-  placement: 'top' | 'bottom' | 'left' | 'right';
-  targetRect: DOMRect;
+  placement: 'top' | 'bottom' | 'left' | 'right' | 'center';
+  targetRect: DOMRect | null;
   onPrev: () => void;
   onNext: () => void;
   onSkip: () => void;
@@ -17,9 +17,17 @@ const VIEWPORT_PADDING = 12;
 const TOOLTIP_WIDTH = 320;
 
 function computePosition(
-  placement: 'top' | 'bottom' | 'left' | 'right',
-  targetRect: DOMRect,
+  placement: 'top' | 'bottom' | 'left' | 'right' | 'center',
+  targetRect: DOMRect | null,
 ): React.CSSProperties {
+  if (placement === 'center' || !targetRect) {
+    return {
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    };
+  }
+
   const maxLeft = window.innerWidth - TOOLTIP_WIDTH - VIEWPORT_PADDING;
 
   // Horizontal center aligned with target, clamped to viewport
@@ -67,7 +75,6 @@ export function TutorialTooltip({
   const lang = i18n.language === 'en' ? 'en' : 'zh';
   const isFirst = current === 0;
   const isLast = current === total - 1;
-
   const style: React.CSSProperties = {
     ...computePosition(placement, targetRect),
     width: TOOLTIP_WIDTH,

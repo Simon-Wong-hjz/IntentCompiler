@@ -25,10 +25,13 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
   useEffect(() => {
     if (!active) return;
 
-    const selector = tutorialSteps[step]?.targetSelector;
-    if (!selector) return;
+    const currentStepDef = tutorialSteps[step];
+    if (!currentStepDef) return;
 
-    const el = document.querySelector(selector);
+    // Center mode (greeting): no target element needed — targetRect unused
+    if (!currentStepDef.targetSelector) return;
+
+    const el = document.querySelector(currentStepDef.targetSelector);
     if (!el) {
       // Safety: skip if target somehow missing
       if (step < tutorialSteps.length - 1) setStep((s) => s + 1);
@@ -81,11 +84,17 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
   if (!active) return null;
 
   const currentStep = tutorialSteps[step];
-  if (!currentStep || !targetRect) return null;
+  if (!currentStep) return null;
+
+  const isCenterMode = !currentStep.targetSelector;
 
   return (
     <>
-      <SpotlightOverlay targetRect={targetRect} />
+      {isCenterMode || !targetRect ? (
+        <div className="fixed inset-0 z-[60] bg-black/45" />
+      ) : (
+        <SpotlightOverlay targetRect={targetRect} />
+      )}
       {/* Clickable backdrop to block interaction outside the tooltip */}
       <div className="fixed inset-0 z-[60]" />
       <TutorialTooltip

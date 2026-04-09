@@ -129,18 +129,20 @@ export function EditorArea({
       )}
 
       {/* Default fields — separated by subtle dividers */}
-      {defaultFields.map((field, index) => (
-        <div key={field.key}>
-          {index === 0 && <div className="border-t border-border-light -mt-1 mb-4" />}
-          {index > 0 && <div className="border-t border-border-light -mt-2 mb-4" />}
-          <FieldRenderer
-            field={field}
-            value={fieldValues[field.key]}
-            onChange={(v) => onFieldChange(field.key, v)}
-            isAiFilled={aiFilledFields.has(field.key)}
-          />
-        </div>
-      ))}
+      <div data-tutorial="default-fields" className="flex flex-col gap-6">
+        {defaultFields.map((field, index) => (
+          <div key={field.key}>
+            {index === 0 && <div className="border-t border-border-light -mt-1 mb-4" />}
+            {index > 0 && <div className="border-t border-border-light -mt-2 mb-4" />}
+            <FieldRenderer
+              field={field}
+              value={fieldValues[field.key]}
+              onChange={(v) => onFieldChange(field.key, v)}
+              isAiFilled={aiFilledFields.has(field.key)}
+            />
+          </div>
+        ))}
+      </div>
 
       {/* Added optional fields — removable, with dividers */}
       {addedFields.map((field) => {

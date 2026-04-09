@@ -24,7 +24,7 @@ export function PreviewHeader({
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center justify-between px-5 pt-4 pb-1">
+    <div className="flex items-center justify-between px-5 pt-4 pb-1" data-tutorial="preview-controls">
       {/* Left side: OUTPUT label + output language toggle */}
       <div className="flex items-center gap-2">
         <span className="text-xs font-semibold text-ink-muted uppercase tracking-wide">

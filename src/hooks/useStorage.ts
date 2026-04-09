@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { detectBrowserLanguage } from '@/i18n/config';
 import {
   setPreference,
   getAllPreferences,
@@ -31,7 +32,7 @@ export interface PreferencesState {
 }
 
 const DEFAULT_PREFERENCES: PreferencesState = {
-  defaultOutputLanguage: 'zh',
+  defaultOutputLanguage: detectBrowserLanguage(),
   defaultOutputFormat: 'markdown',
   aiApiType: 'openai',
   apiKey_openai: '',

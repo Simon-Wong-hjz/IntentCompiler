@@ -5,11 +5,16 @@ import zh from './locales/zh.json';
 
 const STORAGE_KEY = 'intent-compiler-ui-lang';
 
+export function detectBrowserLanguage(): 'en' | 'zh' {
+  const browserLang = navigator.language?.toLowerCase() ?? '';
+  return browserLang.startsWith('zh') ? 'zh' : 'en';
+}
+
 function getStoredLanguage(): string {
   try {
-    return localStorage.getItem(STORAGE_KEY) || 'zh';
+    return localStorage.getItem(STORAGE_KEY) || detectBrowserLanguage();
   } catch {
-    return 'zh';
+    return detectBrowserLanguage();
   }
 }
 
