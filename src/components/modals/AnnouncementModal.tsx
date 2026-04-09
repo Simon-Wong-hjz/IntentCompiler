@@ -77,6 +77,7 @@ export default function AnnouncementModal({
                   <h3 className="text-sm font-semibold text-ink-primary mb-2">
                     {item.title[lang]}
                   </h3>
+                  {/* Safe: HTML is pre-rendered from project-owned .md files at build time */}
                   <div
                     className="text-sm text-ink-secondary leading-relaxed [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:space-y-1 [&_li]:text-sm [&_p]:mb-2"
                     dangerouslySetInnerHTML={{ __html: item.content[lang] }}

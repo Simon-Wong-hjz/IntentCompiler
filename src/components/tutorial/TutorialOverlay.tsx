@@ -21,19 +21,28 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
     setPrevActive(active);
   }
 
-  // Find and track the target element for the current step
+  // Find and track the target element for the current step.
+  // Auto-skip steps whose target is not in the DOM (e.g., intent-field
+  // before a task type is selected).
   useEffect(() => {
     if (!active) return;
 
-    const updateRect = () => {
-      const selector = tutorialSteps[step]?.targetSelector;
-      if (!selector) return;
-      const el = document.querySelector(selector);
-      if (el) {
-        setTargetRect(el.getBoundingClientRect());
+    const selector = tutorialSteps[step]?.targetSelector;
+    if (!selector) return;
+
+    const el = document.querySelector(selector);
+    if (!el) {
+      // Target missing — skip forward (or complete if at the end)
+      if (step >= tutorialSteps.length - 1) {
+        onComplete();
       } else {
-        setTargetRect(null);
+        setStep((s) => s + 1);
       }
+      return;
+    }
+
+    const updateRect = () => {
+      setTargetRect(el.getBoundingClientRect());
     };
 
     updateRect();
@@ -43,7 +52,7 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
       window.removeEventListener('resize', updateRect);
       window.removeEventListener('scroll', updateRect, true);
     };
-  }, [active, step]);
+  }, [active, step, onComplete]);
 
   const handleNext = useCallback(() => {
     if (step >= tutorialSteps.length - 1) {
@@ -57,10 +66,26 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
     setStep((s) => Math.max(0, s - 1));
   }, []);
 
+  // Escape key dismisses tutorial (consistent with modal pattern)
+  useEffect(() => {
+    if (!active) return;
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onComplete();
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [active, onComplete]);
+
   if (!active) return null;
 
   const currentStep = tutorialSteps[step];
   if (!currentStep || !targetRect) return null;
+
+  // Compute visible step index/total so the counter skips missing steps
+  const visibleSteps = tutorialSteps.filter((s) =>
+    document.querySelector(s.targetSelector),
+  );
+  const visibleIndex = visibleSteps.indexOf(currentStep);
 
   return (
     <>
@@ -70,8 +95,8 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
       <TutorialTooltip
         title={currentStep.title}
         description={currentStep.description}
-        current={step}
-        total={tutorialSteps.length}
+        current={visibleIndex >= 0 ? visibleIndex : step}
+        total={visibleSteps.length || tutorialSteps.length}
         placement={currentStep.placement}
         targetRect={targetRect}
         onPrev={handlePrev}
