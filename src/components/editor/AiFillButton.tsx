@@ -30,7 +30,7 @@ export function AiFillButton({
   // No API key: show lock icon button that opens settings
   if (!hasApiKey) {
     return (
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end" data-tutorial="ai-fill-button">
         <button
           type="button"
           onClick={onOpenSettings}
@@ -44,7 +44,7 @@ export function AiFillButton({
   }
 
   return (
-    <div className="flex flex-col items-end">
+    <div className="flex flex-col items-end" data-tutorial="ai-fill-button">
       {/* Button */}
       <div className="relative group">
         {isLoading ? (

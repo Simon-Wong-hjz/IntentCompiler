@@ -170,6 +170,7 @@ export function AddFieldPanel({
     return (
       <button
         type="button"
+        data-tutorial="add-field-panel"
         onClick={handleExpand}
         className="w-full py-3 text-sm font-semibold rounded-lg transition-colors bg-bg-surface border-[1.5px] border-dashed border-border-default text-ink-primary hover:border-accent-primary"
       >
@@ -181,6 +182,7 @@ export function AddFieldPanel({
   return (
     <div
       ref={panelRef}
+      data-tutorial="add-field-panel"
       className="rounded-lg overflow-hidden border border-border-default"
       style={{
         animation: isClosing

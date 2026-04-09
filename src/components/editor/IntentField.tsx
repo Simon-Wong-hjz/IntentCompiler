@@ -61,7 +61,7 @@ export function IntentField({
       : 'none';
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1" data-tutorial="intent-field">
       {/* Label row: field label left, [checkbox + AI Fill] right */}
       <div className="flex items-start justify-between gap-4">
         <FieldLabel fieldKey="intent" inputType="textarea" />

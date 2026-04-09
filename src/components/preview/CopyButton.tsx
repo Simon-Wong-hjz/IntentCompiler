@@ -21,6 +21,7 @@ export function CopyButton({ text, disabled, onAfterCopy }: CopyButtonProps) {
 
   return (
     <button
+      data-tutorial="copy-button"
       onClick={handleClick}
       disabled={disabled}
       className={cn(

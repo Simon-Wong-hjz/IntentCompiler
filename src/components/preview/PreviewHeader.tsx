@@ -57,7 +57,7 @@ export function PreviewHeader({
       </div>
 
       {/* Right side: format selector pills */}
-      <div className="flex gap-1">
+      <div className="flex gap-1" data-tutorial="format-selector">
         {FORMAT_OPTIONS.map((option) => (
           <button
             key={option.value}

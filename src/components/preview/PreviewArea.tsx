@@ -30,7 +30,7 @@ export function PreviewArea({
   const hasSkeleton = skeletonOutput.trim().length > 0;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-tutorial="preview-area">
       <PreviewHeader
         outputFormat={outputFormat}
         outputLanguage={outputLanguage}
