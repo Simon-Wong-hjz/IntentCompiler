@@ -67,9 +67,13 @@ export class OpenAIProvider implements AiProvider {
       throw new Error('Failed to parse AI response. The AI returned invalid JSON. Please try again.');
     }
 
+    // AI may return "addedFields" (prompt instruction) or "addedFieldKeys" (our type)
+    const raw = parsed as unknown as Record<string, unknown>;
+    const addedFieldKeys = (raw.addedFields ?? raw.addedFieldKeys ?? []) as string[];
+
     return {
       filledFields: parsed.filledFields ?? {},
-      addedFieldKeys: (parsed as Record<string, unknown>).addedFields as string[] ?? parsed.addedFieldKeys ?? [],
+      addedFieldKeys,
     };
   }
 
