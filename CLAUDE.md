@@ -20,6 +20,7 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 - [Compiler — Compilation pipeline & formatters](src/compiler/CLAUDE.md)
 - [Components — UI patterns & layout](src/components/CLAUDE.md)
 - AI — `src/ai/types.ts` defines the `AiProvider` interface with `fillFields()`, `verifyKey()`, and `listModels()`. Providers: `providers/openai.ts` (OpenAI), `providers/anthropic.ts` (Anthropic, CORS-limited in browser). `connector.ts` orchestrates calls; `prompt-builder.ts` constructs messages.
+- Data — `src/data/` contains help content (`help-content.ts`), tutorial step definitions (`tutorial-steps.ts`), and versioned announcement Markdown files with a loader (`announcements/`). Announcements are rendered via `marked`.
 
 ## Tech Stack
 
@@ -30,7 +31,7 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 | UI | Tailwind CSS v4 + shadcn/ui |
 | i18n | react-i18next |
 | Storage | IndexedDB via Dexie.js |
-| Serialization | js-yaml, fast-xml-parser |
+| Serialization | js-yaml, fast-xml-parser, marked |
 | Testing | Vitest + React Testing Library + jsdom |
 | Deployment | Static build → Nginx (Alibaba Cloud) |
 
@@ -53,9 +54,10 @@ src/
 │   ├── task-selector/       # TaskSelector, TaskCard — type picker
 │   ├── editor/              # EditorArea, FieldRenderer, field components
 │   ├── preview/             # PreviewArea, PreviewHeader, CopyButton — live output
-│   ├── modals/              # SettingsModal, HistoryModal — dialog windows
+│   ├── modals/              # SettingsModal, HistoryModal, AnnouncementModal — dialog windows
+│   ├── tutorial/            # TutorialOverlay, TutorialTooltip, SpotlightOverlay — guided walkthrough
 │   └── ui/                  # shadcn/ui primitives (button, etc.)
-├── data/                    # Help content data (helpContentMap for all 45 fields)
+├── data/                    # Help content, tutorial steps, announcement content + loader
 ├── i18n/                    # i18n config + locale files (en.json, zh.json)
 ├── hooks/                   # useCompiler, useClipboard, useStorage (usePreferences + useHistory)
 ├── storage/                 # Dexie.js DB schema, preferences CRUD, history CRUD

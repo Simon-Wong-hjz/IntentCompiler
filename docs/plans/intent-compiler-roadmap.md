@@ -226,3 +226,14 @@ Polish visual details: verify all spacing, border radii, font weights, and color
 - [x] Task selector wraps to 3x2 grid below 1280px viewport width
 - [x] Layout remains usable down to 1024px viewport width
 - [x] Copy button is pinned at preview panel bottom (never scrolls away)
+
+---
+
+## Post-Phase-6: Announcement & Tutorial System
+
+Added after Phase 6 completion as a first-run experience and version communication channel.
+
+- **Announcement modal**: Version-gated modal showing bilingual release notes (Markdown rendered via `marked`). Auto-opens on first visit after a new version. Content lives in `src/data/announcements/` as versioned `.md` files.
+- **Tutorial overlay**: 12-step guided walkthrough highlighting key UI elements (task selector, intent field, editor, preview, etc.) with a spotlight effect and tooltip navigation. Auto-triggers on first visit; can be replayed from top bar. Steps auto-skip when target DOM elements are missing.
+- **Welcome greeting**: First tutorial step is a center-positioned welcome message introducing the tool before spotlighting UI elements.
+- **Browser language detection**: Auto-detects `navigator.language` to set initial UI locale (Chinese for `zh-*`, English otherwise).
