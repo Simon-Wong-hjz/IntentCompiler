@@ -13,32 +13,41 @@ interface TutorialTooltipProps {
 }
 
 const TOOLTIP_GAP = 12;
+const VIEWPORT_PADDING = 12;
+const TOOLTIP_WIDTH = 320;
 
 function computePosition(
   placement: 'top' | 'bottom' | 'left' | 'right',
   targetRect: DOMRect,
 ): React.CSSProperties {
-  const tooltipWidth = 320;
+  const maxLeft = window.innerWidth - TOOLTIP_WIDTH - VIEWPORT_PADDING;
+
+  // Horizontal center aligned with target, clamped to viewport
+  const centeredLeft = Math.max(
+    VIEWPORT_PADDING,
+    Math.min(targetRect.left + targetRect.width / 2 - TOOLTIP_WIDTH / 2, maxLeft),
+  );
+
   switch (placement) {
     case 'bottom':
-      return {
-        top: targetRect.bottom + TOOLTIP_GAP,
-        left: targetRect.left + targetRect.width / 2 - tooltipWidth / 2,
-      };
+      return { top: targetRect.bottom + TOOLTIP_GAP, left: centeredLeft };
     case 'top':
       return {
         bottom: window.innerHeight - targetRect.top + TOOLTIP_GAP,
-        left: targetRect.left + targetRect.width / 2 - tooltipWidth / 2,
+        left: centeredLeft,
       };
     case 'right':
       return {
         top: targetRect.top + targetRect.height / 2 - 40,
-        left: targetRect.right + TOOLTIP_GAP,
+        left: Math.min(targetRect.right + TOOLTIP_GAP, maxLeft),
       };
     case 'left':
       return {
         top: targetRect.top + targetRect.height / 2 - 40,
-        right: window.innerWidth - targetRect.left + TOOLTIP_GAP,
+        right: Math.max(
+          VIEWPORT_PADDING,
+          window.innerWidth - targetRect.left + TOOLTIP_GAP,
+        ),
       };
   }
 }
@@ -61,7 +70,7 @@ export function TutorialTooltip({
 
   const style: React.CSSProperties = {
     ...computePosition(placement, targetRect),
-    width: 320,
+    width: TOOLTIP_WIDTH,
   };
 
   return (

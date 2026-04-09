@@ -21,9 +21,7 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
     setPrevActive(active);
   }
 
-  // Find and track the target element for the current step.
-  // Auto-skip steps whose target is not in the DOM (e.g., intent-field
-  // before a task type is selected).
+  // Find, scroll to, and track the target element for the current step.
   useEffect(() => {
     if (!active) return;
 
@@ -32,23 +30,27 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
 
     const el = document.querySelector(selector);
     if (!el) {
-      // Target missing — skip forward (or complete if at the end)
-      if (step >= tutorialSteps.length - 1) {
-        onComplete();
-      } else {
-        setStep((s) => s + 1);
-      }
+      // Safety: skip if target somehow missing
+      if (step < tutorialSteps.length - 1) setStep((s) => s + 1);
+      else onComplete();
       return;
     }
+
+    // Scroll target into view so it's visible under the spotlight
+    el.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' });
 
     const updateRect = () => {
       setTargetRect(el.getBoundingClientRect());
     };
 
+    // Measure immediately, then re-measure after scroll animation settles
     updateRect();
+    const scrollTimer = setTimeout(updateRect, 350);
+
     window.addEventListener('resize', updateRect);
     window.addEventListener('scroll', updateRect, true);
     return () => {
+      clearTimeout(scrollTimer);
       window.removeEventListener('resize', updateRect);
       window.removeEventListener('scroll', updateRect, true);
     };
@@ -81,12 +83,6 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
   const currentStep = tutorialSteps[step];
   if (!currentStep || !targetRect) return null;
 
-  // Compute visible step index/total so the counter skips missing steps
-  const visibleSteps = tutorialSteps.filter((s) =>
-    document.querySelector(s.targetSelector),
-  );
-  const visibleIndex = visibleSteps.indexOf(currentStep);
-
   return (
     <>
       <SpotlightOverlay targetRect={targetRect} />
@@ -95,8 +91,8 @@ export function TutorialOverlay({ active, onComplete }: TutorialOverlayProps) {
       <TutorialTooltip
         title={currentStep.title}
         description={currentStep.description}
-        current={visibleIndex >= 0 ? visibleIndex : step}
-        total={visibleSteps.length || tutorialSteps.length}
+        current={step}
+        total={tutorialSteps.length}
         placement={currentStep.placement}
         targetRect={targetRect}
         onPrev={handlePrev}

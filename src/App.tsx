@@ -78,6 +78,10 @@ function App() {
       preferences.lastSeenAnnouncementVersion !== latestVersion;
 
     if (needsTutorial) {
+      // Auto-select a task type so all tutorial targets exist in the DOM
+      if (!selectedType) {
+        setSelectedType('ask');
+      }
       setTutorialActive(true);
     } else if (needsAnnouncement) {
       setAnnouncementOpen(true);
@@ -341,7 +345,10 @@ function App() {
       onOpenHistory={() => { refreshHistory(); setHistoryOpen(true); }}
       onOpenSettings={() => setSettingsOpen(true)}
       onOpenAnnouncement={() => setAnnouncementOpen(true)}
-      onStartTutorial={() => setTutorialActive(true)}
+      onStartTutorial={() => {
+        if (!selectedType) setSelectedType('ask');
+        setTutorialActive(true);
+      }}
       onAfterCopy={handleAfterCopy}
       aiFilledFields={aiFilledFields}
       aiFillStatus={aiFillStatus}
