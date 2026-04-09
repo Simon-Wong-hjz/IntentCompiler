@@ -1,43 +1,59 @@
 # Intent Compiler
 
-> 一款基于模板引导的 AI 提示词结构化编辑工具。
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Demo](https://img.shields.io/badge/在线体验-Intent_Compiler-f5c518)](https://www.simon-wong.cn/intent-compiler)
+<!-- [![Build](https://img.shields.io/github/actions/workflow/status/YOUR_USER/intent-compiler/ci.yml?branch=main)](https://github.com/YOUR_USER/intent-compiler/actions) -->
 
-Intent Compiler 帮助你将意图"编译"为结构清晰的提示词。选择任务类型、填写相关字段，即可获得整洁、可直接复制的提示词 —— 默认无需 AI，也可选择 AI 辅助填充。
+> 厌倦了每次从头手搓提示词？Intent Compiler 把常见任务拆成结构化字段，帮你快速"编译"出高质量提示词。
 
-## 功能特性
+![Intent Compiler 截图](docs/assets/screenshot.png)
 
-- **6 种任务类型** — 提问、创作、转化、分析、构思、执行 — 每种类型配备定制化字段模板
-- **渐进式呈现** — 默认仅显示核心字段，可按需添加可选字段
-- **4 种输出格式** — Markdown、JSON、YAML、XML — 均为一等公民
-- **实时预览** — 编辑时即时查看编译后的提示词
-- **双语支持** — 界面和输出均支持中文与英文
-- **AI 增强模式** — 可选通过 OpenAI API 自动填充字段
-- **本地持久化** — 设置和编译历史存储于 IndexedDB
-- **隐私优先** — 纯客户端单页应用；API 密钥仅发送至 AI 服务商，不经过任何中间服务器
+Intent Compiler 是一个纯客户端的提示词编译器。选择任务类型 → 填写结构化字段 → 一键获得编译结果。输出可以直接作为提示词粘贴给 AI 对话，作为结构化约束搭配自然语言使用，或用于启动 Agent 会话。——附带可选的 AI 增强模式，自动填充字段内容。
 
-## 技术栈
+## 功能亮点
 
-- **React 19** + **TypeScript 6** + **Vite 8**
-- **Tailwind CSS v4** + **shadcn/ui**
-- **react-i18next** 双语支持
-- **Dexie.js** IndexedDB 存储
-- **Vitest** + **React Testing Library** 测试
+- **6 种任务模板** — 提问、创作、转化、分析、构思、执行，助你结构化思考
+- **渐进式引导** — 默认展示精选核心字段，也可按需添加更多细节，适合不同层次用户
+- **实时预览** — 编辑即所见，所见即所得
+- **多格式输出** — Markdown、JSON、YAML、XML，适配不同模型和使用场景
+- **隐私优先** — 纯客户端运行，数据本地存储，无中间服务器
+- **AI 增强（可选）** — 支持接入 OpenAI API，AI 自动填充字段
+
+## 在线体验
+
+👉 [www.simon-wong.cn/intent-compiler](http://www.simon-wong.cn/intent-compiler)
+
+无需安装，打开即用。
 
 ## 快速开始
 
+需要 Node.js 20+ 和 npm 9+。
+
 ```bash
+git clone https://github.com/Simon-Wong-hjz/IntentCompiler.git
+cd IntentCompiler
 npm install          # 安装依赖
 npm run dev          # 启动开发服务器 (Vite)
 npm run build        # 生产构建
 npm run test         # 运行测试 (Vitest)
-npm run lint         # ESLint 检查
 ```
 
-## 文档
+## 技术栈
 
-- [产品需求文档](docs/prd/intent-compiler-prd.md)
-- [UI/UX 设计规范](docs/design/frontend-design.md)
-- [实施路线图](docs/plans/intent-compiler-roadmap.md)
+| 层 | 技术 |
+|---|---|
+| 框架 | React 19 + TypeScript 6 |
+| 构建 | Vite 8 |
+| UI | Tailwind CSS v4 + shadcn/ui |
+| 国际化 | react-i18next |
+| 存储 | Dexie.js (IndexedDB) |
+| 测试 | Vitest + React Testing Library |
+
+## 项目状态
+
+**当前**：核心功能已完成 — 6 种任务模板、多格式输出、AI 增强、双语支持、本地持久化。
+
+**下一步**：移动端适配、Anthropic API 适配。
 
 ## 许可证
 
