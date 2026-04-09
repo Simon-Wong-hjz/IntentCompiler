@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026-04-09] - Phase 6: Help System + Edge States + Visual Polish
+- Created `src/data/help-content.ts` — bilingual (en/zh) help content for all 45 PRD fields with `whatIsThis`, `suggestions`, and `example` sections
+- Created `src/data/__tests__/help-content.test.ts` — 4 integrity tests verifying field coverage, bilingual completeness, and no extra keys
+- Created `src/components/help/HelpCard.tsx` — inline expandable help card with 200ms slide animation, warm yellow styling
+- Modified `src/components/editor/FieldLabel.tsx` — [?] badge now interactive toggle button with active state (black bg + gold text), renders HelpCard between label row and input
+- Modified `src/compiler/compiler.ts` — added `buildSkeleton()` producing placeholder OrderedFields for template preview
+- Modified `src/hooks/useCompiler.ts` — returns `skeletonOutput` alongside `compiledOutput` when task selected but all fields empty
+- Modified `src/components/preview/PreviewArea.tsx` — shows skeleton in ink-hint color; threaded `skeletonOutput` prop
+- Modified `src/components/editor/AiFillButton.tsx` — added hover tooltip "请先输入意图" when button disabled due to empty intent
+- Modified `src/components/editor/fields/TextareaField.tsx` + `TextField.tsx` — auto-resolve field-specific placeholders from i18n `fieldPlaceholders.*` before falling back to generic hint
+- Added `fieldPlaceholders` i18n entries for 12 key fields (context, requirements, constraints, goal, role, audience, source_content, subject, problem, current_state, plan, scope)
+- Added `ai.enterIntentFirst` i18n key (en: "Enter your intent first", zh: "请先输入意图")
+- Modified `src/index.css` — added Google Fonts @import, font-sans/font-mono/spacing tokens to @theme, focus-visible ring, universal interactive transition
+- Modified `src/components/preview/PreviewHeader.tsx` — added `hover:bg-bg-muted` to inactive format pills and language toggle
+- Modified `src/components/layout/TopBar.tsx` — added `hover:bg-bg-muted` to inactive language toggle segments
+- Modified `src/components/editor/fields/ComboField.tsx` — added `hover:bg-bg-muted` to unselected combo pills
+- **Totals**: 18 test files / 162 tests pass; tsc clean; build 553KB JS + 31KB CSS
+
 ## [2026-04-09] - Phase 5: AI-Enhanced Mode
 - Created `src/ai/types.ts` — AiProvider interface, AiFillRequest/Response/VerifyResult types
 - Created `src/ai/prompt-builder.ts` — System prompt and user message construction for AI field filling

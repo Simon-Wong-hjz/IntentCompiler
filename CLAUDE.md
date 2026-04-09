@@ -4,8 +4,8 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 
 ## Project Status
 
-**Current Phase**: Phase 5 complete (AI-enhanced mode — OpenAI + Anthropic field filling)
-**Next**: Phase 6 — Help system + edge states + visual polish
+**Current Phase**: Phase 6 complete (Help system + edge states + visual polish)
+**Next**: Production readiness — cleanup, final testing, deployment
 
 ### Key Specs
 
@@ -55,6 +55,7 @@ src/
 │   ├── preview/             # PreviewArea, PreviewHeader, CopyButton — live output
 │   ├── modals/              # SettingsModal, HistoryModal — dialog windows
 │   └── ui/                  # shadcn/ui primitives (button, etc.)
+├── data/                    # Help content data (helpContentMap for all 45 fields)
 ├── i18n/                    # i18n config + locale files (en.json, zh.json)
 ├── hooks/                   # useCompiler, useClipboard, useStorage (usePreferences + useHistory)
 ├── storage/                 # Dexie.js DB schema, preferences CRUD, history CRUD
@@ -91,7 +92,7 @@ npm run lint         # ESLint check
 3. **Phase 3** ✅: JSON/YAML/XML formatters + react-i18next bilingual support
 4. **Phase 4** ✅: Dexie.js persistence — settings modal + history modal
 5. **Phase 5** ✅: AI-enhanced mode — OpenAI + Anthropic field filling
-6. **Phase 6**: Help system + edge states + visual polish
+6. **Phase 6** ✅: Help system + edge states + visual polish
 
 ## Design Identity
 
