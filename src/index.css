@@ -78,6 +78,33 @@ button:not(:disabled) {
   }
 }
 
+@keyframes ai-fill-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-ai-fill-progress {
+  width: 40%;
+  animation: ai-fill-progress 1.2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-in;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei',
     'Noto Sans SC', system-ui, -apple-system, sans-serif;
