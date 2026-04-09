@@ -1,6 +1,8 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @theme {
+  /* Colors */
   --color-bg-page: #fffdf5;
   --color-bg-surface: #ffffff;
   --color-bg-muted: #f5f3ef;
@@ -20,14 +22,40 @@
   --color-status-danger: #ee5555;
   --color-status-danger-shadow: rgba(238, 85, 85, 0.15);
 
+  /* Radius */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
+
+  /* Spacing */
+  --spacing-gap-field: 10px;
+  --spacing-gap-section: 12px;
+  --spacing-padding-input: 8px;
+  --spacing-padding-page: 20px;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
 }
 
 button:not(:disabled) {
   cursor: pointer;
+}
+
+/* Focus ring for form inputs */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 1px;
+}
+
+/* Universal transition for interactive elements */
+button,
+a,
+[role="button"] {
+  transition: all 150ms ease;
 }
 
 @keyframes slide-expand {

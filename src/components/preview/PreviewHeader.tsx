@@ -36,7 +36,7 @@ export function PreviewHeader({
             className={`px-2 py-0.5 text-xs font-medium transition-colors ${
               outputLanguage === 'en'
                 ? 'bg-ink-primary text-accent-primary'
-                : 'bg-transparent text-ink-muted hover:text-ink-secondary'
+                : 'bg-transparent text-ink-muted hover:bg-bg-muted hover:text-ink-secondary'
             }`}
             onClick={() => onLanguageChange('en')}
           >
@@ -47,7 +47,7 @@ export function PreviewHeader({
             className={`px-2 py-0.5 text-xs font-medium transition-colors ${
               outputLanguage === 'zh'
                 ? 'bg-ink-primary text-accent-primary'
-                : 'bg-transparent text-ink-muted hover:text-ink-secondary'
+                : 'bg-transparent text-ink-muted hover:bg-bg-muted hover:text-ink-secondary'
             }`}
             onClick={() => onLanguageChange('zh')}
           >
@@ -65,7 +65,7 @@ export function PreviewHeader({
             className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
               outputFormat === option.value
                 ? 'bg-ink-primary text-accent-primary'
-                : 'bg-bg-accent-light text-ink-muted hover:text-ink-secondary'
+                : 'bg-bg-accent-light text-ink-muted hover:bg-bg-muted hover:text-ink-secondary'
             }`}
             onClick={() => onFormatChange(option.value)}
           >

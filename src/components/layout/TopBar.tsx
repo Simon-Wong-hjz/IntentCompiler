@@ -13,7 +13,7 @@ function UILanguageToggle() {
         className={`px-2 py-0.5 font-medium rounded-l-sm transition-colors ${
           currentLang === 'zh'
             ? 'bg-ink-primary text-accent-primary'
-            : 'bg-transparent text-ink-muted hover:text-ink-secondary'
+            : 'bg-transparent text-ink-muted hover:bg-bg-muted hover:text-ink-secondary'
         }`}
         onClick={() => setUILanguage('zh')}
       >
@@ -24,7 +24,7 @@ function UILanguageToggle() {
         className={`px-2 py-0.5 font-medium rounded-r-sm transition-colors ${
           currentLang === 'en'
             ? 'bg-ink-primary text-accent-primary'
-            : 'bg-transparent text-ink-muted hover:text-ink-secondary'
+            : 'bg-transparent text-ink-muted hover:bg-bg-muted hover:text-ink-secondary'
         }`}
         onClick={() => setUILanguage('en')}
       >

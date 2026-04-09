@@ -38,7 +38,7 @@ export function ComboField({ field, value, onChange }: ComboFieldProps) {
                 className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
                   isSelected
                     ? 'font-semibold bg-bg-accent-light text-ink-primary border-[1.5px] border-accent-primary'
-                    : 'bg-bg-surface text-ink-muted border border-border-default'
+                    : 'bg-bg-surface text-ink-muted border border-border-default hover:bg-bg-muted'
                 }`}
               >
                 {t(`options.${option}`, { defaultValue: option })}
