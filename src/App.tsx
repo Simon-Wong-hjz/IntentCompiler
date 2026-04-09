@@ -65,19 +65,24 @@ function App() {
 
   // Get the current template's field definitions
   const template = selectedType ? getTemplate(selectedType) : undefined;
-  const fields: FieldDefinition[] = template?.fields ?? [];
+  const fields: FieldDefinition[] = useMemo(
+    () => template?.fields ?? [],
+    [template],
+  );
 
   // Build display-order fields: intent → defaults → added optionals
   // This ensures compiled output matches the editor's visual order
-  const intentField = fields.find((f) => f.key === 'intent');
-  const defaultFields = fields.filter(
-    (f) => f.key !== 'intent' && f.visibility === 'default',
-  );
-  const displayOrderFields: FieldDefinition[] = [
-    ...(intentField ? [intentField] : []),
-    ...defaultFields,
-    ...addedFields,
-  ];
+  const displayOrderFields: FieldDefinition[] = useMemo(() => {
+    const intentField = fields.find((f) => f.key === 'intent');
+    const defaultFields = fields.filter(
+      (f) => f.key !== 'intent' && f.visibility === 'default',
+    );
+    return [
+      ...(intentField ? [intentField] : []),
+      ...defaultFields,
+      ...addedFields,
+    ];
+  }, [fields, addedFields]);
 
   // Compile fields into preview output (using display order)
   const { compiledOutput, hasContent } = useCompiler(
