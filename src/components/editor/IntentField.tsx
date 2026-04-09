@@ -2,13 +2,39 @@ import { useCallback, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { FieldLabel } from '@/components/editor/FieldLabel';
+import { AiFillButton } from '@/components/editor/AiFillButton';
+import type { AiFillStatus } from '@/hooks/useAiFill';
 
 interface IntentFieldProps {
   value: string;
   onChange: (value: string) => void;
+  // AI props
+  aiFillStatus: AiFillStatus;
+  aiFillDisabled: boolean;
+  hasApiKey: boolean;
+  filledCount: number;
+  errorMessage: string;
+  onAiFill: () => void;
+  onDismissError: () => void;
+  onOpenSettings?: () => void;
+  allowAddFields: boolean;
+  onAllowAddFieldsChange: (checked: boolean) => void;
 }
 
-export function IntentField({ value, onChange }: IntentFieldProps) {
+export function IntentField({
+  value,
+  onChange,
+  aiFillStatus,
+  aiFillDisabled,
+  hasApiKey,
+  filledCount,
+  errorMessage,
+  onAiFill,
+  onDismissError,
+  onOpenSettings,
+  allowAddFields,
+  onAllowAddFieldsChange,
+}: IntentFieldProps) {
   const { t } = useTranslation();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -34,7 +60,20 @@ export function IntentField({ value, onChange }: IntentFieldProps) {
 
   return (
     <div className="flex flex-col gap-1">
-      <FieldLabel fieldKey="intent" inputType="textarea" />
+      {/* Label row: field label left, AI Fill button right */}
+      <div className="flex items-start justify-between gap-4">
+        <FieldLabel fieldKey="intent" inputType="textarea" />
+        <AiFillButton
+          status={aiFillStatus}
+          disabled={aiFillDisabled}
+          hasApiKey={hasApiKey}
+          filledCount={filledCount}
+          errorMessage={errorMessage}
+          onFill={onAiFill}
+          onDismissError={onDismissError}
+          onOpenSettings={onOpenSettings}
+        />
+      </div>
       <textarea
         ref={textareaRef}
         id="intent"
@@ -57,6 +96,24 @@ export function IntentField({ value, onChange }: IntentFieldProps) {
           boxShadow: glowStyle,
         }}
       />
+      {/* Allow AI to add fields checkbox */}
+      {hasApiKey && (
+        <label className="flex items-center gap-2 mt-2 text-sm text-ink-secondary cursor-pointer">
+          <input
+            type="checkbox"
+            checked={allowAddFields}
+            onChange={(e) => onAllowAddFieldsChange(e.target.checked)}
+            className="w-4 h-4 rounded border-border-default text-accent-primary focus:ring-accent-primary"
+          />
+          <span>{t('ai.allowAddFields')}</span>
+          <span
+            className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-bg-muted text-ink-muted text-[10px] cursor-help"
+            title={t('ai.allowAddFieldsHelp')}
+          >
+            ?
+          </span>
+        </label>
+      )}
     </div>
   );
 }

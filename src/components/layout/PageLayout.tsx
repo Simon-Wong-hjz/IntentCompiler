@@ -4,6 +4,7 @@ import { EditorArea } from '@/components/editor/EditorArea';
 import { PreviewArea } from '@/components/preview/PreviewArea';
 import type { TaskType, FieldDefinition } from '@/registry/types';
 import type { OutputFormat, Language } from '@/compiler/types';
+import type { AiFillStatus } from '@/hooks/useAiFill';
 
 interface PageLayoutProps {
   selectedType: TaskType | null;
@@ -24,6 +25,17 @@ interface PageLayoutProps {
   onOpenHistory: () => void;
   onOpenSettings: () => void;
   onAfterCopy?: () => void;
+  // AI props
+  aiFilledFields: Set<string>;
+  aiFillStatus: AiFillStatus;
+  aiFillDisabled: boolean;
+  hasApiKey: boolean;
+  filledCount: number;
+  aiFillError: string;
+  onAiFill: () => void;
+  onDismissError: () => void;
+  allowAddFields: boolean;
+  onAllowAddFieldsChange: (checked: boolean) => void;
 }
 
 export function PageLayout({
@@ -45,6 +57,16 @@ export function PageLayout({
   onOpenHistory,
   onOpenSettings,
   onAfterCopy,
+  aiFilledFields,
+  aiFillStatus,
+  aiFillDisabled,
+  hasApiKey,
+  filledCount,
+  aiFillError,
+  onAiFill,
+  onDismissError,
+  allowAddFields,
+  onAllowAddFieldsChange,
 }: PageLayoutProps) {
   return (
     <div className="h-screen flex flex-col bg-bg-page" style={{ minWidth: '1024px' }}>
@@ -67,6 +89,17 @@ export function PageLayout({
             addedFields={addedFields}
             onAddField={onAddField}
             onRemoveField={onRemoveField}
+            aiFilledFields={aiFilledFields}
+            aiFillStatus={aiFillStatus}
+            aiFillDisabled={aiFillDisabled}
+            hasApiKey={hasApiKey}
+            filledCount={filledCount}
+            aiFillError={aiFillError}
+            onAiFill={onAiFill}
+            onDismissError={onDismissError}
+            onOpenSettings={onOpenSettings}
+            allowAddFields={allowAddFields}
+            onAllowAddFieldsChange={onAllowAddFieldsChange}
           />
         </div>
 

@@ -4,6 +4,7 @@ import { IntentField } from '@/components/editor/IntentField';
 import { FieldRenderer } from '@/components/editor/FieldRenderer';
 import { AddFieldPanel } from '@/components/editor/AddFieldPanel';
 import type { FieldDefinition, TaskType } from '@/registry/types';
+import type { AiFillStatus } from '@/hooks/useAiFill';
 
 /** Duration of the field-collapse animation (ms). */
 const FIELD_COLLAPSE_DURATION = 200;
@@ -16,6 +17,18 @@ interface EditorAreaProps {
   addedFields: FieldDefinition[];
   onAddField: (field: FieldDefinition) => void;
   onRemoveField: (fieldKey: string) => void;
+  // AI props
+  aiFilledFields: Set<string>;
+  aiFillStatus: AiFillStatus;
+  aiFillDisabled: boolean;
+  hasApiKey: boolean;
+  filledCount: number;
+  aiFillError: string;
+  onAiFill: () => void;
+  onDismissError: () => void;
+  onOpenSettings?: () => void;
+  allowAddFields: boolean;
+  onAllowAddFieldsChange: (checked: boolean) => void;
 }
 
 export function EditorArea({
@@ -26,6 +39,17 @@ export function EditorArea({
   addedFields,
   onAddField,
   onRemoveField,
+  aiFilledFields,
+  aiFillStatus,
+  aiFillDisabled,
+  hasApiKey,
+  filledCount,
+  aiFillError,
+  onAiFill,
+  onDismissError,
+  onOpenSettings,
+  allowAddFields,
+  onAllowAddFieldsChange,
 }: EditorAreaProps) {
   const { t } = useTranslation();
   const [removingFieldKey, setRemovingFieldKey] = useState<string | null>(null);
@@ -88,6 +112,16 @@ export function EditorArea({
         <IntentField
           value={(fieldValues['intent'] as string) ?? ''}
           onChange={(v) => onFieldChange('intent', v)}
+          aiFillStatus={aiFillStatus}
+          aiFillDisabled={aiFillDisabled}
+          hasApiKey={hasApiKey}
+          filledCount={filledCount}
+          errorMessage={aiFillError}
+          onAiFill={onAiFill}
+          onDismissError={onDismissError}
+          onOpenSettings={onOpenSettings}
+          allowAddFields={allowAddFields}
+          onAllowAddFieldsChange={onAllowAddFieldsChange}
         />
       )}
 
@@ -100,6 +134,7 @@ export function EditorArea({
             field={field}
             value={fieldValues[field.key]}
             onChange={(v) => onFieldChange(field.key, v)}
+            isAiFilled={aiFilledFields.has(field.key)}
           />
         </div>
       ))}
@@ -131,6 +166,7 @@ export function EditorArea({
                   field={field}
                   value={fieldValues[field.key]}
                   onChange={(v) => onFieldChange(field.key, v)}
+                  isAiFilled={aiFilledFields.has(field.key)}
                 />
               </div>
             </div>

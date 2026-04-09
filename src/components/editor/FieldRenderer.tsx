@@ -11,75 +11,85 @@ interface FieldRendererProps {
   field: FieldDefinition;
   value: unknown;
   onChange: (value: unknown) => void;
+  isAiFilled?: boolean;
 }
 
-export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
+export function FieldRenderer({ field, value, onChange, isAiFilled }: FieldRendererProps) {
+  let content: React.ReactNode;
+
   switch (field.inputType) {
     case 'textarea':
-      return (
+      content = (
         <TextareaField
           field={field}
           value={(value as string) ?? ''}
           onChange={onChange}
         />
       );
+      break;
 
     case 'text':
-      return (
+      content = (
         <TextField
           field={field}
           value={(value as string) ?? ''}
           onChange={onChange}
         />
       );
+      break;
 
     case 'combo':
-      return (
+      content = (
         <ComboField
           field={field}
           value={(value as string) ?? ''}
           onChange={onChange}
         />
       );
+      break;
 
     case 'list':
-      return (
+      content = (
         <ListField
           field={field}
           value={(value as string[]) ?? []}
           onChange={onChange}
         />
       );
+      break;
 
     case 'toggle':
-      return (
+      content = (
         <ToggleField
           field={field}
           value={(value as boolean) ?? false}
           onChange={onChange}
         />
       );
+      break;
 
     case 'number':
-      return (
+      content = (
         <NumberField
           field={field}
           value={(value as number) ?? 0}
           onChange={onChange}
         />
       );
+      break;
 
     case 'key-value':
-      return (
+      content = (
         <KeyValueField
           field={field}
           value={(value as KeyValuePair[]) ?? []}
           onChange={onChange}
         />
       );
+      break;
 
     default:
-      return (
+      content = (
         <TextField
           field={field}
           value={(value as string) ?? ''}
@@ -88,4 +98,10 @@ export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
         />
       );
   }
+
+  if (isAiFilled) {
+    return <div className="rounded-lg bg-accent-light">{content}</div>;
+  }
+
+  return content;
 }
