@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createProvider } from '@/ai/connector';
-import type { VerifyResult, AiProviderName } from '@/ai/types';
+import type { VerifyResult, ModelOption, AiProviderName } from '@/ai/types';
 import type { PreferencesState } from '../../hooks/useStorage';
 import type { PreferenceKey } from '../../storage/preferences';
 
@@ -62,6 +62,8 @@ export default function SettingsModal({
   const [showApiKey, setShowApiKey] = useState(false);
   const [verifyStatus, setVerifyStatus] = useState<VerifyStatus>('idle');
   const [verifyResult, setVerifyResult] = useState<VerifyResult | null>(null);
+  const [availableModels, setAvailableModels] = useState<ModelOption[]>([]);
+  const [modelsLoading, setModelsLoading] = useState(false);
   const apiKeyInputRef = useRef<HTMLInputElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
@@ -86,6 +88,8 @@ export default function SettingsModal({
     setVerifyStatus('idle');
     setVerifyResult(null);
     setShowApiKey(false);
+    setAvailableModels([]);
+    setModelsLoading(false);
   }
 
   // Escape key handler
@@ -98,8 +102,8 @@ export default function SettingsModal({
     return () => document.removeEventListener('keydown', handleEsc);
   }, [open, onClose]);
 
-  // Real API key verification using the provider's verifyKey()
-  const verifyApiKey = useCallback(async (key: string, provider: string) => {
+  // Real API key verification + model fetching
+  const verifyApiKey = useCallback(async (key: string, provider: string, endpoint: string) => {
     if (!key || key.trim() === '') {
       setVerifyStatus('idle');
       setVerifyResult(null);
@@ -111,10 +115,23 @@ export default function SettingsModal({
 
     try {
       const aiProvider = createProvider(provider as AiProviderName);
-      const result = await aiProvider.verifyKey(key);
+      const result = await aiProvider.verifyKey(key, endpoint || undefined);
 
       setVerifyResult(result);
       setVerifyStatus(result.valid ? 'success' : 'error');
+
+      // On success, fetch available models
+      if (result.valid) {
+        setModelsLoading(true);
+        try {
+          const models = await aiProvider.listModels(key, endpoint || undefined);
+          setAvailableModels(models);
+        } catch {
+          setAvailableModels([]);
+        } finally {
+          setModelsLoading(false);
+        }
+      }
     } catch {
       setVerifyResult({ valid: false, error: 'Verification failed unexpectedly.' });
       setVerifyStatus('error');
@@ -133,6 +150,7 @@ export default function SettingsModal({
     onUpdatePreference(key, value);
     setVerifyStatus('idle');
     setVerifyResult(null);
+    setAvailableModels([]);
   };
 
   const handleEndpointChange = (value: string) => {
@@ -149,18 +167,26 @@ export default function SettingsModal({
 
   const handleApiKeyBlur = () => {
     if (currentApiKey && currentApiKey.trim() !== '') {
-      verifyApiKey(currentApiKey, currentApiType);
+      verifyApiKey(currentApiKey, currentApiType, currentEndpoint);
     }
   };
 
   const handleApiKeyKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      verifyApiKey(currentApiKey, currentApiType);
+      verifyApiKey(currentApiKey, currentApiType, currentEndpoint);
     }
   };
 
   const inputClassName =
     'w-full px-3 py-2 text-sm rounded-lg border border-border-default bg-bg-surface outline-none transition-colors focus:border-accent-primary';
+
+  // Model dropdown: include current saved model if not in fetched list
+  const modelOptions = availableModels.length > 0
+    ? (currentModel && !availableModels.some((m) => m.id === currentModel)
+        ? [{ id: currentModel, name: currentModel }, ...availableModels]
+        : availableModels)
+    : [];
+  const modelsReady = modelOptions.length > 0;
 
   return (
     <div
@@ -258,7 +284,8 @@ export default function SettingsModal({
               <PillSelector
                 options={[
                   { value: 'openai', label: 'OpenAI' },
-                  { value: 'anthropic', label: 'Anthropic' },
+                  // TODO: re-enable Anthropic after fixing browser request format
+                  // { value: 'anthropic', label: 'Anthropic' },
                 ]}
                 value={currentApiType}
                 onChange={(v) => onUpdatePreference('aiApiType', v)}
@@ -289,25 +316,7 @@ export default function SettingsModal({
               </p>
             </div>
 
-            {/* Model */}
-            <div>
-              <SectionLabel>
-                {t('settings.model', '模型')}
-              </SectionLabel>
-              <input
-                type="text"
-                value={currentModel}
-                onChange={(e) => handleModelChange(e.target.value)}
-                placeholder={
-                  currentApiType === 'openai'
-                    ? 'gpt-4o'
-                    : 'claude-sonnet-4-20250514'
-                }
-                className={inputClassName}
-              />
-            </div>
-
-            {/* API Key */}
+            {/* API Key (moved before Model) */}
             <div>
               <SectionLabel>
                 {t('settings.apiKey', 'API 密钥')}
@@ -353,6 +362,42 @@ export default function SettingsModal({
                 <p className="text-xs text-status-danger mt-2 font-medium">
                   ✗ {verifyResult.error || t('settings.invalidKey', '无效的 API 密钥，请检查后重试。')}
                 </p>
+              )}
+            </div>
+
+            {/* Model (dropdown, populated after key verification) */}
+            <div>
+              <SectionLabel>
+                {t('settings.model', '模型')}
+              </SectionLabel>
+              {modelsLoading ? (
+                <div className={`${inputClassName} opacity-50 animate-pulse`}>
+                  {t('settings.loadingModels', '加载模型列表...')}
+                </div>
+              ) : (
+                <select
+                  value={currentModel}
+                  onChange={(e) => handleModelChange(e.target.value)}
+                  disabled={!modelsReady}
+                  className={`${inputClassName} ${!modelsReady ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  {modelsReady ? (
+                    <>
+                      <option value="">
+                        {t('settings.selectModel', '请选择模型')}
+                      </option>
+                      {modelOptions.map((m) => (
+                        <option key={m.id} value={m.id}>
+                          {m.name}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <option value="">
+                      {t('settings.verifyKeyFirst', '请先验证 API 密钥')}
+                    </option>
+                  )}
+                </select>
               )}
             </div>
 

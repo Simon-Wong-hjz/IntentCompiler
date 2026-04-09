@@ -4,8 +4,8 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 
 ## Project Status
 
-**Current Phase**: Phase 4 complete (Dexie.js persistence — settings modal + history modal)
-**Next**: Phase 5 — AI-enhanced mode (OpenAI + Anthropic field filling)
+**Current Phase**: Phase 5 complete (AI-enhanced mode — OpenAI + Anthropic field filling)
+**Next**: Phase 6 — Help system + edge states + visual polish
 
 ### Key Specs
 
@@ -19,6 +19,7 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 - [Registry — Template & field schemas](src/registry/CLAUDE.md)
 - [Compiler — Compilation pipeline & formatters](src/compiler/CLAUDE.md)
 - [Components — UI patterns & layout](src/components/CLAUDE.md)
+- AI — `src/ai/types.ts` defines the `AiProvider` interface with `fillFields()`, `verifyKey()`, and `listModels()`. Providers: `providers/openai.ts` (OpenAI), `providers/anthropic.ts` (Anthropic, CORS-limited in browser). `connector.ts` orchestrates calls; `prompt-builder.ts` constructs messages.
 
 ## Tech Stack
 
@@ -39,6 +40,11 @@ A web-based tool for structuring AI prompts through guided, template-driven edit
 src/
 ├── App.tsx                  # Root component — state management, task selection
 ├── main.tsx                 # Entry point
+├── ai/                      # AI providers, prompt building, connector
+│   ├── types.ts             # AiProvider interface + request/response types
+│   ├── prompt-builder.ts    # System & user message construction
+│   ├── connector.ts         # Provider factory + response validation
+│   └── providers/           # OpenAI + Anthropic fetch-based implementations
 ├── registry/                # Template Registry — task type schemas + field configs
 ├── compiler/                # Compiler — field data → OrderedField[] → formatted string
 ├── formatters/              # Output formatters (Markdown, JSON, YAML, XML)
@@ -84,7 +90,7 @@ npm run lint         # ESLint check
 2. **Phase 2** ✅: All 6 task types + all input type renderers + progressive disclosure
 3. **Phase 3** ✅: JSON/YAML/XML formatters + react-i18next bilingual support
 4. **Phase 4** ✅: Dexie.js persistence — settings modal + history modal
-5. **Phase 5**: AI-enhanced mode — OpenAI + Anthropic field filling
+5. **Phase 5** ✅: AI-enhanced mode — OpenAI + Anthropic field filling
 6. **Phase 6**: Help system + edge states + visual polish
 
 ## Design Identity

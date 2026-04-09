@@ -1,35 +1,43 @@
-import type { AiProvider, AiFillRequest, AiFillResponse, VerifyResult } from '@/ai/types';
+import type { AiProvider, AiFillRequest, AiFillResponse, VerifyResult, ModelOption } from '@/ai/types';
 import { buildSystemPrompt, buildUserMessage } from '@/ai/prompt-builder';
 
-const OPENAI_CHAT_URL = 'https://api.openai.com/v1/chat/completions';
-const OPENAI_MODELS_URL = 'https://api.openai.com/v1/models';
-const MODEL = 'gpt-4o';
+const DEFAULT_ENDPOINT = 'https://api.openai.com/v1';
+const DEFAULT_MODEL = 'gpt-4o';
+
+/** Strip trailing slashes from endpoint URL */
+function normalizeEndpoint(endpoint?: string): string {
+  if (!endpoint) return DEFAULT_ENDPOINT;
+  return endpoint.replace(/\/+$/, '');
+}
 
 export class OpenAIProvider implements AiProvider {
   name = 'OpenAI';
 
   async fillFields(request: AiFillRequest): Promise<AiFillResponse> {
     const { apiKey, intent, taskType, currentFields, allOptionalFields, allowAddFields } = request;
+    const endpoint = normalizeEndpoint(request.endpoint);
+    const model = request.model || DEFAULT_MODEL;
 
-    const systemPrompt = buildSystemPrompt();
+    const systemPrompt = buildSystemPrompt(request.language);
     const userMessage = buildUserMessage({
       intent,
       taskType,
       currentFields,
       allOptionalFields,
       allowAddFields,
+      language: request.language,
     });
 
     let response: Response;
     try {
-      response = await fetch(OPENAI_CHAT_URL, {
+      response = await fetch(`${endpoint}/chat/completions`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: MODEL,
+          model,
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userMessage },
@@ -77,9 +85,10 @@ export class OpenAIProvider implements AiProvider {
     };
   }
 
-  async verifyKey(apiKey: string): Promise<VerifyResult> {
+  async verifyKey(apiKey: string, endpoint?: string): Promise<VerifyResult> {
+    const base = normalizeEndpoint(endpoint);
     try {
-      const response = await fetch(OPENAI_MODELS_URL, {
+      const response = await fetch(`${base}/models`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${apiKey}`,
@@ -97,6 +106,28 @@ export class OpenAIProvider implements AiProvider {
       return { valid: true, model: 'GPT-4o' };
     } catch {
       return { valid: false, error: 'Could not verify key. Check your network connection.' };
+    }
+  }
+
+  async listModels(apiKey: string, endpoint?: string): Promise<ModelOption[]> {
+    const base = normalizeEndpoint(endpoint);
+    try {
+      const response = await fetch(`${base}/models`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+        },
+      });
+
+      if (!response.ok) return [];
+
+      const data = await response.json();
+      return (data.data ?? [])
+        .filter((m: { id: string }) => /^(gpt-|o[1-9]|chatgpt-)/.test(m.id))
+        .map((m: { id: string }) => ({ id: m.id, name: m.id }))
+        .sort((a: ModelOption, b: ModelOption) => a.id.localeCompare(b.id));
+    } catch {
+      return [];
     }
   }
 }

@@ -48,6 +48,7 @@ describe('Anthropic Provider', () => {
       expect(options.headers['x-api-key']).toBe('sk-ant-test-key-123');
       expect(options.headers['anthropic-version']).toBe('2023-06-01');
       expect(options.headers['content-type']).toBe('application/json');
+      expect(options.headers['anthropic-dangerous-direct-browser-access']).toBe('true');
 
       const body = JSON.parse(options.body);
       expect(body.model).toBe('claude-sonnet-4-20250514');
@@ -92,10 +93,10 @@ describe('Anthropic Provider', () => {
       await expect(provider.fillFields(mockRequest)).rejects.toThrow('Rate limited');
     });
 
-    it('throws CORS-specific error on TypeError (browser CORS block)', async () => {
+    it('throws network error on fetch failure', async () => {
       vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new TypeError('Failed to fetch'));
 
-      await expect(provider.fillFields(mockRequest)).rejects.toThrow('CORS');
+      await expect(provider.fillFields(mockRequest)).rejects.toThrow('Network error');
     });
   });
 
@@ -124,12 +125,12 @@ describe('Anthropic Provider', () => {
       expect(result.error).toContain('Invalid API key');
     });
 
-    it('returns CORS-specific error on network failure', async () => {
+    it('returns network error on fetch failure', async () => {
       vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new TypeError('Failed to fetch'));
 
       const result = await provider.verifyKey('sk-ant-test-key');
       expect(result.valid).toBe(false);
-      expect(result.error).toContain('CORS');
+      expect(result.error).toContain('Network error');
     });
   });
 });

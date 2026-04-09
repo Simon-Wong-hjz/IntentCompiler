@@ -11,6 +11,7 @@ App (state owner)
     └── Split pane (50/50)
         ├── EditorArea            # Left: dynamic form
         │   ├── IntentField       # Always first, elevated styling
+    │   │   └── AiFillButton  # AI Fill button (4 states) + add-fields checkbox in label row
         │   ├── FieldRenderer × N # One per field definition
         │   │   └── TextField / TextareaField / ComboField / ListField
         │   │       / ToggleField / NumberField / KeyValueField
@@ -94,6 +95,15 @@ All state lives in `App.tsx`:
 Storage hooks (`usePreferences` and `useHistory` from `hooks/useStorage.ts`) provide persistence state and actions to `App.tsx`, which passes them to modals via props.
 
 State flows down via props: `App → PageLayout → EditorArea/PreviewArea`, `App → SettingsModal/HistoryModal`.
+
+### AI Prop Flow
+
+AI state originates in `App.tsx` (via `useAiFill` hook) and flows through two paths:
+
+1. **App → IntentField**: `aiFillStatus`, `aiFillDisabled`, `hasApiKey`, `filledCount`, `errorMessage`, `onAiFill`, `onDismissError`, `onOpenSettings`, `allowAddFields`, `onAllowAddFieldsChange`. IntentField renders `AiFillButton` in its label row (right-aligned, alongside the "Allow AI to add fields" checkbox).
+2. **App → EditorArea → FieldRenderer**: `aiFilledFields: Set<string>` tracks which fields were AI-filled. FieldRenderer applies `bg-accent-light` tinting to those fields' containers.
+
+Note: The "Allow AI to add fields" checkbox is positioned in the IntentField label row (next to AiFillButton), not below the textarea as originally planned — this reduces vertical space usage.
 
 ### Progressive Disclosure
 

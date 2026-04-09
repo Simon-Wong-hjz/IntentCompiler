@@ -1,6 +1,6 @@
 # Phase 5: AI-Enhanced Mode — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Enable AI-assisted field filling so users can write a brief intent and have an AI provider (OpenAI or Anthropic) parse it and populate template fields automatically.
 
@@ -58,7 +58,7 @@ src/App.tsx                                  # Add AI-related state (aiFilledFie
 **Files:**
 - Create: `src/ai/types.ts`
 
-- [ ] **Step 1: Create `src/ai/types.ts`**
+- [x] **Step 1: Create `src/ai/types.ts`**
 ```ts
 import type { TaskType, FieldDefinition } from '@/registry/types';
 
@@ -96,13 +96,13 @@ export interface AiProvider {
 export type AiProviderName = 'openai' | 'anthropic';
 ```
 
-- [ ] **Step 2: Verify types compile**
+- [x] **Step 2: Verify types compile**
 ```bash
 npx tsc --noEmit
 ```
 Expected: No errors.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 ```bash
 git add src/ai/types.ts
 git commit -m "feat(ai): define AiProvider interface and request/response types"
@@ -116,7 +116,7 @@ git commit -m "feat(ai): define AiProvider interface and request/response types"
 - Create: `src/ai/prompt-builder.ts`
 - Test: `tests/ai/prompt-builder.test.ts`
 
-- [ ] **Step 1: Write the failing test** — `tests/ai/prompt-builder.test.ts`
+- [x] **Step 1: Write the failing test** — `tests/ai/prompt-builder.test.ts`
 ```ts
 import { describe, it, expect } from 'vitest';
 import { buildSystemPrompt, buildUserMessage } from '@/ai/prompt-builder';
@@ -209,13 +209,13 @@ describe('Prompt Builder', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 ```bash
 npx vitest run tests/ai/prompt-builder.test.ts
 ```
 Expected: FAIL — cannot resolve `@/ai/prompt-builder`.
 
-- [ ] **Step 3: Write implementation** — `src/ai/prompt-builder.ts`
+- [x] **Step 3: Write implementation** — `src/ai/prompt-builder.ts`
 ```ts
 import type { FieldDefinition, TaskType } from '@/registry/types';
 
@@ -298,13 +298,13 @@ export function buildUserMessage(params: BuildUserMessageParams): string {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 ```bash
 npx vitest run tests/ai/prompt-builder.test.ts
 ```
 Expected: PASS — all tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/ai/prompt-builder.ts tests/ai/prompt-builder.test.ts
 git commit -m "feat(ai): implement prompt builder for field filling requests"
@@ -318,7 +318,7 @@ git commit -m "feat(ai): implement prompt builder for field filling requests"
 - Create: `src/ai/providers/openai.ts`
 - Test: `tests/ai/providers/openai.test.ts`
 
-- [ ] **Step 1: Write the failing test** — `tests/ai/providers/openai.test.ts`
+- [x] **Step 1: Write the failing test** — `tests/ai/providers/openai.test.ts`
 ```ts
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { OpenAIProvider } from '@/ai/providers/openai';
@@ -455,13 +455,13 @@ describe('OpenAI Provider', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 ```bash
 npx vitest run tests/ai/providers/openai.test.ts
 ```
 Expected: FAIL — cannot resolve `@/ai/providers/openai`.
 
-- [ ] **Step 3: Write implementation** — `src/ai/providers/openai.ts`
+- [x] **Step 3: Write implementation** — `src/ai/providers/openai.ts`
 ```ts
 import type { AiProvider, AiFillRequest, AiFillResponse, VerifyResult } from '@/ai/types';
 import { buildSystemPrompt, buildUserMessage } from '@/ai/prompt-builder';
@@ -558,13 +558,13 @@ export class OpenAIProvider implements AiProvider {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 ```bash
 npx vitest run tests/ai/providers/openai.test.ts
 ```
 Expected: PASS — all tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/ai/providers/openai.ts tests/ai/providers/openai.test.ts
 git commit -m "feat(ai): implement OpenAI provider with fillFields and verifyKey"
@@ -578,7 +578,7 @@ git commit -m "feat(ai): implement OpenAI provider with fillFields and verifyKey
 - Create: `src/ai/providers/anthropic.ts`
 - Test: `tests/ai/providers/anthropic.test.ts`
 
-- [ ] **Step 1: Write the failing test** — `tests/ai/providers/anthropic.test.ts`
+- [x] **Step 1: Write the failing test** — `tests/ai/providers/anthropic.test.ts`
 ```ts
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { AnthropicProvider } from '@/ai/providers/anthropic';
@@ -717,13 +717,13 @@ describe('Anthropic Provider', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 ```bash
 npx vitest run tests/ai/providers/anthropic.test.ts
 ```
 Expected: FAIL — cannot resolve `@/ai/providers/anthropic`.
 
-- [ ] **Step 3: Write implementation** — `src/ai/providers/anthropic.ts`
+- [x] **Step 3: Write implementation** — `src/ai/providers/anthropic.ts`
 ```ts
 import type { AiProvider, AiFillRequest, AiFillResponse, VerifyResult } from '@/ai/types';
 import { buildSystemPrompt, buildUserMessage } from '@/ai/prompt-builder';
@@ -844,13 +844,13 @@ export class AnthropicProvider implements AiProvider {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 ```bash
 npx vitest run tests/ai/providers/anthropic.test.ts
 ```
 Expected: PASS — all tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/ai/providers/anthropic.ts tests/ai/providers/anthropic.test.ts
 git commit -m "feat(ai): implement Anthropic provider with CORS-aware error handling"
@@ -864,7 +864,7 @@ git commit -m "feat(ai): implement Anthropic provider with CORS-aware error hand
 - Create: `src/ai/connector.ts`
 - Test: `tests/ai/connector.test.ts`
 
-- [ ] **Step 1: Write the failing test** — `tests/ai/connector.test.ts`
+- [x] **Step 1: Write the failing test** — `tests/ai/connector.test.ts`
 ```ts
 import { describe, it, expect, vi } from 'vitest';
 import { aiFill, createProvider } from '@/ai/connector';
@@ -991,13 +991,13 @@ describe('AI Connector', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 ```bash
 npx vitest run tests/ai/connector.test.ts
 ```
 Expected: FAIL — cannot resolve `@/ai/connector`.
 
-- [ ] **Step 3: Write implementation** — `src/ai/connector.ts`
+- [x] **Step 3: Write implementation** — `src/ai/connector.ts`
 ```ts
 import type { AiProvider, AiFillRequest, AiFillResponse, AiProviderName } from '@/ai/types';
 import { OpenAIProvider } from '@/ai/providers/openai';
@@ -1063,13 +1063,13 @@ export async function aiFill(
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 ```bash
 npx vitest run tests/ai/connector.test.ts
 ```
 Expected: PASS — all tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/ai/connector.ts tests/ai/connector.test.ts
 git commit -m "feat(ai): implement connector orchestrator with response validation"
@@ -1082,7 +1082,7 @@ git commit -m "feat(ai): implement connector orchestrator with response validati
 **Files:**
 - Create: `src/hooks/useAiFill.ts`
 
-- [ ] **Step 1: Create `src/hooks/useAiFill.ts`**
+- [x] **Step 1: Create `src/hooks/useAiFill.ts`**
 ```ts
 import { useState, useCallback, useRef } from 'react';
 import type { TaskType, FieldDefinition } from '@/registry/types';
@@ -1184,13 +1184,13 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
 }
 ```
 
-- [ ] **Step 2: Verify types compile**
+- [x] **Step 2: Verify types compile**
 ```bash
 npx tsc --noEmit
 ```
 Expected: No errors.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 ```bash
 git add src/hooks/useAiFill.ts
 git commit -m "feat(ai): add useAiFill hook for orchestrating AI fill flow"
@@ -1203,7 +1203,7 @@ git commit -m "feat(ai): add useAiFill hook for orchestrating AI fill flow"
 **Files:**
 - Create: `src/components/editor/AiFillButton.tsx`
 
-- [ ] **Step 1: Create `src/components/editor/AiFillButton.tsx`**
+- [x] **Step 1: Create `src/components/editor/AiFillButton.tsx`**
 ```tsx
 import type { AiFillStatus } from '@/hooks/useAiFill';
 
@@ -1300,7 +1300,7 @@ export function AiFillButton({
 }
 ```
 
-- [ ] **Step 2: Add CSS animation keyframes**
+- [x] **Step 2: Add CSS animation keyframes**
 
 Add the following to `src/index.css` AFTER the `@theme` block (Tailwind v4 — keyframes and utility classes go outside `@theme`):
 
@@ -1335,7 +1335,7 @@ Add the following to `src/index.css` AFTER the `@theme` block (Tailwind v4 — k
 }
 ```
 
-- [ ] **Step 3: Verify visually** — `npm run dev`
+- [x] **Step 3: Verify visually** — `npm run dev`
 
 Temporarily render the AiFillButton in the IntentField area with hardcoded props to confirm:
 - Idle state: dark background, golden text, "AI Fill" label
@@ -1345,7 +1345,7 @@ Temporarily render the AiFillButton in the IntentField area with hardcoded props
 
 Remove the temporary rendering after verification.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 ```bash
 git add src/components/editor/AiFillButton.tsx src/index.css
 git commit -m "feat(ai): add AiFillButton component with idle/disabled/loading/success/error states"
@@ -1360,7 +1360,7 @@ git commit -m "feat(ai): add AiFillButton component with idle/disabled/loading/s
 
 This task adds the AiFillButton to IntentField's label row (right-aligned) and the "Allow AI to add fields" checkbox below the intent input.
 
-- [ ] **Step 1: Update IntentField to accept AI props**
+- [x] **Step 1: Update IntentField to accept AI props**
 
 Add the following props to IntentField:
 
@@ -1383,7 +1383,7 @@ interface IntentFieldProps {
 }
 ```
 
-- [ ] **Step 2: Add AiFillButton to the label row**
+- [x] **Step 2: Add AiFillButton to the label row**
 
 Update IntentField's label row to use flexbox with `justify-between`. The field name + help icon go on the left; AiFillButton goes on the right.
 
@@ -1416,7 +1416,7 @@ import type { AiFillStatus } from '@/hooks/useAiFill';
 </div>
 ```
 
-- [ ] **Step 3: Add "Allow AI to add fields" checkbox below the intent input**
+- [x] **Step 3: Add "Allow AI to add fields" checkbox below the intent input**
 
 Add the checkbox immediately after the intent textarea, before the next field. It should be hidden when `hasApiKey` is false.
 
@@ -1443,7 +1443,7 @@ Add the checkbox immediately after the intent textarea, before the next field. I
 )}
 ```
 
-- [ ] **Step 4: Verify visually** — `npm run dev`
+- [x] **Step 4: Verify visually** — `npm run dev`
 
 Confirm:
 - AiFillButton renders in the IntentField label row, right-aligned
@@ -1451,7 +1451,7 @@ Confirm:
 - Checkbox is hidden when no API key
 - AiFillButton shows lock icon when no API key
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/components/editor/IntentField.tsx
 git commit -m "feat(ai): wire AiFillButton and add-fields checkbox into IntentField"
@@ -1465,7 +1465,7 @@ git commit -m "feat(ai): wire AiFillButton and add-fields checkbox into IntentFi
 - Modify: `src/components/editor/EditorArea.tsx`
 - Modify: `src/components/editor/FieldRenderer.tsx`
 
-- [ ] **Step 1: Add aiFilledFields prop to EditorArea**
+- [x] **Step 1: Add aiFilledFields prop to EditorArea**
 
 EditorArea receives a `Set<string>` of AI-filled field keys and passes it down to FieldRenderer.
 
@@ -1490,7 +1490,7 @@ When rendering fields, pass the tint flag to FieldRenderer:
 />
 ```
 
-- [ ] **Step 2: Apply bg-accent-light tinting in FieldRenderer**
+- [x] **Step 2: Apply bg-accent-light tinting in FieldRenderer**
 
 FieldRenderer accepts `isAiFilled?: boolean` and applies the tint to the field's input container (not the label).
 
@@ -1509,7 +1509,7 @@ interface FieldRendererProps {
 
 The `bg-accent-light` class maps to `#fff3cd` per the design token system set up in Phase 1.
 
-- [ ] **Step 3: Verify visually** — `npm run dev`
+- [x] **Step 3: Verify visually** — `npm run dev`
 
 Temporarily mark a field as AI-filled in React state to confirm:
 - The field's input container gets the subtle yellow `#fff3cd` background
@@ -1518,7 +1518,7 @@ Temporarily mark a field as AI-filled in React state to confirm:
 
 Remove the temporary state after verification.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 ```bash
 git add src/components/editor/EditorArea.tsx src/components/editor/FieldRenderer.tsx
 git commit -m "feat(ai): add bg-accent-light tinting for AI-filled fields"
@@ -1533,7 +1533,7 @@ git commit -m "feat(ai): add bg-accent-light tinting for AI-filled fields"
 
 This task adds the AI-related state to App.tsx and wires the useAiFill hook into the component tree.
 
-- [ ] **Step 1: Add AI state variables**
+- [x] **Step 1: Add AI state variables**
 
 ```tsx
 import { useState, useCallback } from 'react';
@@ -1550,7 +1550,7 @@ const [allowAddFields, setAllowAddFields] = useState(false);
 // providerName, getApiKey for the current provider
 ```
 
-- [ ] **Step 2: Initialize useAiFill hook**
+- [x] **Step 2: Initialize useAiFill hook**
 
 ```tsx
 // Derive the current fields and optional fields from template registry + active fields
@@ -1579,7 +1579,7 @@ const {
 });
 ```
 
-- [ ] **Step 3: Handle AI fill response**
+- [x] **Step 3: Handle AI fill response**
 
 Create a handler that processes the AiFillResponse and updates field values + active fields:
 
@@ -1615,7 +1615,7 @@ const handleAiFill = useCallback(async () => {
 }, [triggerFill]);
 ```
 
-- [ ] **Step 4: Pass AI props down to IntentField and EditorArea**
+- [x] **Step 4: Pass AI props down to IntentField and EditorArea**
 
 ```tsx
 // In the JSX, pass to IntentField:
@@ -1641,7 +1641,7 @@ const handleAiFill = useCallback(async () => {
 />
 ```
 
-- [ ] **Step 5: Clear AI-filled state on task type change**
+- [x] **Step 5: Clear AI-filled state on task type change**
 
 When the task type changes, reset the AI-filled field tracking:
 
@@ -1656,13 +1656,13 @@ const handleTaskTypeChange = useCallback((type: TaskType) => {
 }, [resetAiFill]);
 ```
 
-- [ ] **Step 6: Verify types compile**
+- [x] **Step 6: Verify types compile**
 ```bash
 npx tsc --noEmit
 ```
 Expected: No errors.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 ```bash
 git add src/App.tsx
 git commit -m "feat(ai): wire AI state and useAiFill hook into App component"
@@ -1677,14 +1677,14 @@ git commit -m "feat(ai): wire AI state and useAiFill hook into App component"
 
 This task replaces the Phase 4 mock verifier with real provider `verifyKey()` calls.
 
-- [ ] **Step 1: Import real provider factory**
+- [x] **Step 1: Import real provider factory**
 
 ```tsx
 import { createProvider } from '@/ai/connector';
 import type { VerifyResult, AiProviderName } from '@/ai/types';
 ```
 
-- [ ] **Step 2: Replace mock verification function**
+- [x] **Step 2: Replace mock verification function**
 
 Find the mock verification logic in SettingsModal (Phase 4 implemented a mock that always returns success after a delay) and replace it:
 
@@ -1719,7 +1719,7 @@ const verifyApiKey = useCallback(async (key: string, provider: AiProviderName) =
 }, []);
 ```
 
-- [ ] **Step 3: Wire verification to API key input blur/Enter**
+- [x] **Step 3: Wire verification to API key input blur/Enter**
 
 ```tsx
 // On the API key input:
@@ -1740,7 +1740,7 @@ const verifyApiKey = useCallback(async (key: string, provider: AiProviderName) =
 />
 ```
 
-- [ ] **Step 4: Update verification status display**
+- [x] **Step 4: Update verification status display**
 
 ```tsx
 {/* Verification status */}
@@ -1759,7 +1759,7 @@ const verifyApiKey = useCallback(async (key: string, provider: AiProviderName) =
 )}
 ```
 
-- [ ] **Step 5: Re-verify when provider changes**
+- [x] **Step 5: Re-verify when provider changes**
 
 When the user switches provider, if the new provider already has a stored key, trigger verification:
 
@@ -1781,7 +1781,7 @@ const handleProviderChange = useCallback((provider: AiProviderName) => {
 }, [verifyApiKey]);
 ```
 
-- [ ] **Step 6: Verify visually** — `npm run dev`
+- [x] **Step 6: Verify visually** — `npm run dev`
 
 Open Settings modal and confirm:
 - Entering a valid-looking key and pressing Enter or tabbing out triggers a real verification request
@@ -1790,7 +1790,7 @@ Open Settings modal and confirm:
 - Switching providers loads that provider's stored key and re-verifies
 - For Anthropic: expect a CORS error message (this is correct behavior — the Anthropic provider's verifyKey will fail with a CORS-specific error in the browser)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 ```bash
 git add src/components/modals/SettingsModal.tsx
 git commit -m "feat(ai): replace mock API key verifier with real provider verification"
@@ -1802,14 +1802,14 @@ git commit -m "feat(ai): replace mock API key verifier with real provider verifi
 
 This is a manual verification task. No code files to create.
 
-- [ ] **Step 1: Configure OpenAI in Settings**
+- [x] **Step 1: Configure OpenAI in Settings**
 1. Open `npm run dev`
 2. Open Settings modal
 3. Select OpenAI provider
 4. Enter a real OpenAI API key (or use a test key)
 5. Verify the key is accepted (green status)
 
-- [ ] **Step 2: Test AI Fill with "Ask" task type**
+- [x] **Step 2: Test AI Fill with "Ask" task type**
 1. Select "Ask" task type
 2. Type in the Intent field: "How do React hooks compare to class component lifecycle methods?"
 3. Confirm the AI Fill button is in idle state (dark bg, golden text, "AI Fill")
@@ -1821,19 +1821,19 @@ This is a manual verification task. No code files to create.
    - Success message "Filled N fields" appears below intent, fades after 3 seconds
    - Preview panel updates in real-time as fields are filled
 
-- [ ] **Step 3: Test "Allow AI to add fields"**
+- [x] **Step 3: Test "Allow AI to add fields"**
 1. Clear the editor (switch task type and switch back, or reload)
 2. Check the "Allow AI to add fields" checkbox
 3. Type an intent and click AI Fill
 4. Confirm: AI may add optional fields that were not in the editor (they appear with yellow tint)
 
-- [ ] **Step 4: Test error states**
+- [x] **Step 4: Test error states**
 1. Enter an invalid API key in Settings
 2. Attempt AI Fill — should show "Invalid API key" error
 3. Disconnect network (airplane mode) — should show "Network error"
 4. Error message persists until dismissed (click X) or next attempt
 
-- [ ] **Step 5: Test disabled states**
+- [x] **Step 5: Test disabled states**
 1. No task type selected → button disabled (40% opacity)
 2. Task type selected but Intent empty → button disabled
 3. No API key configured → lock icon, clicking opens Settings
@@ -1844,18 +1844,18 @@ This is a manual verification task. No code files to create.
 
 This is a manual verification task to confirm the CORS limitation is handled gracefully.
 
-- [ ] **Step 1: Configure Anthropic in Settings**
+- [x] **Step 1: Configure Anthropic in Settings**
 1. Open Settings modal
 2. Switch to Anthropic provider
 3. Enter an Anthropic API key
 4. **Expected**: Key verification fails with CORS error message: "CORS error: Anthropic API does not support direct browser calls. Use OpenAI or configure a CORS proxy."
 
-- [ ] **Step 2: Attempt AI Fill with Anthropic**
+- [x] **Step 2: Attempt AI Fill with Anthropic**
 1. Select a task type and enter an intent
 2. Click AI Fill
 3. **Expected**: Error message shows the CORS limitation. The message is actionable — it tells the user to use OpenAI or set up a CORS proxy.
 
-- [ ] **Step 3: Verify provider switching preserves keys**
+- [x] **Step 3: Verify provider switching preserves keys**
 1. Switch back to OpenAI — the OpenAI key should still be there
 2. Switch to Anthropic — the Anthropic key should still be there
 3. Keys are stored independently per provider in Dexie
@@ -1866,27 +1866,27 @@ This is a manual verification task to confirm the CORS limitation is handled gra
 
 Manual verification that AI fill works correctly across all task types, not just Ask.
 
-- [ ] **Step 1: Test with Create**
+- [x] **Step 1: Test with Create**
 1. Select "Create", enter intent: "Write a Python script to parse CSV files and generate a summary report"
 2. Click AI Fill
 3. Confirm: content_type, key_points, tone are filled appropriately
 
-- [ ] **Step 2: Test with Transform**
+- [x] **Step 2: Test with Transform**
 1. Select "Transform", enter intent: "Translate this technical documentation from English to Chinese while preserving code examples"
 2. Click AI Fill
 3. Confirm: transform_type is filled (should select "translate"), source_content may remain empty (user needs to provide it)
 
-- [ ] **Step 3: Test with Analyze**
+- [x] **Step 3: Test with Analyze**
 1. Select "Analyze", enter intent: "Compare React vs Vue.js for a medium-sized e-commerce project"
 2. Click AI Fill
 3. Confirm: analyze_type is filled (should select "compare"), subject and criteria are filled
 
-- [ ] **Step 4: Test with Ideate**
+- [x] **Step 4: Test with Ideate**
 1. Select "Ideate", enter intent: "Design a notification system that reduces user alert fatigue"
 2. Click AI Fill
 3. Confirm: problem, current_state, goal are filled
 
-- [ ] **Step 5: Test with Execute**
+- [x] **Step 5: Test with Execute**
 1. Select "Execute", enter intent: "Deploy this Node.js application to AWS with auto-scaling and monitoring"
 2. Click AI Fill
 3. Confirm: plan, goal are filled
@@ -1901,7 +1901,7 @@ Manual verification that AI fill works correctly across all task types, not just
 
 This task ensures all AI-related UI text follows the i18n system established in Phase 3.
 
-- [ ] **Step 1: Add i18n keys for AI components**
+- [x] **Step 1: Add i18n keys for AI components**
 
 Add the following translation keys to the i18n resource files (the exact file depends on Phase 3 structure, typically `src/i18n/en.json` and `src/i18n/zh.json` or a similar structure):
 
@@ -1938,7 +1938,7 @@ Add the following translation keys to the i18n resource files (the exact file de
 }
 ```
 
-- [ ] **Step 2: Update AiFillButton to use translations**
+- [x] **Step 2: Update AiFillButton to use translations**
 
 ```tsx
 import { useTranslation } from 'react-i18next';
@@ -1954,7 +1954,7 @@ const { t } = useTranslation();
 // "Fill failed:"  → t('ai.fillFailed')
 ```
 
-- [ ] **Step 3: Update IntentField checkbox to use translations**
+- [x] **Step 3: Update IntentField checkbox to use translations**
 
 ```tsx
 // The checkbox label:
@@ -1964,14 +1964,14 @@ const { t } = useTranslation();
 title={t('ai.allowAddFieldsHelp')}
 ```
 
-- [ ] **Step 4: Verify visually** — `npm run dev`
+- [x] **Step 4: Verify visually** — `npm run dev`
 
 Toggle the UI language between EN and 中文:
 - AiFillButton text switches language
 - "Allow AI to add fields" checkbox label switches
 - Success/error messages switch
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/components/editor/AiFillButton.tsx src/components/editor/IntentField.tsx src/i18n/
 git commit -m "feat(ai): add i18n translations for all AI-related UI text"
@@ -1986,7 +1986,7 @@ git commit -m "feat(ai): add i18n translations for all AI-related UI text"
 - Modify: `src/ai/providers/anthropic.ts`
 - Modify: `tests/ai/providers/openai.test.ts`
 
-- [ ] **Step 1: Add test for malformed JSON in OpenAI provider**
+- [x] **Step 1: Add test for malformed JSON in OpenAI provider**
 
 ```ts
 // Add to tests/ai/providers/openai.test.ts, in the fillFields describe block:
@@ -2013,7 +2013,7 @@ it('handles response with no choices', async () => {
 });
 ```
 
-- [ ] **Step 2: Add JSON parse error handling to both providers**
+- [x] **Step 2: Add JSON parse error handling to both providers**
 
 In `src/ai/providers/openai.ts`, wrap the `JSON.parse(content)` call:
 
@@ -2028,13 +2028,13 @@ try {
 
 Apply the same pattern in `src/ai/providers/anthropic.ts` for its `JSON.parse(textBlock.text)` call.
 
-- [ ] **Step 3: Run all AI tests**
+- [x] **Step 3: Run all AI tests**
 ```bash
 npx vitest run tests/ai/
 ```
 Expected: All tests pass.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 ```bash
 git add src/ai/providers/openai.ts src/ai/providers/anthropic.ts tests/ai/providers/openai.test.ts
 git commit -m "fix(ai): add graceful handling for malformed AI JSON responses"
@@ -2047,7 +2047,7 @@ git commit -m "fix(ai): add graceful handling for malformed AI JSON responses"
 **Files:**
 - Modify: `src/App.tsx` (the handleAiFill callback)
 
-- [ ] **Step 1: Ensure AI fill overwrites existing field values**
+- [x] **Step 1: Ensure AI fill overwrites existing field values**
 
 When AI fills a field that already has user-entered content, the AI value should overwrite it. The user was warned about this by clicking the button.
 
@@ -2066,16 +2066,16 @@ setFieldValues((prev) => {
 
 This correctly overwrites any existing values. No code change needed if already correct.
 
-- [ ] **Step 2: Verify that AI-filled tinting only tracks the LATEST fill**
+- [x] **Step 2: Verify that AI-filled tinting only tracks the LATEST fill**
 
 The `setAiFilledFields(new Set(Object.keys(response.filledFields)))` call replaces the entire set with only the fields from the latest AI fill. This is correct — previous fills are no longer tinted. Verify this is the existing behavior.
 
-- [ ] **Step 3: Manual test**
+- [x] **Step 3: Manual test**
 1. Select Ask, fill some fields manually (context, audience)
 2. Type an intent and click AI Fill
 3. Confirm: AI overwrites the manually-filled fields. Only the AI-filled fields from this request show the yellow tint. Previously-manual fields that were overwritten now have the tint.
 
-- [ ] **Step 4: Commit** (if any changes were needed)
+- [x] **Step 4: Commit** (if any changes were needed)
 ```bash
 git add src/App.tsx
 git commit -m "fix(ai): ensure AI fill correctly overwrites existing field values"
@@ -2085,30 +2085,30 @@ git commit -m "fix(ai): ensure AI fill correctly overwrites existing field value
 
 ### Task 18: Run Full Test Suite and Fix Regressions
 
-- [ ] **Step 1: Run all tests**
+- [x] **Step 1: Run all tests**
 ```bash
 npx vitest run
 ```
 
-- [ ] **Step 2: Run TypeScript type check**
+- [x] **Step 2: Run TypeScript type check**
 ```bash
 npx tsc --noEmit
 ```
 
-- [ ] **Step 3: Fix any test failures or type errors**
+- [x] **Step 3: Fix any test failures or type errors**
 
 Address issues one by one. Common issues to watch for:
 - IntentField now requires new props — update any existing tests or parent components that render IntentField
 - EditorArea now requires `aiFilledFields` prop — update any existing tests
 - FieldRenderer now accepts `isAiFilled` — this is optional so should not break existing tests
 
-- [ ] **Step 4: Run tests again to confirm all green**
+- [x] **Step 4: Run tests again to confirm all green**
 ```bash
 npx vitest run
 ```
 Expected: All tests pass.
 
-- [ ] **Step 5: Commit** (if fixes were needed)
+- [x] **Step 5: Commit** (if fixes were needed)
 ```bash
 git add -u
 git commit -m "fix: resolve Phase 5 regressions in existing tests"
@@ -2120,12 +2120,12 @@ git commit -m "fix: resolve Phase 5 regressions in existing tests"
 
 Complete visual walkthrough of all Phase 5 features.
 
-- [ ] **Step 1: Start dev server**
+- [x] **Step 1: Start dev server**
 ```bash
 npm run dev
 ```
 
-- [ ] **Step 2: Verify the complete AI fill flow**
+- [x] **Step 2: Verify the complete AI fill flow**
 1. Open Settings, configure OpenAI with a valid key, verify it succeeds
 2. Close Settings
 3. Select "Ask" task type
@@ -2137,17 +2137,17 @@ npm run dev
 9. Switch to a different task type — confirm tinting clears, checkbox resets
 10. Switch to Anthropic provider — confirm CORS error is shown clearly
 
-- [ ] **Step 3: Verify disabled states**
+- [x] **Step 3: Verify disabled states**
 1. No task type → AI Fill button disabled
 2. Task type but empty intent → button disabled
 3. Remove API key from Settings → lock icon on button, checkbox hidden
 
-- [ ] **Step 4: Verify i18n**
+- [x] **Step 4: Verify i18n**
 1. Switch UI to Chinese
 2. Confirm all AI-related text is in Chinese (button, checkbox, messages)
 3. Switch back to English
 
-- [ ] **Step 5: Verify preview updates**
+- [x] **Step 5: Verify preview updates**
 1. After AI fill, confirm the preview panel shows the compiled output with AI-filled values
 2. Switch output format (MD → JSON → YAML → XML) — all show AI-filled values
 3. Copy to clipboard — confirm history record includes AI-filled data
@@ -2159,7 +2159,7 @@ npm run dev
 **Files:**
 - Modify: `.claude/changelog.md`
 
-- [ ] **Step 1: Add Phase 5 changelog entry**
+- [x] **Step 1: Add Phase 5 changelog entry**
 
 ```markdown
 ## [2026-04-07] - Phase 5: AI-Enhanced Mode
@@ -2179,7 +2179,7 @@ npm run dev
 - Added i18n translations for all AI UI text (English + Chinese)
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 ```bash
 git add .claude/changelog.md
 git commit -m "docs: update changelog with Phase 5 AI-Enhanced Mode changes"

@@ -1,43 +1,56 @@
-import type { AiProvider, AiFillRequest, AiFillResponse, VerifyResult } from '@/ai/types';
+import type { AiProvider, AiFillRequest, AiFillResponse, VerifyResult, ModelOption } from '@/ai/types';
 import { buildSystemPrompt, buildUserMessage } from '@/ai/prompt-builder';
 
-const ANTHROPIC_MESSAGES_URL = 'https://api.anthropic.com/v1/messages';
-const MODEL = 'claude-sonnet-4-20250514';
+const DEFAULT_ENDPOINT = 'https://api.anthropic.com';
+const DEFAULT_MODEL = 'claude-sonnet-4-20250514';
 const ANTHROPIC_VERSION = '2023-06-01';
 
-/**
- * CORS LIMITATION:
- * Anthropic's API does not include CORS headers for direct browser requests.
- * In a browser SPA, fetch() to api.anthropic.com will be blocked by the browser's
- * same-origin policy. This provider handles the resulting TypeError gracefully and
- * provides a clear error message guiding the user to use OpenAI or set up a CORS proxy.
- */
+/** Strip trailing slashes from endpoint URL */
+function normalizeEndpoint(endpoint?: string): string {
+  if (!endpoint) return DEFAULT_ENDPOINT;
+  return endpoint.replace(/\/+$/, '');
+}
+
+/** Common Anthropic headers including the browser CORS opt-in */
+function anthropicHeaders(apiKey: string): Record<string, string> {
+  return {
+    'x-api-key': apiKey,
+    'anthropic-version': ANTHROPIC_VERSION,
+    'content-type': 'application/json',
+    'anthropic-dangerous-direct-browser-access': 'true',
+  };
+}
+
+const FALLBACK_MODELS: ModelOption[] = [
+  { id: 'claude-sonnet-4-20250514', name: 'Claude Sonnet 4' },
+  { id: 'claude-haiku-4-5-20251001', name: 'Claude Haiku 4.5' },
+];
+
 export class AnthropicProvider implements AiProvider {
   name = 'Anthropic';
 
   async fillFields(request: AiFillRequest): Promise<AiFillResponse> {
     const { apiKey, intent, taskType, currentFields, allOptionalFields, allowAddFields } = request;
+    const endpoint = normalizeEndpoint(request.endpoint);
+    const model = request.model || DEFAULT_MODEL;
 
-    const systemPrompt = buildSystemPrompt();
+    const systemPrompt = buildSystemPrompt(request.language);
     const userMessage = buildUserMessage({
       intent,
       taskType,
       currentFields,
       allOptionalFields,
       allowAddFields,
+      language: request.language,
     });
 
     let response: Response;
     try {
-      response = await fetch(ANTHROPIC_MESSAGES_URL, {
+      response = await fetch(`${endpoint}/v1/messages`, {
         method: 'POST',
-        headers: {
-          'x-api-key': apiKey,
-          'anthropic-version': ANTHROPIC_VERSION,
-          'content-type': 'application/json',
-        },
+        headers: anthropicHeaders(apiKey),
         body: JSON.stringify({
-          model: MODEL,
+          model,
           max_tokens: 2048,
           system: systemPrompt,
           messages: [
@@ -46,10 +59,7 @@ export class AnthropicProvider implements AiProvider {
         }),
       });
     } catch {
-      throw new Error(
-        'CORS error: Anthropic API does not support direct browser calls. ' +
-        'Please use OpenAI as your AI provider, or configure a CORS proxy in your environment.'
-      );
+      throw new Error('Network error: could not reach Anthropic. Check your internet connection.');
     }
 
     if (response.status === 401) {
@@ -87,17 +97,14 @@ export class AnthropicProvider implements AiProvider {
     };
   }
 
-  async verifyKey(apiKey: string): Promise<VerifyResult> {
+  async verifyKey(apiKey: string, endpoint?: string): Promise<VerifyResult> {
+    const base = normalizeEndpoint(endpoint);
     try {
-      const response = await fetch(ANTHROPIC_MESSAGES_URL, {
+      const response = await fetch(`${base}/v1/messages`, {
         method: 'POST',
-        headers: {
-          'x-api-key': apiKey,
-          'anthropic-version': ANTHROPIC_VERSION,
-          'content-type': 'application/json',
-        },
+        headers: anthropicHeaders(apiKey),
         body: JSON.stringify({
-          model: MODEL,
+          model: DEFAULT_MODEL,
           max_tokens: 16,
           messages: [
             { role: 'user', content: 'Reply with "ok".' },
@@ -115,12 +122,33 @@ export class AnthropicProvider implements AiProvider {
 
       return { valid: true, model: 'Claude Sonnet' };
     } catch {
-      return {
-        valid: false,
-        error:
-          'CORS error: Anthropic API does not support direct browser calls. ' +
-          'Use OpenAI or configure a CORS proxy.',
-      };
+      return { valid: false, error: 'Network error. Check your internet connection.' };
+    }
+  }
+
+  async listModels(apiKey: string, endpoint?: string): Promise<ModelOption[]> {
+    const base = normalizeEndpoint(endpoint);
+    try {
+      const response = await fetch(`${base}/v1/models`, {
+        method: 'GET',
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': ANTHROPIC_VERSION,
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+      });
+
+      if (!response.ok) return FALLBACK_MODELS;
+
+      const data = await response.json();
+      return (data.data ?? [])
+        .map((m: { id: string; display_name?: string }) => ({
+          id: m.id,
+          name: m.display_name || m.id,
+        }))
+        .sort((a: ModelOption, b: ModelOption) => a.name.localeCompare(b.name));
+    } catch {
+      return FALLBACK_MODELS;
     }
   }
 }

@@ -12,7 +12,10 @@ interface UseAiFillParams {
   allOptionalFields: FieldDefinition[];
   allowAddFields: boolean;
   providerName: AiProviderName | null;
+  language: string;
   getApiKey: () => string | null;
+  getEndpoint: () => string | null;
+  getModel: () => string | null;
 }
 
 interface UseAiFillReturn {
@@ -25,7 +28,7 @@ interface UseAiFillReturn {
 }
 
 export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
-  const { taskType, intent, currentFields, allOptionalFields, allowAddFields, providerName, getApiKey } = params;
+  const { taskType, intent, currentFields, allOptionalFields, allowAddFields, providerName, language, getApiKey, getEndpoint, getModel } = params;
 
   const [status, setStatus] = useState<AiFillStatus>('idle');
   const [filledCount, setFilledCount] = useState(0);
@@ -66,6 +69,8 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
 
     try {
       const provider = createProvider(providerName);
+      const endpoint = getEndpoint() || undefined;
+      const model = getModel() || undefined;
       const response = await aiFill(provider, {
         intent,
         taskType,
@@ -73,6 +78,9 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
         allOptionalFields,
         allowAddFields,
         apiKey,
+        endpoint,
+        model,
+        language,
       });
 
       const count = Object.keys(response.filledFields).length;
@@ -92,7 +100,7 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
       setStatus('error');
       return null;
     }
-  }, [taskType, providerName, getApiKey, intent, currentFields, allOptionalFields, allowAddFields]);
+  }, [taskType, providerName, language, getApiKey, getEndpoint, getModel, intent, currentFields, allOptionalFields, allowAddFields]);
 
   return { status, filledCount, errorMessage, triggerFill, reset, isDisabled };
 }

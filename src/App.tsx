@@ -112,6 +112,18 @@ function App() {
     return null;
   }, [providerName, preferences.apiKey_openai, preferences.apiKey_anthropic]);
 
+  const getEndpoint = useCallback((): string | null => {
+    if (providerName === 'openai') return preferences.apiEndpoint_openai || null;
+    if (providerName === 'anthropic') return preferences.apiEndpoint_anthropic || null;
+    return null;
+  }, [providerName, preferences.apiEndpoint_openai, preferences.apiEndpoint_anthropic]);
+
+  const getModel = useCallback((): string | null => {
+    if (providerName === 'openai') return preferences.model_openai || null;
+    if (providerName === 'anthropic') return preferences.model_anthropic || null;
+    return null;
+  }, [providerName, preferences.model_openai, preferences.model_anthropic]);
+
   // Derive fields for AI: current fields (excluding intent), all optional fields not yet added
   const currentFieldsForAi = useMemo(
     () => displayOrderFields.filter((f) => f.key !== 'intent'),
@@ -138,7 +150,10 @@ function App() {
     allOptionalFields: allOptionalFieldsForAi,
     allowAddFields,
     providerName,
+    language: outputLanguage,
     getApiKey,
+    getEndpoint,
+    getModel,
   });
 
   // Handle AI fill response: update field values, track filled fields, add optional fields

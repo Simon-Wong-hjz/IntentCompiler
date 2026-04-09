@@ -16,21 +16,37 @@ const sampleOptionalFields: FieldDefinition[] = [
 
 describe('Prompt Builder', () => {
   describe('buildSystemPrompt', () => {
-    it('contains instructions for returning JSON', () => {
+    it('defaults to Chinese prompt', () => {
       const prompt = buildSystemPrompt();
       expect(prompt).toContain('JSON');
       expect(prompt).toContain('filledFields');
       expect(prompt).toContain('addedFields');
+      expect(prompt).toContain('中文');
     });
 
-    it('instructs AI about field input types', () => {
-      const prompt = buildSystemPrompt();
-      expect(prompt).toContain('list');
+    it('returns Chinese prompt for zh language', () => {
+      const prompt = buildSystemPrompt('zh');
+      expect(prompt).toContain('意图编译器');
+      expect(prompt).toContain('字符串数组');
+      expect(prompt).toContain('布尔值');
+    });
+
+    it('returns English prompt for en language', () => {
+      const prompt = buildSystemPrompt('en');
+      expect(prompt).toContain('Intent Compiler');
       expect(prompt).toContain('array of strings');
-      expect(prompt).toContain('select');
-      expect(prompt).toContain('toggle');
       expect(prompt).toContain('boolean');
-      expect(prompt).toContain('number');
+      expect(prompt).toContain('English');
+    });
+
+    it('instructs AI about field input types in both languages', () => {
+      for (const lang of ['zh', 'en'] as const) {
+        const prompt = buildSystemPrompt(lang);
+        expect(prompt).toContain('select');
+        expect(prompt).toContain('toggle');
+        expect(prompt).toContain('number');
+        expect(prompt).toContain('key-value');
+      }
     });
   });
 
@@ -45,6 +61,31 @@ describe('Prompt Builder', () => {
       });
       expect(msg).toContain('How do React hooks work?');
       expect(msg).toContain('ask');
+    });
+
+    it('uses Chinese labels by default', () => {
+      const msg = buildUserMessage({
+        intent: 'Test',
+        taskType: 'ask',
+        currentFields: sampleFields,
+        allOptionalFields: [],
+        allowAddFields: false,
+      });
+      expect(msg).toContain('意图');
+      expect(msg).toContain('任务类型');
+    });
+
+    it('uses English labels when language is en', () => {
+      const msg = buildUserMessage({
+        intent: 'Test',
+        taskType: 'ask',
+        currentFields: sampleFields,
+        allOptionalFields: [],
+        allowAddFields: false,
+        language: 'en',
+      });
+      expect(msg).toContain('INTENT');
+      expect(msg).toContain('TASK TYPE');
     });
 
     it('lists current fields with their input types and options', () => {
@@ -83,7 +124,6 @@ describe('Prompt Builder', () => {
         allowAddFields: false,
       });
       expect(msg).not.toContain('knowledge_level');
-      expect(msg).not.toContain('OPTIONAL FIELDS');
     });
   });
 });

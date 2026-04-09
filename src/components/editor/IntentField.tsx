@@ -60,19 +60,38 @@ export function IntentField({
 
   return (
     <div className="flex flex-col gap-1">
-      {/* Label row: field label left, AI Fill button right */}
+      {/* Label row: field label left, [checkbox + AI Fill] right */}
       <div className="flex items-start justify-between gap-4">
         <FieldLabel fieldKey="intent" inputType="textarea" />
-        <AiFillButton
-          status={aiFillStatus}
-          disabled={aiFillDisabled}
-          hasApiKey={hasApiKey}
-          filledCount={filledCount}
-          errorMessage={errorMessage}
-          onFill={onAiFill}
-          onDismissError={onDismissError}
-          onOpenSettings={onOpenSettings}
-        />
+        <div className="flex items-center gap-3">
+          {hasApiKey && (
+            <label className="flex items-center gap-1.5 text-xs text-ink-secondary cursor-pointer whitespace-nowrap">
+              <input
+                type="checkbox"
+                checked={allowAddFields}
+                onChange={(e) => onAllowAddFieldsChange(e.target.checked)}
+                className="w-3.5 h-3.5 rounded border-border-default text-accent-primary focus:ring-accent-primary"
+              />
+              <span>{t('ai.allowAddFields')}</span>
+              <span
+                className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-bg-muted text-ink-muted text-[9px] cursor-help"
+                title={t('ai.allowAddFieldsHelp')}
+              >
+                ?
+              </span>
+            </label>
+          )}
+          <AiFillButton
+            status={aiFillStatus}
+            disabled={aiFillDisabled}
+            hasApiKey={hasApiKey}
+            filledCount={filledCount}
+            errorMessage={errorMessage}
+            onFill={onAiFill}
+            onDismissError={onDismissError}
+            onOpenSettings={onOpenSettings}
+          />
+        </div>
       </div>
       <textarea
         ref={textareaRef}
@@ -96,24 +115,6 @@ export function IntentField({
           boxShadow: glowStyle,
         }}
       />
-      {/* Allow AI to add fields checkbox */}
-      {hasApiKey && (
-        <label className="flex items-center gap-2 mt-2 text-sm text-ink-secondary cursor-pointer">
-          <input
-            type="checkbox"
-            checked={allowAddFields}
-            onChange={(e) => onAllowAddFieldsChange(e.target.checked)}
-            className="w-4 h-4 rounded border-border-default text-accent-primary focus:ring-accent-primary"
-          />
-          <span>{t('ai.allowAddFields')}</span>
-          <span
-            className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-bg-muted text-ink-muted text-[10px] cursor-help"
-            title={t('ai.allowAddFieldsHelp')}
-          >
-            ?
-          </span>
-        </label>
-      )}
     </div>
   );
 }

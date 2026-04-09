@@ -27,7 +27,7 @@
     },
     "execute": {
       "verb": "执行",
-      "mentalModel": "帮我做一个多步骤任务"
+      "mentalModel": "用于启动 Agent 会话"
     }
   },
   "fields": {
@@ -205,6 +205,9 @@
     "apiEndpoint": "API 端点",
     "apiEndpointHint": "可填写第三方兼容端点地址",
     "model": "模型",
+    "selectModel": "请选择模型",
+    "loadingModels": "加载模型列表...",
+    "verifyKeyFirst": "请先验证 API 密钥",
     "apiKey": "API 密钥",
     "show": "显示",
     "hide": "隐藏",

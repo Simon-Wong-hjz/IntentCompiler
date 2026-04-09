@@ -12,7 +12,7 @@ Intent Compiler helps you "compile" your intent into well-structured prompts. Se
 - **4 Output Formats** — Compiled prompts in Markdown, JSON, YAML, or XML
 - **Privacy-First** — Pure client-side SPA; no backend server required
 - **Bilingual** — Full English and Chinese support
-- **AI-Enhanced Mode** — Optional field filling via OpenAI or Anthropic APIs *(planned — Phase 5)*
+- **AI-Enhanced Mode** — Optional field filling via OpenAI APIs
 - **Local Persistence** — Settings and compilation history stored in IndexedDB
 
 ## Tech Stack

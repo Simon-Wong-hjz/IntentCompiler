@@ -27,7 +27,7 @@
     },
     "execute": {
       "verb": "Execute",
-      "mentalModel": "Do a multi-step task for me"
+      "mentalModel": "Start an Agent session"
     }
   },
   "fields": {
@@ -205,6 +205,9 @@
     "apiEndpoint": "API Endpoint",
     "apiEndpointHint": "You may enter a third-party compatible endpoint URL",
     "model": "Model",
+    "selectModel": "Select a model",
+    "loadingModels": "Loading models...",
+    "verifyKeyFirst": "Verify API key first",
     "apiKey": "API Key",
     "show": "Show",
     "hide": "Hide",
