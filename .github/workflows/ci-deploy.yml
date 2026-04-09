@@ -1,0 +1,56 @@
+name: CI & Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run test
+
+      - run: npm run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: success()
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Deploy to ECS via rsync
+        env:
+          ECS_HOST: ${{ secrets.ECS_HOST }}
+          ECS_SSH_KEY: ${{ secrets.ECS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$ECS_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$ECS_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+            dist/ root@"$ECS_HOST":/var/www/html/intent-compiler/
