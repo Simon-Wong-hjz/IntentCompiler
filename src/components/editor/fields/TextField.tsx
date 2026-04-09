@@ -16,7 +16,9 @@ export function TextField({
   placeholder,
 }: TextFieldProps) {
   const { t } = useTranslation();
-  const resolvedPlaceholder = placeholder ?? t('hints.text');
+  // Field-specific placeholder takes priority, then prop, then generic hint
+  const fieldPlaceholder = t(`fieldPlaceholders.${field.key}`, { defaultValue: '' });
+  const resolvedPlaceholder = placeholder ?? (fieldPlaceholder || t('hints.text'));
   return (
     <div className="flex flex-col gap-1">
       <FieldLabel fieldKey={field.key} inputType={field.inputType} />

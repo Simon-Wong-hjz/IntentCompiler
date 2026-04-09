@@ -44,20 +44,31 @@ export function AiFillButton({
   return (
     <div className="flex flex-col items-end">
       {/* Button */}
-      <button
-        type="button"
-        onClick={onFill}
-        disabled={disabled || isLoading}
-        className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold transition-colors ${
-          isLoading
-            ? 'bg-accent-primary text-ink-primary cursor-wait'
-            : disabled
-              ? 'bg-ink-primary text-accent-primary opacity-40 cursor-not-allowed'
-              : 'bg-ink-primary text-accent-primary hover:opacity-90 cursor-pointer'
-        }`}
-      >
-        {isLoading ? `\u27F3 ${t('ai.fillButtonLoading')}` : `\u2728 ${t('ai.fillButton')}`}
-      </button>
+      <div className="relative group">
+        <button
+          type="button"
+          onClick={onFill}
+          disabled={disabled || isLoading}
+          className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold transition-colors ${
+            isLoading
+              ? 'bg-accent-primary text-ink-primary cursor-wait'
+              : disabled
+                ? 'bg-ink-primary text-accent-primary opacity-40 cursor-not-allowed'
+                : 'bg-ink-primary text-accent-primary hover:opacity-90 cursor-pointer'
+          }`}
+        >
+          {isLoading ? `\u27F3 ${t('ai.fillButtonLoading')}` : `\u2728 ${t('ai.fillButton')}`}
+        </button>
+        {/* Tooltip when disabled (intent empty or no task selected) */}
+        {disabled && !isLoading && (
+          <div
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-1 rounded-md bg-ink-primary px-2 py-1 text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none z-10"
+            role="tooltip"
+          >
+            {t('ai.enterIntentFirst')}
+          </div>
+        )}
+      </div>
 
       {/* Loading progress bar */}
       {isLoading && (

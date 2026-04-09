@@ -124,6 +124,20 @@
     "error_handling": "Strategy when errors occur",
     "success_criteria": "How to determine task completion"
   },
+  "fieldPlaceholders": {
+    "context": "Background information...",
+    "requirements": "Conditions that must be met...",
+    "constraints": "Things to avoid...",
+    "goal": "Desired outcome...",
+    "role": "Role the AI should assume...",
+    "audience": "Target audience...",
+    "source_content": "Paste content to transform...",
+    "subject": "What to analyze...",
+    "problem": "Describe the problem...",
+    "current_state": "Current situation...",
+    "plan": "Steps or workflow (leave empty for AI to plan)...",
+    "scope": "What to cover..."
+  },
   "hints": {
     "textarea": "Enter text freely",
     "text": "Enter text freely",
@@ -236,7 +250,8 @@
     "allowAddFields": "Allow AI to add fields",
     "allowAddFieldsHelp": "When checked, AI can discover and add relevant optional fields beyond what's currently in the editor.",
     "noApiKey": "No API key configured. Open Settings to add your API key.",
-    "configureProvider": "Configure AI provider in Settings"
+    "configureProvider": "Configure AI provider in Settings",
+    "enterIntentFirst": "Enter your intent first"
   },
   "common": {
     "en": "EN",

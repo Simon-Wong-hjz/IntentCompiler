@@ -19,7 +19,9 @@ export function TextareaField({
   minHeight = 36,
 }: TextareaFieldProps) {
   const { t } = useTranslation();
-  const resolvedPlaceholder = placeholder ?? t('hints.textarea');
+  // Field-specific placeholder takes priority, then prop, then generic hint
+  const fieldPlaceholder = t(`fieldPlaceholders.${field.key}`, { defaultValue: '' });
+  const resolvedPlaceholder = placeholder ?? (fieldPlaceholder || t('hints.textarea'));
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const autoExpand = useCallback(() => {

@@ -124,6 +124,20 @@
     "error_handling": "发生错误时的处理策略",
     "success_criteria": "如何判断任务完成"
   },
+  "fieldPlaceholders": {
+    "context": "背景信息...",
+    "requirements": "必须满足的条件...",
+    "constraints": "需要避免的内容...",
+    "goal": "期望达成的结果...",
+    "role": "AI 应扮演的角色...",
+    "audience": "目标受众...",
+    "source_content": "粘贴要转换的内容...",
+    "subject": "要分析的内容...",
+    "problem": "描述问题...",
+    "current_state": "当前状况...",
+    "plan": "步骤或工作流（留空让 AI 规划）...",
+    "scope": "覆盖范围..."
+  },
   "hints": {
     "textarea": "自由输入文本",
     "text": "自由输入文本",
@@ -235,7 +249,8 @@
     "allowAddFields": "允许 AI 添加字段",
     "allowAddFieldsHelp": "勾选后，AI 可以发现并添加编辑器中尚未显示的相关可选字段。",
     "noApiKey": "未配置 API 密钥。请在设置中添加。",
-    "configureProvider": "在设置中配置 AI 提供者"
+    "configureProvider": "在设置中配置 AI 提供者",
+    "enterIntentFirst": "请先输入意图"
   },
   "common": {
     "en": "EN",
