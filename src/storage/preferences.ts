@@ -11,7 +11,9 @@ export type PreferenceKey =
   | 'apiEndpoint_anthropic'
   | 'model_openai'
   | 'model_anthropic'
-  | 'uiLanguage';
+  | 'uiLanguage'
+  | 'lastSeenAnnouncementVersion'
+  | 'tutorialCompleted';
 
 /**
  * Get a single preference value by key.

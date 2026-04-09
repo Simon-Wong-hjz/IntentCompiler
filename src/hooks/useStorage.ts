@@ -26,6 +26,8 @@ export interface PreferencesState {
   model_openai: string;
   model_anthropic: string;
   uiLanguage: string;
+  lastSeenAnnouncementVersion: string;
+  tutorialCompleted: string;
 }
 
 const DEFAULT_PREFERENCES: PreferencesState = {
@@ -39,6 +41,8 @@ const DEFAULT_PREFERENCES: PreferencesState = {
   model_openai: '',
   model_anthropic: '',
   uiLanguage: 'zh',
+  lastSeenAnnouncementVersion: '',
+  tutorialCompleted: '',
 };
 
 export function usePreferences() {
