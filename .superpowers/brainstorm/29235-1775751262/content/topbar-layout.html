@@ -1,0 +1,60 @@
+<h2>TopBar 按钮布局</h2>
+<p class="subtitle">公告和教程入口应该放在哪里？当前 TopBar：左侧标题，右侧为「历史」「设置」和语言切换</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>右侧追加</h3>
+      <p>在现有按钮左边追加「公告」「教程」</p>
+      <div style="margin-top:12px; background:#fffdf5; border:1.5px solid #e8e0d0; border-radius:8px; padding:10px 16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-weight:700; color:#1a1a1a;">意图编译器</span>
+        <div style="display:flex; gap:16px; align-items:center; font-size:13px;">
+          <span style="color:#f5c518; font-weight:600;">📢 公告</span>
+          <span style="color:#f5c518; font-weight:600;">📖 教程</span>
+          <span style="color:#6b6560;">历史</span>
+          <span style="color:#6b6560;">设置</span>
+          <span style="background:#f0ebe4; border-radius:12px; padding:2px 4px; font-size:12px;"><span style="padding:2px 8px; background:#1a1a1a; color:white; border-radius:10px;">中文</span><span style="padding:2px 8px; color:#6b6560;">EN</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>左侧标题旁</h3>
+      <p>紧跟标题右边，与功能按钮分开</p>
+      <div style="margin-top:12px; background:#fffdf5; border:1.5px solid #e8e0d0; border-radius:8px; padding:10px 16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span style="font-weight:700; color:#1a1a1a;">意图编译器</span>
+          <span style="color:#f5c518; font-weight:600; font-size:13px;">📢 公告</span>
+          <span style="color:#f5c518; font-weight:600; font-size:13px;">📖 教程</span>
+        </div>
+        <div style="display:flex; gap:16px; align-items:center; font-size:13px;">
+          <span style="color:#6b6560;">历史</span>
+          <span style="color:#6b6560;">设置</span>
+          <span style="background:#f0ebe4; border-radius:12px; padding:2px 4px; font-size:12px;"><span style="padding:2px 8px; background:#1a1a1a; color:white; border-radius:10px;">中文</span><span style="padding:2px 8px; color:#6b6560;">EN</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>图标式（不带文字）</h3>
+      <p>用小图标代替文字按钮，节省空间</p>
+      <div style="margin-top:12px; background:#fffdf5; border:1.5px solid #e8e0d0; border-radius:8px; padding:10px 16px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-weight:700; color:#1a1a1a;">意图编译器</span>
+        <div style="display:flex; gap:16px; align-items:center; font-size:13px;">
+          <span style="font-size:16px; cursor:pointer;" title="公告">📢</span>
+          <span style="font-size:16px; cursor:pointer;" title="教程">📖</span>
+          <span style="color:#6b6560;">历史</span>
+          <span style="color:#6b6560;">设置</span>
+          <span style="background:#f0ebe4; border-radius:12px; padding:2px 4px; font-size:12px;"><span style="padding:2px 8px; background:#1a1a1a; color:white; border-radius:10px;">中文</span><span style="padding:2px 8px; color:#6b6560;">EN</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

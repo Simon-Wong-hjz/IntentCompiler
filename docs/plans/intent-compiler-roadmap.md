@@ -108,16 +108,16 @@ Add the Output Language toggle (EN|中文) in the preview header, independent of
 
 ### Acceptance criteria
 
-- [ ] JSON formatter produces valid, parseable JSON with fields ordered by importance
-- [ ] YAML formatter produces valid YAML (via js-yaml) with fields ordered by importance
-- [ ] XML formatter produces valid XML (via fast-xml-parser) with fields ordered by importance
-- [ ] Format selector tabs in preview header switch output format; preview updates immediately
-- [ ] UI language toggle switches all visible UI text between English and Chinese
-- [ ] Task type cards display verb + mental model in the current UI language
-- [ ] Field names, operation hints, placeholders, and button labels all follow UI language
-- [ ] Output language toggle in preview header is independent of UI language
-- [ ] Compiled output uses the output language for field labels and section headers
-- [ ] UI in English + output in Chinese works correctly (and vice versa)
+- [x] JSON formatter produces valid, parseable JSON with fields ordered by importance
+- [x] YAML formatter produces valid YAML (via js-yaml) with fields ordered by importance
+- [x] XML formatter produces valid XML (via fast-xml-parser) with fields ordered by importance
+- [x] Format selector tabs in preview header switch output format; preview updates immediately
+- [x] UI language toggle switches all visible UI text between English and Chinese
+- [x] Task type cards display verb + mental model in the current UI language
+- [x] Field names, operation hints, placeholders, and button labels all follow UI language
+- [x] Output language toggle in preview header is independent of UI language
+- [x] Compiled output uses the output language for field labels and section headers
+- [x] UI in English + output in Chinese works correctly (and vice versa)
 
 ---
 
@@ -139,19 +139,19 @@ Wire the Settings defaults: on page load, the output language toggle and format 
 
 ### Acceptance criteria
 
-- [ ] Dexie.js database initializes with preferences and history stores on first visit
-- [ ] Settings modal opens from top bar, displays Output Defaults and AI Configuration sections
-- [ ] Output Defaults (language, format) persist across page reloads
-- [ ] Editor initializes output language and format from stored defaults
-- [ ] API key input supports mask/show toggle, stores key in IndexedDB
-- [ ] Provider selector (OpenAI / Anthropic) stores each provider's key independently
-- [ ] API key verification triggers on blur/Enter with success/failure status display
-- [ ] History record is auto-created on each "Copy to Clipboard" action
-- [ ] History modal shows records sorted by newest first with correct task type badge, truncated intent, timestamp, and format
-- [ ] Loading a history record restores editor state (task type, all fields, output language, format)
-- [ ] Loading prompts confirmation when editor has non-empty fields
-- [ ] Individual delete and "Clear All" work with confirmation
-- [ ] Settings modal auto-saves (no manual save button)
+- [x] Dexie.js database initializes with preferences and history stores on first visit
+- [x] Settings modal opens from top bar, displays Output Defaults and AI Configuration sections
+- [x] Output Defaults (language, format) persist across page reloads
+- [x] Editor initializes output language and format from stored defaults
+- [x] API key input supports mask/show toggle, stores key in IndexedDB
+- [x] Provider selector (OpenAI / Anthropic) stores each provider's key independently
+- [x] API key verification triggers on blur/Enter with success/failure status display
+- [x] History record is auto-created on each "Copy to Clipboard" action
+- [x] History modal shows records sorted by newest first with correct task type badge, truncated intent, timestamp, and format
+- [x] Loading a history record restores editor state (task type, all fields, output language, format)
+- [x] Loading prompts confirmation when editor has non-empty fields
+- [x] Individual delete and "Clear All" work with confirmation
+- [x] Settings modal auto-saves (no manual save button)
 
 ---
 
@@ -175,19 +175,19 @@ Handle error states: network errors, invalid API key, rate limiting. Display act
 
 ### Acceptance criteria
 
-- [ ] AI Fill button appears next to Intent with correct idle/disabled/loading/success/error states
-- [ ] Button is disabled (40% opacity) when prerequisites are not met (no task type, empty intent, or no API key)
-- [ ] Clicking AI Fill with no API key configured shows lock icon and opens Settings modal to AI Configuration
-- [ ] AI Fill sends intent + task type + field list to the configured provider
-- [ ] Filled fields update in the editor and the preview updates in real-time
-- [ ] AI-filled fields show `bg-accent-light` background tint
-- [ ] "Allow AI to add fields" checkbox is hidden when no API key is configured
-- [ ] With checkbox unchecked: AI fills only currently displayed fields
-- [ ] With checkbox checked: AI can add optional fields not yet in the editor
-- [ ] Success state shows "Filled N fields" message that fades after 3 seconds
-- [ ] Error states show actionable messages: "Network error", "Invalid API key", "Rate limited"
-- [ ] Users can edit AI-filled values before compiling
-- [ ] Provider switching in Settings correctly routes AI requests to the selected provider
+- [x] AI Fill button appears next to Intent with correct idle/disabled/loading/success/error states
+- [x] Button is disabled (40% opacity) when prerequisites are not met (no task type, empty intent, or no API key)
+- [x] Clicking AI Fill with no API key configured shows lock icon and opens Settings modal to AI Configuration
+- [x] AI Fill sends intent + task type + field list to the configured provider
+- [x] Filled fields update in the editor and the preview updates in real-time
+- [x] AI-filled fields show `bg-accent-light` background tint
+- [x] "Allow AI to add fields" checkbox is hidden when no API key is configured
+- [x] With checkbox unchecked: AI fills only currently displayed fields
+- [x] With checkbox checked: AI can add optional fields not yet in the editor
+- [x] Success state shows "Filled N fields" message that fades after 3 seconds
+- [x] Error states show actionable messages: "Network error", "Invalid API key", "Rate limited"
+- [x] Users can edit AI-filled values before compiling
+- [x] Provider switching in Settings correctly routes AI requests to the selected provider
 
 ---
 
@@ -213,16 +213,16 @@ Polish visual details: verify all spacing, border radii, font weights, and color
 
 ### Acceptance criteria
 
-- [ ] Every field's [?] icon expands an inline help card with "What is this?", "Suggestions" (where applicable), and "Example" (where applicable)
-- [ ] Help card styling matches design spec: `bg-accent-warm`, `accent-primary` border, correct padding
-- [ ] ? icon inverts to active styling when expanded; clicking again collapses
-- [ ] Help content follows UI language (switches on language toggle)
-- [ ] "No task type selected" state shows centered prompt in both editor and preview
-- [ ] "Task selected, no fields filled" state shows template skeleton in preview
-- [ ] "Intent empty" state disables AI Fill with tooltip on hover
-- [ ] "No API key" state shows lock icon on AI Fill, hides "Allow AI to add fields"
-- [ ] "History empty" state shows centered message
-- [ ] All spacing, color, typography, and border tokens match the design spec
-- [ ] Task selector wraps to 3x2 grid below 1280px viewport width
-- [ ] Layout remains usable down to 1024px viewport width
-- [ ] Copy button is pinned at preview panel bottom (never scrolls away)
+- [x] Every field's [?] icon expands an inline help card with "What is this?", "Suggestions" (where applicable), and "Example" (where applicable)
+- [x] Help card styling matches design spec: `bg-accent-warm`, `accent-primary` border, correct padding
+- [x] ? icon inverts to active styling when expanded; clicking again collapses
+- [x] Help content follows UI language (switches on language toggle)
+- [x] "No task type selected" state shows centered prompt in both editor and preview
+- [x] "Task selected, no fields filled" state shows template skeleton in preview
+- [x] "Intent empty" state disables AI Fill with tooltip on hover
+- [x] "No API key" state shows lock icon on AI Fill, hides "Allow AI to add fields"
+- [x] "History empty" state shows centered message
+- [x] All spacing, color, typography, and border tokens match the design spec
+- [x] Task selector wraps to 3x2 grid below 1280px viewport width
+- [x] Layout remains usable down to 1024px viewport width
+- [x] Copy button is pinned at preview panel bottom (never scrolls away)
