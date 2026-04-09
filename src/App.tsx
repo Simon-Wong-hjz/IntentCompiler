@@ -5,11 +5,13 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { getTemplate } from '@/registry/template-registry';
 import { useCompiler } from '@/hooks/useCompiler';
 import { usePreferences, useHistory } from '@/hooks/useStorage';
+import { useAiFill } from '@/hooks/useAiFill';
 import SettingsModal from '@/components/modals/SettingsModal';
 import HistoryModal from '@/components/modals/HistoryModal';
 import type { HistoryRecord } from '@/storage/db';
 import type { TaskType, FieldDefinition } from '@/registry/types';
 import type { OutputFormat, Language } from '@/compiler/types';
+import type { AiProviderName } from '@/ai/types';
 
 function App() {
   const [selectedType, setSelectedType] = useState<TaskType | null>(null);
@@ -18,6 +20,10 @@ function App() {
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('markdown');
   const [outputLanguage, setOutputLanguage] = useState<Language>('zh');
   const { t } = useTranslation();
+
+  // AI state
+  const [aiFilledFields, setAiFilledFields] = useState<Set<string>>(new Set());
+  const [allowAddFields, setAllowAddFields] = useState(false);
 
   // Storage hooks
   const { preferences, updatePreference, loading: prefsLoading } = usePreferences();
@@ -85,6 +91,86 @@ function App() {
   const intentFilled = ((fieldValues['intent'] as string) ?? '').trim().length > 0;
   const canCopy = hasContent && intentFilled;
 
+  // Derive AI provider info from preferences
+  const providerName = (preferences.aiApiType || null) as AiProviderName | null;
+  const hasApiKey = !!(
+    providerName === 'openai'
+      ? preferences.apiKey_openai
+      : providerName === 'anthropic'
+        ? preferences.apiKey_anthropic
+        : ''
+  );
+
+  const getApiKey = useCallback((): string | null => {
+    if (providerName === 'openai') return preferences.apiKey_openai || null;
+    if (providerName === 'anthropic') return preferences.apiKey_anthropic || null;
+    return null;
+  }, [providerName, preferences.apiKey_openai, preferences.apiKey_anthropic]);
+
+  // Derive fields for AI: current fields (excluding intent), all optional fields not yet added
+  const currentFieldsForAi = useMemo(
+    () => displayOrderFields.filter((f) => f.key !== 'intent'),
+    [displayOrderFields],
+  );
+  const allOptionalFieldsForAi = useMemo(() => {
+    const addedKeys = new Set(addedFields.map((f) => f.key));
+    return fields.filter(
+      (f) => f.visibility === 'optional' && !addedKeys.has(f.key),
+    );
+  }, [fields, addedFields]);
+
+  const {
+    status: aiFillStatus,
+    filledCount,
+    errorMessage: aiFillError,
+    triggerFill,
+    reset: resetAiFill,
+    isDisabled: aiFillDisabled,
+  } = useAiFill({
+    taskType: selectedType,
+    intent: (fieldValues['intent'] as string) ?? '',
+    currentFields: currentFieldsForAi,
+    allOptionalFields: allOptionalFieldsForAi,
+    allowAddFields,
+    providerName,
+    getApiKey,
+  });
+
+  // Handle AI fill response: update field values, track filled fields, add optional fields
+  const handleAiFill = useCallback(async () => {
+    const response = await triggerFill();
+    if (!response) return;
+
+    // Update field values with AI-filled data
+    setFieldValues((prev) => {
+      const updated = { ...prev };
+      for (const [key, value] of Object.entries(response.filledFields)) {
+        updated[key] = value;
+      }
+      return updated;
+    });
+
+    // Track which fields were AI-filled (latest fill only)
+    setAiFilledFields(new Set(Object.keys(response.filledFields)));
+
+    // If AI added optional fields, add them to the active fields list
+    if (response.addedFieldKeys && response.addedFieldKeys.length > 0) {
+      setAddedFields((prev) => {
+        const updated = [...prev];
+        const existingKeys = new Set(updated.map((f) => f.key));
+        for (const key of response.addedFieldKeys!) {
+          if (!existingKeys.has(key)) {
+            const fieldDef = fields.find((f) => f.key === key);
+            if (fieldDef) {
+              updated.push(fieldDef);
+            }
+          }
+        }
+        return updated;
+      });
+    }
+  }, [triggerFill, fields]);
+
   const handleSelectType = useCallback(
     (type: TaskType) => {
       if (type === selectedType) return;
@@ -112,8 +198,12 @@ function App() {
       setSelectedType(type);
       setFieldValues(intentValue ? { intent: intentValue } : {});
       setAddedFields([]);
+      // Clear AI state on task switch
+      setAiFilledFields(new Set());
+      setAllowAddFields(false);
+      resetAiFill();
     },
-    [selectedType, fieldValues, t],
+    [selectedType, fieldValues, t, resetAiFill],
   );
 
   const handleFieldChange = useCallback((key: string, value: unknown) => {
@@ -152,7 +242,10 @@ function App() {
     setOutputLanguage(record.outputLanguage as Language);
     setOutputFormat(record.outputFormat as OutputFormat);
     setAddedFields([]);
-  }, []);
+    setAiFilledFields(new Set());
+    setAllowAddFields(false);
+    resetAiFill();
+  }, [resetAiFill]);
 
   // Check if editor has content (for History modal's load confirmation)
   const hasEditorContent = useMemo(() => {
@@ -185,6 +278,16 @@ function App() {
       onOpenHistory={() => { refreshHistory(); setHistoryOpen(true); }}
       onOpenSettings={() => setSettingsOpen(true)}
       onAfterCopy={handleAfterCopy}
+      aiFilledFields={aiFilledFields}
+      aiFillStatus={aiFillStatus}
+      aiFillDisabled={aiFillDisabled}
+      hasApiKey={hasApiKey}
+      filledCount={filledCount}
+      aiFillError={aiFillError}
+      onAiFill={handleAiFill}
+      onDismissError={resetAiFill}
+      allowAddFields={allowAddFields}
+      onAllowAddFieldsChange={setAllowAddFields}
     />
     <SettingsModal
       open={settingsOpen}
