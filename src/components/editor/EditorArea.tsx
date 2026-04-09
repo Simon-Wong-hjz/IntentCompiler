@@ -25,6 +25,7 @@ interface EditorAreaProps {
   filledCount: number;
   aiFillError: string;
   onAiFill: () => void;
+  onCancelAiFill: () => void;
   onDismissError: () => void;
   onOpenSettings?: () => void;
   allowAddFields: boolean;
@@ -46,6 +47,7 @@ export function EditorArea({
   filledCount,
   aiFillError,
   onAiFill,
+  onCancelAiFill,
   onDismissError,
   onOpenSettings,
   allowAddFields,
@@ -118,6 +120,7 @@ export function EditorArea({
           filledCount={filledCount}
           errorMessage={aiFillError}
           onAiFill={onAiFill}
+          onCancelAiFill={onCancelAiFill}
           onDismissError={onDismissError}
           onOpenSettings={onOpenSettings}
           allowAddFields={allowAddFields}

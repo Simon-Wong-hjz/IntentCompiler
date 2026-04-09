@@ -13,7 +13,6 @@ const ALL_FIELD_KEYS = [
   'source_content', 'transform_type', 'preserve',
   'subject', 'analyze_type', 'criteria', 'compared_subjects', 'benchmark',
   'problem', 'current_state', 'idea_count', 'evaluation_criteria',
-  'tradeoff_preference',
   'plan', 'tools_to_use', 'checkpoints', 'error_handling', 'success_criteria',
 ];
 

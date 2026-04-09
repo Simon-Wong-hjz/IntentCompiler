@@ -13,7 +13,7 @@ function normalizeEndpoint(endpoint?: string): string {
 export class OpenAIProvider implements AiProvider {
   name = 'OpenAI';
 
-  async fillFields(request: AiFillRequest): Promise<AiFillResponse> {
+  async fillFields(request: AiFillRequest, signal?: AbortSignal): Promise<AiFillResponse> {
     const { apiKey, intent, taskType, currentFields, allOptionalFields, allowAddFields } = request;
     const endpoint = normalizeEndpoint(request.endpoint);
     const model = request.model || DEFAULT_MODEL;
@@ -45,8 +45,10 @@ export class OpenAIProvider implements AiProvider {
           response_format: { type: 'json_object' },
           temperature: 0.3,
         }),
+        signal,
       });
-    } catch {
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') throw err;
       throw new Error('Network error: could not reach OpenAI. Check your internet connection.');
     }
 

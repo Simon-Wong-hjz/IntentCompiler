@@ -24,9 +24,9 @@ export function HelpCard({ content, isOpen }: HelpCardProps) {
       className="overflow-hidden transition-all duration-200 ease-in-out"
       style={{ maxHeight: isOpen ? `${height}px` : '0px' }}
     >
+      <div ref={contentRef} className="pb-1">
       <div
-        ref={contentRef}
-        className="rounded-lg border-[1.5px] border-accent-primary bg-bg-accent-warm px-3 py-[10px] mb-1"
+        className="rounded-lg border-[1.5px] border-accent-primary bg-bg-accent-warm px-3 py-[10px]"
       >
         {/* What is this? -- always shown */}
         <p className="text-xs text-ink-primary">
@@ -55,6 +55,7 @@ export function HelpCard({ content, isOpen }: HelpCardProps) {
             {content.example[lang]}
           </p>
         )}
+      </div>
       </div>
     </div>
   );

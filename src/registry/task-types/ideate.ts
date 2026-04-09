@@ -19,7 +19,6 @@ export const ideateTemplate: TaskTemplate = {
     // --- Task Optional fields ---
     { key: 'idea_count', inputType: 'number', scope: 'task', visibility: 'optional' },
     { key: 'evaluation_criteria', inputType: 'list', scope: 'task', visibility: 'optional' },
-    { key: 'tradeoff_preference', inputType: 'text', scope: 'task', visibility: 'optional' },
     // --- Universal Optional fields ---
     { key: 'role', inputType: 'text', scope: 'universal', visibility: 'optional' },
     { key: 'audience', inputType: 'text', scope: 'universal', visibility: 'optional' },

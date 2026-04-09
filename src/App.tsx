@@ -141,6 +141,7 @@ function App() {
     filledCount,
     errorMessage: aiFillError,
     triggerFill,
+    cancelFill,
     reset: resetAiFill,
     isDisabled: aiFillDisabled,
   } = useAiFill({
@@ -306,6 +307,7 @@ function App() {
       filledCount={filledCount}
       aiFillError={aiFillError}
       onAiFill={handleAiFill}
+      onCancelAiFill={cancelFill}
       onDismissError={resetAiFill}
       allowAddFields={allowAddFields}
       onAllowAddFieldsChange={setAllowAddFields}

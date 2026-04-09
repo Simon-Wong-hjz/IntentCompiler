@@ -35,7 +35,7 @@ export interface VerifyResult {
 /** Abstract AI provider interface */
 export interface AiProvider {
   name: string;
-  fillFields(request: AiFillRequest): Promise<AiFillResponse>;
+  fillFields(request: AiFillRequest, signal?: AbortSignal): Promise<AiFillResponse>;
   verifyKey(apiKey: string, endpoint?: string): Promise<VerifyResult>;
   listModels(apiKey: string, endpoint?: string): Promise<ModelOption[]>;
 }

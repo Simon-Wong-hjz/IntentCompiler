@@ -15,6 +15,7 @@ interface IntentFieldProps {
   filledCount: number;
   errorMessage: string;
   onAiFill: () => void;
+  onCancelAiFill: () => void;
   onDismissError: () => void;
   onOpenSettings?: () => void;
   allowAddFields: boolean;
@@ -30,6 +31,7 @@ export function IntentField({
   filledCount,
   errorMessage,
   onAiFill,
+  onCancelAiFill,
   onDismissError,
   onOpenSettings,
   allowAddFields,
@@ -73,11 +75,13 @@ export function IntentField({
                 className="w-3.5 h-3.5 rounded border-border-default text-accent-primary focus:ring-accent-primary"
               />
               <span>{t('ai.allowAddFields')}</span>
-              <span
-                className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-bg-muted text-ink-muted text-[9px] cursor-help"
-                title={t('ai.allowAddFieldsHelp')}
-              >
-                ?
+              <span className="relative group/tip">
+                <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-bg-muted text-ink-muted text-[9px] cursor-help">
+                  ?
+                </span>
+                <span className="absolute top-full right-0 mt-1 px-2.5 py-1.5 text-xs text-ink-primary bg-bg-surface border border-border-default rounded-lg shadow-md opacity-0 group-hover/tip:opacity-100 transition-opacity duration-150 pointer-events-none w-52 whitespace-normal z-10">
+                  {t('ai.allowAddFieldsHelp')}
+                </span>
               </span>
             </label>
           )}
@@ -88,6 +92,7 @@ export function IntentField({
             filledCount={filledCount}
             errorMessage={errorMessage}
             onFill={onAiFill}
+            onCancel={onCancelAiFill}
             onDismissError={onDismissError}
             onOpenSettings={onOpenSettings}
           />

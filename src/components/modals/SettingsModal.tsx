@@ -64,7 +64,9 @@ export default function SettingsModal({
   const [verifyResult, setVerifyResult] = useState<VerifyResult | null>(null);
   const [availableModels, setAvailableModels] = useState<ModelOption[]>([]);
   const [modelsLoading, setModelsLoading] = useState(false);
+  const [modelDropdownOpen, setModelDropdownOpen] = useState(false);
   const apiKeyInputRef = useRef<HTMLInputElement>(null);
+  const modelComboRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
   const currentApiType = preferences.aiApiType || 'openai';
@@ -101,6 +103,18 @@ export default function SettingsModal({
     document.addEventListener('keydown', handleEsc);
     return () => document.removeEventListener('keydown', handleEsc);
   }, [open, onClose]);
+
+  // Close model dropdown on outside click
+  useEffect(() => {
+    if (!modelDropdownOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (modelComboRef.current && !modelComboRef.current.contains(e.target as Node)) {
+        setModelDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [modelDropdownOpen]);
 
   // Real API key verification + model fetching
   const verifyApiKey = useCallback(async (key: string, provider: string, endpoint: string) => {
@@ -165,18 +179,6 @@ export default function SettingsModal({
     onUpdatePreference(key, value);
   };
 
-  const handleApiKeyBlur = () => {
-    if (currentApiKey && currentApiKey.trim() !== '') {
-      verifyApiKey(currentApiKey, currentApiType, currentEndpoint);
-    }
-  };
-
-  const handleApiKeyKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      verifyApiKey(currentApiKey, currentApiType, currentEndpoint);
-    }
-  };
-
   const inputClassName =
     'w-full px-3 py-2 text-sm rounded-lg border border-border-default bg-bg-surface outline-none transition-colors focus:border-accent-primary';
 
@@ -210,20 +212,22 @@ export default function SettingsModal({
         </div>
 
         <div className="px-6 pb-6 space-y-6">
-          {/* ── Output Defaults Section ── */}
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink-muted mb-4">
-              {t('settings.outputDefaults', '输出默认值')}
-            </h3>
+          {/* ── Output Configuration Divider ── */}
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-border-default" />
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">
+              {t('settings.outputConfiguration', '输出配置')}
+            </span>
+            <div className="flex-1 h-px bg-border-default" />
+          </div>
 
+          {/* ── Output Configuration Section ── */}
+          <div>
             {/* Default Output Language */}
             <div className="mb-4">
               <div className="flex items-center gap-1 mb-1.5">
                 <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">
                   {t('settings.defaultOutputLanguage', '默认输出语言')}
-                </span>
-                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-bg-muted text-ink-muted text-[10px] cursor-help">
-                  ?
                 </span>
               </div>
               <PillSelector
@@ -244,9 +248,6 @@ export default function SettingsModal({
               <div className="flex items-center gap-1 mb-1.5">
                 <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">
                   {t('settings.defaultOutputFormat', '默认输出格式')}
-                </span>
-                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-bg-muted text-ink-muted text-[10px] cursor-help">
-                  ?
                 </span>
               </div>
               <PillSelector
@@ -276,6 +277,13 @@ export default function SettingsModal({
 
           {/* ── AI Configuration Section ── */}
           <div className="space-y-4">
+            <p className="text-xs text-ink-muted">
+              {t(
+                'settings.aiNetworkNote',
+                '请求将从您的浏览器本地发送，请确保您的当前网络可以访问所设置的 API 端点。'
+              )}
+            </p>
+
             {/* AI API Type */}
             <div>
               <SectionLabel>
@@ -327,8 +335,6 @@ export default function SettingsModal({
                   type={showApiKey ? 'text' : 'password'}
                   value={currentApiKey}
                   onChange={(e) => handleApiKeyChange(e.target.value)}
-                  onBlur={handleApiKeyBlur}
-                  onKeyDown={handleApiKeyKeyDown}
                   placeholder={currentApiType === 'openai' ? 'sk-...' : 'sk-ant-...'}
                   className={`flex-1 px-3 py-2 text-sm rounded-lg border bg-bg-surface transition-colors ${
                     verifyStatus === 'error'
@@ -344,14 +350,22 @@ export default function SettingsModal({
                     ? t('settings.hide', '隐藏')
                     : t('settings.show', '显示')}
                 </button>
+                <button
+                  onClick={() => verifyApiKey(currentApiKey, currentApiType, currentEndpoint)}
+                  disabled={!currentApiKey || currentApiKey.trim() === '' || verifyStatus === 'verifying'}
+                  className={`px-3 py-2 text-sm font-medium rounded-lg border transition-colors ${
+                    !currentApiKey || currentApiKey.trim() === '' || verifyStatus === 'verifying'
+                      ? 'border-border-default bg-bg-muted text-ink-muted cursor-not-allowed opacity-50'
+                      : 'border-accent-primary bg-accent-primary text-ink-primary hover:opacity-90 cursor-pointer'
+                  }`}
+                >
+                  {verifyStatus === 'verifying'
+                    ? t('settings.verifying', '验证中...')
+                    : t('settings.verify', '验证')}
+                </button>
               </div>
 
               {/* Verification Status */}
-              {verifyStatus === 'verifying' && (
-                <p className="text-xs text-ink-muted mt-2 animate-pulse">
-                  {t('settings.verifying', '验证中...')}
-                </p>
-              )}
               {verifyStatus === 'success' && verifyResult?.valid && (
                 <p className="text-xs text-status-success mt-2 font-medium">
                   ✓ {t('settings.keyVerified', '密钥已验证')} — {currentApiType === 'openai' ? 'OpenAI' : 'Anthropic'}{' '}
@@ -365,42 +379,6 @@ export default function SettingsModal({
               )}
             </div>
 
-            {/* Model (dropdown, populated after key verification) */}
-            <div>
-              <SectionLabel>
-                {t('settings.model', '模型')}
-              </SectionLabel>
-              {modelsLoading ? (
-                <div className={`${inputClassName} opacity-50 animate-pulse`}>
-                  {t('settings.loadingModels', '加载模型列表...')}
-                </div>
-              ) : (
-                <select
-                  value={currentModel}
-                  onChange={(e) => handleModelChange(e.target.value)}
-                  disabled={!modelsReady}
-                  className={`${inputClassName} ${!modelsReady ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  {modelsReady ? (
-                    <>
-                      <option value="">
-                        {t('settings.selectModel', '请选择模型')}
-                      </option>
-                      {modelOptions.map((m) => (
-                        <option key={m.id} value={m.id}>
-                          {m.name}
-                        </option>
-                      ))}
-                    </>
-                  ) : (
-                    <option value="">
-                      {t('settings.verifyKeyFirst', '请先验证 API 密钥')}
-                    </option>
-                  )}
-                </select>
-              )}
-            </div>
-
             {/* Security Note */}
             <div className="flex items-start gap-2 text-xs text-ink-muted">
               <span className="mt-0.5">🔒</span>
@@ -410,6 +388,76 @@ export default function SettingsModal({
                   '您的 API 密钥仅存储在浏览器本地，仅发送至您配置的 API 端点，不会发送到任何其他服务器。'
                 )}
               </span>
+            </div>
+
+            {/* Model (custom combo: text input + filtered dropdown) */}
+            <div ref={modelComboRef} className="relative">
+              <SectionLabel>
+                {t('settings.model', '模型')}
+              </SectionLabel>
+              {modelsLoading ? (
+                <div className={`${inputClassName} opacity-50 animate-pulse`}>
+                  {t('settings.loadingModels', '加载模型列表...')}
+                </div>
+              ) : (
+                <>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={currentModel}
+                      onChange={(e) => {
+                        handleModelChange(e.target.value);
+                        setModelDropdownOpen(true);
+                      }}
+                      onFocus={() => modelsReady && setModelDropdownOpen(true)}
+                      placeholder={currentApiType === 'openai' ? 'gpt-4o' : 'claude-sonnet-4-20250514'}
+                      className={inputClassName}
+                    />
+                    {modelsReady && (
+                      <button
+                        type="button"
+                        onClick={() => setModelDropdownOpen(!modelDropdownOpen)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink-primary transition-colors p-1"
+                        aria-label="Toggle model list"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={`transition-transform ${modelDropdownOpen ? 'rotate-180' : ''}`}>
+                          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                  {modelDropdownOpen && modelsReady && (() => {
+                    const query = currentModel.toLowerCase();
+                    const filtered = modelOptions.filter(
+                      (m) => m.id.toLowerCase().includes(query) || m.name.toLowerCase().includes(query)
+                    );
+                    if (filtered.length === 0) return null;
+                    return (
+                      <ul className="absolute z-10 mt-1 w-full max-h-48 overflow-y-auto rounded-lg border border-border-default bg-bg-surface shadow-lg">
+                        {filtered.map((m) => (
+                          <li key={m.id}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                handleModelChange(m.id);
+                                setModelDropdownOpen(false);
+                              }}
+                              className={`w-full text-left px-3 py-2 text-sm transition-colors hover:bg-bg-accent-light ${
+                                m.id === currentModel ? 'text-accent-primary font-medium' : 'text-ink-primary'
+                              }`}
+                            >
+                              {m.name}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  })()}
+                </>
+              )}
+              <p className="text-xs text-ink-muted mt-1.5">
+                {t('settings.modelHint', '验证密钥后从可用的模型中选择，或者直接输入模型名称')}
+              </p>
             </div>
           </div>
         </div>

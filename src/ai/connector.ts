@@ -27,8 +27,9 @@ export function createProvider(name: AiProviderName): AiProvider {
 export async function aiFill(
   provider: AiProvider,
   request: AiFillRequest,
+  signal?: AbortSignal,
 ): Promise<AiFillResponse> {
-  const rawResponse = await provider.fillFields(request);
+  const rawResponse = await provider.fillFields(request, signal);
 
   const validCurrentKeys = new Set(request.currentFields.map((f) => f.key));
   const validOptionalKeys = new Set(request.allOptionalFields.map((f) => f.key));

@@ -8,6 +8,7 @@ interface AiFillButtonProps {
   filledCount: number;
   errorMessage: string;
   onFill: () => void;
+  onCancel: () => void;
   onDismissError: () => void;
   onOpenSettings?: () => void;
 }
@@ -19,6 +20,7 @@ export function AiFillButton({
   filledCount,
   errorMessage,
   onFill,
+  onCancel,
   onDismissError,
   onOpenSettings,
 }: AiFillButtonProps) {
@@ -32,7 +34,7 @@ export function AiFillButton({
         <button
           type="button"
           onClick={onOpenSettings}
-          className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold bg-ink-primary text-accent-primary opacity-40 cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold whitespace-nowrap bg-ink-primary text-accent-primary opacity-40 cursor-pointer"
           title={t('ai.configureProvider')}
         >
           {'\u{1F512}'} {t('ai.fillButtonLock')}
@@ -45,20 +47,28 @@ export function AiFillButton({
     <div className="flex flex-col items-end">
       {/* Button */}
       <div className="relative group">
-        <button
-          type="button"
-          onClick={onFill}
-          disabled={disabled || isLoading}
-          className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold transition-colors ${
-            isLoading
-              ? 'bg-accent-primary text-ink-primary cursor-wait'
-              : disabled
+        {isLoading ? (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold whitespace-nowrap transition-colors bg-accent-primary text-ink-primary hover:opacity-80 cursor-pointer"
+          >
+            {'\u2715'} {t('ai.fillButtonCancel')}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={onFill}
+            disabled={disabled}
+            className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold whitespace-nowrap transition-colors ${
+              disabled
                 ? 'bg-ink-primary text-accent-primary opacity-40 cursor-not-allowed'
                 : 'bg-ink-primary text-accent-primary hover:opacity-90 cursor-pointer'
-          }`}
-        >
-          {isLoading ? `\u27F3 ${t('ai.fillButtonLoading')}` : `\u2728 ${t('ai.fillButton')}`}
-        </button>
+            }`}
+          >
+            {'\u2728'} {t('ai.fillButton')}
+          </button>
+        )}
         {/* Tooltip when disabled (intent empty or no task selected) */}
         {disabled && !isLoading && (
           <div

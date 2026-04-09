@@ -67,7 +67,7 @@ describe('AddFieldPanel', () => {
     const onAddField = vi.fn();
     render(<AddFieldPanel {...defaultProps} onAddField={onAddField} />);
     fireEvent.click(screen.getByText('+ 添加项目'));
-    const addButtons = screen.getAllByLabelText(/技术栈|目标长度/);
+    const addButtons = screen.getAllByLabelText(/^(技术栈|目标长度)$/);
     fireEvent.click(addButtons[0]);
     // onAddField is deferred until the 200ms row-slide-up animation completes
     expect(onAddField).not.toHaveBeenCalled();

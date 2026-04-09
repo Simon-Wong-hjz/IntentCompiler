@@ -34,6 +34,7 @@ interface PageLayoutProps {
   filledCount: number;
   aiFillError: string;
   onAiFill: () => void;
+  onCancelAiFill: () => void;
   onDismissError: () => void;
   allowAddFields: boolean;
   onAllowAddFieldsChange: (checked: boolean) => void;
@@ -66,6 +67,7 @@ export function PageLayout({
   filledCount,
   aiFillError,
   onAiFill,
+  onCancelAiFill,
   onDismissError,
   allowAddFields,
   onAllowAddFieldsChange,
@@ -98,6 +100,7 @@ export function PageLayout({
             filledCount={filledCount}
             aiFillError={aiFillError}
             onAiFill={onAiFill}
+            onCancelAiFill={onCancelAiFill}
             onDismissError={onDismissError}
             onOpenSettings={onOpenSettings}
             allowAddFields={allowAddFields}

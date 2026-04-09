@@ -55,7 +55,6 @@ const FIELD_LABELS_ZH: Record<string, string> = {
   current_state: '现状',
   idea_count: '想法数量',
   evaluation_criteria: '评估标准',
-  tradeoff_preference: '权衡偏好',
   // Execute fields
   plan: '执行计划',
   tools_to_use: '使用工具',

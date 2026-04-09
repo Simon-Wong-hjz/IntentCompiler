@@ -23,6 +23,7 @@ interface UseAiFillReturn {
   filledCount: number;
   errorMessage: string;
   triggerFill: () => Promise<AiFillResponse | null>;
+  cancelFill: () => void;
   reset: () => void;
   isDisabled: boolean;
 }
@@ -34,6 +35,7 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
   const [filledCount, setFilledCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const successTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   const isDisabled = !taskType || intent.trim() === '' || !providerName;
 
@@ -45,6 +47,16 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
       clearTimeout(successTimerRef.current);
       successTimerRef.current = null;
     }
+  }, []);
+
+  const cancelFill = useCallback(() => {
+    if (abortRef.current) {
+      abortRef.current.abort();
+      abortRef.current = null;
+    }
+    setStatus('idle');
+    setErrorMessage('');
+    setFilledCount(0);
   }, []);
 
   const triggerFill = useCallback(async (): Promise<AiFillResponse | null> => {
@@ -62,6 +74,13 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
       clearTimeout(successTimerRef.current);
       successTimerRef.current = null;
     }
+
+    // Abort any in-flight request
+    if (abortRef.current) {
+      abortRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortRef.current = controller;
 
     setStatus('loading');
     setErrorMessage('');
@@ -81,7 +100,7 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
         endpoint,
         model,
         language,
-      });
+      }, controller.signal);
 
       const count = Object.keys(response.filledFields).length;
       setFilledCount(count);
@@ -95,6 +114,10 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
 
       return response;
     } catch (err) {
+      // Silently swallow abort errors — the user cancelled intentionally
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        return null;
+      }
       const message = err instanceof Error ? err.message : 'An unknown error occurred.';
       setErrorMessage(message);
       setStatus('error');
@@ -102,5 +125,5 @@ export function useAiFill(params: UseAiFillParams): UseAiFillReturn {
     }
   }, [taskType, providerName, language, getApiKey, getEndpoint, getModel, intent, currentFields, allOptionalFields, allowAddFields]);
 
-  return { status, filledCount, errorMessage, triggerFill, reset, isDisabled };
+  return { status, filledCount, errorMessage, triggerFill, cancelFill, reset, isDisabled };
 }
