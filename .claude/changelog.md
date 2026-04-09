@@ -1,5 +1,27 @@
 # Changelog
 
+## [2026-04-09] - Announcement & Tutorial System
+- Created `src/data/announcements/index.ts` — announcement data loader: YAML frontmatter parser, `<!-- en -->` bilingual split, `marked` Markdown→HTML rendering, Vite glob import
+- Created `src/data/announcements/v0.6.0.md` — first announcement file with bilingual release notes for Phase 6
+- Created `src/data/announcements/__tests__/announcements.test.ts` — 5 tests: frontmatter parsing, bilingual split, HTML rendering, zh fallback, error case
+- Created `src/data/tutorial-steps.ts` — 10-step declarative tutorial config with `TutorialStep` interface (targetSelector, bilingual title/description, placement)
+- Created `src/data/__tests__/tutorial-steps.test.ts` — 3 tests: step count, required fields, unique selectors
+- Created `src/components/modals/AnnouncementModal.tsx` — scrollable modal with version badges, accent border on latest, `dangerouslySetInnerHTML` for pre-rendered content
+- Created `src/components/tutorial/SpotlightOverlay.tsx` — full-screen overlay with `box-shadow: 0 0 0 9999px` cutout technique
+- Created `src/components/tutorial/TutorialTooltip.tsx` — positioned tooltip with `computePosition()` for 4 placements, step counter, prev/next/skip buttons
+- Created `src/components/tutorial/TutorialOverlay.tsx` — orchestrator: step navigation, DOM querying, resize/scroll tracking, auto-skip for missing targets, Escape key dismissal
+- Created `tests/components/AnnouncementModal.test.tsx` — 5 tests covering render, content, close, backdrop, empty state
+- Created `tests/components/TutorialOverlay.test.tsx` — 5 tests covering render, navigation, skip, completion, step counter
+- Modified `src/components/layout/TopBar.tsx` — added Megaphone + GraduationCap icon buttons, `data-tutorial` attributes on all 4 nav buttons
+- Modified `src/components/layout/PageLayout.tsx` — threaded `onOpenAnnouncement` and `onStartTutorial` props
+- Modified `src/App.tsx` — added auto-trigger logic (tutorial first → announcement), state management, preference persistence
+- Modified `src/storage/preferences.ts` — added `lastSeenAnnouncementVersion` and `tutorialCompleted` preference keys
+- Modified `src/hooks/useStorage.ts` — added new preference defaults
+- Modified 7 components with `data-tutorial` attributes: TaskSelector, IntentField, AddFieldPanel, PreviewArea, PreviewHeader, CopyButton, AiFillButton
+- Added bilingual i18n strings for announcement and tutorial sections in en.json and zh.json
+- Fixed tutorial auto-skip bug: steps targeting conditionally-rendered elements now skip gracefully with adjusted step counter
+- **Totals**: 22 test files / 180 tests pass; tsc clean; 14 commits
+
 ## [2026-04-09] - Phase 6: Help System + Edge States + Visual Polish
 - Created `src/data/help-content.ts` — bilingual (en/zh) help content for all 45 PRD fields with `whatIsThis`, `suggestions`, and `example` sections
 - Created `src/data/__tests__/help-content.test.ts` — 4 integrity tests verifying field coverage, bilingual completeness, and no extra keys
